@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build artifacts and caches
+dist/
+build/
+coverage/
+.vite/
+.next/
+.turbo/
+.cache/
+storybook-static/
+*.tsbuildinfo
+
+# Browser tests
+playwright-report/
+test-results/
+
+# Environment files: commit examples, never secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.idea/
