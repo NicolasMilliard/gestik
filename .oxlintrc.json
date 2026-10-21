@@ -24,6 +24,7 @@
     "no-debugger": "error",
     "typescript/no-explicit-any": "error",
     "react/rules-of-hooks": "error",
-    "react/exhaustive-deps": "error"
+    "react/exhaustive-deps": "error",
+    "react/react-in-jsx-scope": "off"
   }
 }

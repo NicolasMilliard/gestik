@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "bun --filter @gestik/docs dev",
+    "dev": "bun run build && bun --filter @gestik/docs dev",
     "build": "bun --filter @gestik/react build",
     "test": "bun --filter @gestik/react test",
     "lint": "oxlint .",
