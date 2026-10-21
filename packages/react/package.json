@@ -4,11 +4,19 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    }
+  },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0"
   },
   "scripts": {
-    "build": "tsdown",
+    "build": "tsdown --dts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
