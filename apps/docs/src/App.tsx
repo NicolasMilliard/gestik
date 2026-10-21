@@ -19,8 +19,8 @@ function App() {
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 32 }}>
           <figure style={{ margin: 0 }}>
-            <DragHint input="pointer" />
-            <figcaption>Pointer: drag to the right.</figcaption>
+            <DragHint input="touch" />
+            <figcaption>Touch: drag to the right.</figcaption>
           </figure>
 
           <figure style={{ margin: 0 }}>

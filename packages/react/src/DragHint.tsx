@@ -1,13 +1,13 @@
 import { CursorIcon } from './icons/CursorIcon';
-import { PointerIcon } from './icons/PointerIcon';
+import { TouchIcon } from './icons/TouchIcon';
 
-export type DragHintInput = 'pointer' | 'cursor';
+export type DragHintInput = 'touch' | 'cursor';
 
 export interface DragHintProps {
   input?: DragHintInput;
 }
 
-export function DragHint({ input = 'pointer' }: DragHintProps) {
+export function DragHint({ input = 'touch' }: DragHintProps) {
   const hotspot = { x: 0.2, y: -0.1 };
 
   return (
@@ -59,7 +59,7 @@ export function DragHint({ input = 'pointer' }: DragHintProps) {
             transform: `translate(${-hotspot.x * 100}%, ${-hotspot.y * 100}%)`,
           }}
         >
-          {input === 'pointer' ? <PointerIcon /> : <CursorIcon />}
+          {input === 'touch' ? <TouchIcon /> : <CursorIcon />}
         </span>
       </span>
     </span>
