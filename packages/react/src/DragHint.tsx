@@ -1,65 +1,84 @@
-import { CursorIcon } from './icons/CursorIcon';
-import { PointerIcon } from './icons/PointerIcon';
+import type { ReactNode } from 'react';
+import './DragHint.css';
+import { ClosedHand } from './icons/ClosedHand';
+import { OpenHand } from './icons/OpenHand';
 
-export type DragHintInput = 'pointer' | 'cursor';
+const SCENE_WIDTH = 112;
+const SCENE_HEIGHT = 72;
 
-export interface DragHintProps {
-  input?: DragHintInput;
+export interface DragHintHotspot {
+  x: number;
+  y: number;
 }
 
-export function DragHint({ input = 'pointer' }: DragHintProps) {
-  const hotspot = { x: 0.2, y: -0.1 };
+export interface DragHintProps {
+  direction?: 'right' | 'left';
+  size?: number;
+  className?: string;
+  icons?: {
+    idle: ReactNode;
+    grabbing: ReactNode;
+  };
+  hotspot?: DragHintHotspot;
+}
+
+export function DragHint({
+  direction = 'right',
+  size = SCENE_WIDTH,
+  className,
+  icons = { idle: <OpenHand />, grabbing: <ClosedHand /> },
+  hotspot = { x: 0.44, y: 0 },
+}: DragHintProps) {
+  const scale = size / SCENE_WIDTH;
 
   return (
     <span
+      className={className ? `gestik-drag-hint ${className}` : 'gestik-drag-hint'}
+      data-direction={direction}
       aria-hidden="true"
-      style={{
-        position: 'relative',
-        display: 'inline-block',
-        width: 120,
-        height: 72,
-        color: 'inherit',
-        pointerEvents: 'none',
-        verticalAlign: 'middle',
-      }}
+      style={{ width: size, height: SCENE_HEIGHT * scale }}
     >
-      <svg width="120" height="72" viewBox="0 0 120 72" fill="none" style={{ display: 'block' }}>
-        <path
-          d="M52 41h15m-6-6 6 6-6 6"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <rect
-          x="76"
-          y="25"
+      <span
+        key={direction}
+        className="gestik-drag-hint__stage"
+        style={{ transform: `scale(${scale})` }}
+      >
+        <svg
+          className="gestik-drag-hint__destination"
+          viewBox="0 0 32 32"
           width="32"
           height="32"
-          rx="7"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeDasharray="4 4"
-          opacity="0.45"
-        />
-      </svg>
-
-      <span style={{ position: 'absolute', left: 12, top: 25, width: 32, height: 32 }}>
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-          <rect x="1" y="1" width="30" height="30" rx="7" stroke="currentColor" strokeWidth="2" />
-        </svg>
-      </span>
-
-      <span style={{ position: 'absolute', left: 28, top: 41 }}>
-        <span
-          style={{
-            display: 'block',
-            width: 24,
-            height: 24,
-            transform: `translate(${-hotspot.x * 100}%, ${-hotspot.y * 100}%)`,
-          }}
+          fill="none"
         >
-          {input === 'pointer' ? <PointerIcon /> : <CursorIcon />}
+          <rect x="1" y="1" width="30" height="30" rx="7" strokeWidth="2" strokeDasharray="4 4" />
+        </svg>
+
+        <span className="gestik-drag-hint__drag-group">
+          <span className="gestik-drag-hint__lift-group">
+            <svg
+              className="gestik-drag-hint__square"
+              viewBox="0 0 32 32"
+              width="32"
+              height="32"
+              fill="none"
+            >
+              <rect x="1" y="1" width="30" height="30" rx="7" strokeWidth="2" />
+            </svg>
+
+            <span
+              className="gestik-drag-hint__icon-anchor"
+              style={{
+                transform: `translate(${-hotspot.x * 100}%, ${-hotspot.y * 100}%)`,
+              }}
+            >
+              <span className="gestik-drag-hint__icon gestik-drag-hint__icon--idle">
+                {icons.idle}
+              </span>
+              <span className="gestik-drag-hint__icon gestik-drag-hint__icon--grabbing">
+                {icons.grabbing}
+              </span>
+            </span>
+          </span>
         </span>
       </span>
     </span>

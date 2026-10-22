@@ -1,0 +1,216 @@
+.gestik-drag-hint {
+  --gestik-drag-hint-duration: 2800ms;
+  --_gestik-start-x: 12px;
+  --_gestik-target-x: 68px;
+  --_gestik-travel: 56px;
+
+  position: relative;
+  display: inline-block;
+  width: 112px;
+  height: 72px;
+  vertical-align: middle;
+  pointer-events: none;
+}
+
+.gestik-drag-hint[data-direction='left'] {
+  --_gestik-start-x: 68px;
+  --_gestik-target-x: 12px;
+  --_gestik-travel: -56px;
+}
+
+.gestik-drag-hint__stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 112px;
+  height: 72px;
+  transform-origin: 0 0;
+}
+
+.gestik-drag-hint__destination {
+  position: absolute;
+  top: 25px;
+  left: var(--_gestik-target-x);
+  display: block;
+}
+
+.gestik-drag-hint__destination rect {
+  fill: var(--gestik-drag-hint-target-fill, none);
+  stroke: var(--gestik-drag-hint-target-stroke, currentColor);
+  stroke-opacity: var(--gestik-drag-hint-target-stroke-opacity, 0.45);
+}
+
+.gestik-drag-hint__square {
+  display: block;
+}
+
+.gestik-drag-hint__square rect {
+  fill: var(--gestik-drag-hint-square-fill, none);
+  stroke: var(--gestik-drag-hint-square-stroke, currentColor);
+}
+
+.gestik-drag-hint__icon-anchor {
+  color: var(--gestik-drag-hint-icon-color, inherit);
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.gestik-drag-hint__drag-group {
+  position: absolute;
+  top: 25px;
+  left: var(--_gestik-start-x);
+  width: 32px;
+  height: 32px;
+  animation: gestik-drag-hint-travel var(--gestik-drag-hint-duration) linear infinite both;
+}
+
+.gestik-drag-hint__drag-group::before {
+  position: absolute;
+  inset: 2px;
+  border-radius: 6px;
+  box-shadow: 0 5px 8px rgb(0 0 0 / 0.2);
+  opacity: 0;
+  content: '';
+  animation: gestik-drag-hint-shadow var(--gestik-drag-hint-duration) ease-in-out infinite both;
+}
+
+.gestik-drag-hint__lift-group {
+  position: relative;
+  display: block;
+  width: 32px;
+  height: 32px;
+  animation: gestik-drag-hint-lift var(--gestik-drag-hint-duration) ease-in-out infinite both;
+}
+
+.gestik-drag-hint__icon {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.gestik-drag-hint__icon--idle {
+  opacity: 1;
+  animation: gestik-drag-hint-idle var(--gestik-drag-hint-duration) steps(1, end) infinite both;
+}
+
+.gestik-drag-hint__icon--grabbing {
+  opacity: 0;
+  animation: gestik-drag-hint-grabbing var(--gestik-drag-hint-duration) steps(1, end) infinite both;
+}
+
+@keyframes gestik-drag-hint-travel {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  26% {
+    transform: translateX(0);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.45, 0, 0.2, 1);
+  }
+
+  60%,
+  82% {
+    transform: translateX(var(--_gestik-travel));
+    opacity: 1;
+  }
+
+  83% {
+    transform: translateX(var(--_gestik-travel));
+    opacity: 0;
+  }
+
+  84% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes gestik-drag-hint-lift {
+  0%,
+  20% {
+    transform: translateY(0);
+  }
+
+  26%,
+  60% {
+    transform: translateY(-3px);
+  }
+
+  68% {
+    transform: translateY(1px);
+  }
+
+  72%,
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes gestik-drag-hint-shadow {
+  0%,
+  20% {
+    opacity: 0;
+  }
+
+  26%,
+  60% {
+    opacity: 1;
+  }
+
+  72%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes gestik-drag-hint-idle {
+  0% {
+    opacity: 1;
+  }
+
+  20% {
+    opacity: 0;
+  }
+
+  72%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes gestik-drag-hint-grabbing {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  72%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gestik-drag-hint__drag-group,
+  .gestik-drag-hint__drag-group::before,
+  .gestik-drag-hint__lift-group,
+  .gestik-drag-hint__icon--idle,
+  .gestik-drag-hint__icon--grabbing {
+    animation: none;
+  }
+}
