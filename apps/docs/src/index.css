@@ -1,0 +1,8 @@
+.custom-drag-hint {
+  --gestik-drag-hint-square-stroke: #155e75;
+  --gestik-drag-hint-target-stroke: #155e75;
+  --gestik-drag-hint-target-stroke-opacity: 0.65;
+  --gestik-drag-hint-square-fill: rgb(236 254 255 / 85%);
+  --gestik-drag-hint-icon-color: #0e7490;
+  --gestik-drag-hint-surface: #ecfeff;
+}

@@ -1,5 +1,8 @@
 .gestik-drag-hint {
   --gestik-drag-hint-duration: 2800ms;
+  --_gestik-start-x: 12px;
+  --_gestik-target-x: 68px;
+  --_gestik-travel: 56px;
 
   position: relative;
   display: inline-block;
@@ -9,16 +12,46 @@
   pointer-events: none;
 }
 
-.gestik-drag-hint__scene,
+.gestik-drag-hint[data-direction='left'] {
+  --_gestik-start-x: 68px;
+  --_gestik-target-x: 12px;
+  --_gestik-travel: -56px;
+}
+
+.gestik-drag-hint__stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 112px;
+  height: 72px;
+  transform-origin: 0 0;
+}
+
+.gestik-drag-hint__destination {
+  position: absolute;
+  top: 25px;
+  left: var(--_gestik-target-x);
+  display: block;
+}
+
+.gestik-drag-hint__destination rect {
+  fill: var(--gestik-drag-hint-target-fill, none);
+  stroke: var(--gestik-drag-hint-target-stroke, currentColor);
+  stroke-opacity: var(--gestik-drag-hint-target-stroke-opacity, 0.45);
+}
+
 .gestik-drag-hint__square {
   display: block;
 }
 
-.gestik-drag-hint__destination {
-  opacity: 0.45;
+.gestik-drag-hint__square rect {
+  fill: var(--gestik-drag-hint-square-fill, none);
+  stroke: var(--gestik-drag-hint-square-stroke, currentColor);
 }
 
 .gestik-drag-hint__icon-anchor {
+  color: var(--gestik-drag-hint-icon-color, inherit);
   position: absolute;
   top: 16px;
   left: 16px;
@@ -30,7 +63,7 @@
 .gestik-drag-hint__drag-group {
   position: absolute;
   top: 25px;
-  left: 12px;
+  left: var(--_gestik-start-x);
   width: 32px;
   height: 32px;
   animation: gestik-drag-hint-travel var(--gestik-drag-hint-duration) linear infinite both;
@@ -84,12 +117,12 @@
 
   60%,
   82% {
-    transform: translateX(56px);
+    transform: translateX(var(--_gestik-travel));
     opacity: 1;
   }
 
   83% {
-    transform: translateX(56px);
+    transform: translateX(var(--_gestik-travel));
     opacity: 0;
   }
 

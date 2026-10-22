@@ -8,7 +8,7 @@ export const OpenHand = () => {
       fill="none"
     >
       <path
-        fill="white"
+        fill="var(--gestik-drag-hint-surface, white)"
         d="M4 12.5 2 15l4.5 5 5 2 7-1 3.5-5-.5-9.5H18V5l-3.5-1L12 2 9.5 4l-3 1-.5 8.5z"
       />
       <path

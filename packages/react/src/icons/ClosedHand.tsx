@@ -7,7 +7,10 @@ export const ClosedHand = () => {
       height="100%"
       fill="none"
     >
-      <path fill="white" d="M4.5 12 2 13.5V17l5 4.5h10.5L22 16l-.5-6-2-1L12 6 6 8v5.5z" />
+      <path
+        fill="var(--gestik-drag-hint-surface, white)"
+        d="M4.5 12 2 13.5V17l5 4.5h10.5L22 16l-.5-6-2-1L12 6 6 8v5.5z"
+      />
       <path
         stroke="currentColor"
         strokeLinecap="round"
