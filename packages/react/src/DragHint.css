@@ -1,8 +1,10 @@
 .gestik-drag-hint {
-  --gestik-drag-hint-duration: 2800ms;
   --_gestik-start-x: 12px;
   --_gestik-target-x: 68px;
   --_gestik-travel: 56px;
+  --gestik-drag-hint-duration: 2800ms;
+  --gestik-drag-hint-iterations: infinite;
+  --gestik-drag-hint-play-state: running;
 
   position: relative;
   display: inline-block;
@@ -66,7 +68,8 @@
   left: var(--_gestik-start-x);
   width: 32px;
   height: 32px;
-  animation: gestik-drag-hint-travel var(--gestik-drag-hint-duration) linear infinite both;
+  animation: gestik-drag-hint-travel var(--gestik-drag-hint-duration) linear
+    var(--gestik-drag-hint-iterations) both;
 }
 
 .gestik-drag-hint__drag-group::before {
@@ -76,7 +79,8 @@
   box-shadow: 0 5px 8px rgb(0 0 0 / 0.2);
   opacity: 0;
   content: '';
-  animation: gestik-drag-hint-shadow var(--gestik-drag-hint-duration) ease-in-out infinite both;
+  animation: gestik-drag-hint-shadow var(--gestik-drag-hint-duration) ease-in-out
+    var(--gestik-drag-hint-iterations) both;
 }
 
 .gestik-drag-hint__lift-group {
@@ -84,7 +88,8 @@
   display: block;
   width: 32px;
   height: 32px;
-  animation: gestik-drag-hint-lift var(--gestik-drag-hint-duration) ease-in-out infinite both;
+  animation: gestik-drag-hint-lift var(--gestik-drag-hint-duration) ease-in-out
+    var(--gestik-drag-hint-iterations) both;
 }
 
 .gestik-drag-hint__icon {
@@ -95,12 +100,14 @@
 
 .gestik-drag-hint__icon--idle {
   opacity: 1;
-  animation: gestik-drag-hint-idle var(--gestik-drag-hint-duration) steps(1, end) infinite both;
+  animation: gestik-drag-hint-idle var(--gestik-drag-hint-duration) steps(1, end)
+    var(--gestik-drag-hint-iterations) both;
 }
 
 .gestik-drag-hint__icon--grabbing {
   opacity: 0;
-  animation: gestik-drag-hint-grabbing var(--gestik-drag-hint-duration) steps(1, end) infinite both;
+  animation: gestik-drag-hint-grabbing var(--gestik-drag-hint-duration) steps(1, end)
+    var(--gestik-drag-hint-iterations) both;
 }
 
 @keyframes gestik-drag-hint-travel {
@@ -203,6 +210,14 @@
   100% {
     opacity: 0;
   }
+}
+
+.gestik-drag-hint__drag-group,
+.gestik-drag-hint__drag-group::before,
+.gestik-drag-hint__lift-group,
+.gestik-drag-hint__icon--idle,
+.gestik-drag-hint__icon--grabbing {
+  animation-play-state: var(--gestik-drag-hint-play-state);
 }
 
 @media (prefers-reduced-motion: reduce) {

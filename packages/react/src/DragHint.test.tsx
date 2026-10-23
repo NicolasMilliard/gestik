@@ -51,4 +51,19 @@ describe('DragHint', () => {
     const anchor = container.querySelector<HTMLElement>('.gestik-drag-hint__icon-anchor');
     expect(anchor?.style.transform).toBe('translate(-25%, -75%)');
   });
+
+  it('applies playback settings and can resume', () => {
+    const { container, rerender } = render(
+      <DragHint duration={1400} iterations={2} playing={false} />,
+    );
+    const hint = container.firstElementChild as HTMLElement;
+
+    expect(hint.style.getPropertyValue('--gestik-drag-hint-duration')).toBe('1400ms');
+    expect(hint.style.getPropertyValue('--gestik-drag-hint-iterations')).toBe('2');
+    expect(hint.style.getPropertyValue('--gestik-drag-hint-play-state')).toBe('paused');
+
+    rerender(<DragHint duration={1400} iterations={2} playing />);
+
+    expect(hint.style.getPropertyValue('--gestik-drag-hint-play-state')).toBe('running');
+  });
 });
