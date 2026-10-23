@@ -1,1 +1,5 @@
-export { DragHint, type DragHintHotspot, type DragHintProps } from './DragHint.js';
+export {
+  DragHint,
+  type DragHintHotspot,
+  type DragHintProps,
+} from "./drag-hint.js";
