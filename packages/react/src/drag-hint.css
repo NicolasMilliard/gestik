@@ -14,7 +14,7 @@
   pointer-events: none;
 }
 
-.gestik-drag-hint[data-direction='left'] {
+.gestik-drag-hint[data-direction="left"] {
   --_gestik-start-x: 68px;
   --_gestik-target-x: 12px;
   --_gestik-travel: -56px;
@@ -78,9 +78,9 @@
   border-radius: 6px;
   box-shadow: 0 5px 8px rgb(0 0 0 / 0.2);
   opacity: 0;
-  content: '';
-  animation: gestik-drag-hint-shadow var(--gestik-drag-hint-duration) ease-in-out
-    var(--gestik-drag-hint-iterations) both;
+  content: "";
+  animation: gestik-drag-hint-shadow var(--gestik-drag-hint-duration)
+    ease-in-out var(--gestik-drag-hint-iterations) both;
 }
 
 .gestik-drag-hint__lift-group {
@@ -100,14 +100,14 @@
 
 .gestik-drag-hint__icon--idle {
   opacity: 1;
-  animation: gestik-drag-hint-idle var(--gestik-drag-hint-duration) steps(1, end)
-    var(--gestik-drag-hint-iterations) both;
+  animation: gestik-drag-hint-idle var(--gestik-drag-hint-duration)
+    steps(1, end) var(--gestik-drag-hint-iterations) both;
 }
 
 .gestik-drag-hint__icon--grabbing {
   opacity: 0;
-  animation: gestik-drag-hint-grabbing var(--gestik-drag-hint-duration) steps(1, end)
-    var(--gestik-drag-hint-iterations) both;
+  animation: gestik-drag-hint-grabbing var(--gestik-drag-hint-duration)
+    steps(1, end) var(--gestik-drag-hint-iterations) both;
 }
 
 @keyframes gestik-drag-hint-travel {

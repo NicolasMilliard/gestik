@@ -13,17 +13,17 @@ Use Bun at the version in the root `package.json`, Node.js 22.18 or newer, and `
 
 Run these from the repository root:
 
-| Command                | Purpose                                                        |
-| ---------------------- | -------------------------------------------------------------- |
-| `bun run check`        | Ultracite lint and formatting checks; warnings also fail       |
-| `bun run fix`          | Apply lint and formatting fixes                                |
-| `bun run lint`         | Run the shared Oxlint configuration                            |
-| `bun run format:check` | Check formatting with the shared Oxfmt configuration           |
-| `bun run build`        | Build the React package and its public declarations            |
-| `bun run typecheck`    | Type-check tooling and all workspaces; build the library first |
-| `bun run test`         | Run the React package's Vitest suite                           |
-| `bun run build:docs`   | Type-check and build the documentation app                     |
-| `bun run verify`       | Run all of the above checks in dependency order                |
+| Command | Purpose |
+| --- | --- |
+| `bun run check` | Ultracite lint and formatting checks; warnings also fail |
+| `bun run fix` | Apply lint and formatting fixes |
+| `bun run lint` | Run the shared Oxlint configuration |
+| `bun run format:check` | Check formatting with the shared Oxfmt configuration |
+| `bun run build` | Build the React package and its public declarations |
+| `bun run typecheck` | Type-check tooling and all workspaces; build the library first |
+| `bun run test` | Run the React package's Vitest suite |
+| `bun run build:docs` | Type-check and build the documentation app |
+| `bun run verify` | Run all of the above checks in dependency order |
 
 The docs consume the package's built exports, so the library must be built before the docs can resolve it in a clean checkout. `verify` handles this order. Use `bun run test`, since bare `bun test` invokes a different test runner.
 
@@ -33,7 +33,7 @@ CI runs `bun install --frozen-lockfile` and `bun run verify` for pull requests a
 
 - Ultracite 8.0.2 supplies the core, React, and Vitest presets over the existing Oxlint/Oxfmt stack. The lockfile fixes resolved versions; update tooling in a dedicated change and review new diagnostics.
 - One root lint configuration covers both workspaces. Nested configs can replace the root rules, so any future workspace config must explicitly inherit them.
-- Existing single quotes, 100-column wrapping, trailing commas, component names, and named function declarations are preserved through explained overrides. Import and Tailwind class ordering follow the preset; the formatter resolves the docs app's custom Tailwind theme.
+- Adopt Ultracite's formatting and lint defaults, including quotes, wrapping, imports, arrow functions, and kebab-case filenames. Migrate existing code instead of preserving its style through overrides. Keep public component names and API behavior stable. The formatter resolves the docs app's custom Tailwind theme.
 - Fast Refresh export checks apply to docs source; the Vitest environment tag is allowed in tests. These exceptions stay scoped to the files that need them.
 - TypeScript checks run separately. Type-aware Oxlint analysis, browser automation, agent hooks, and specialist agent roles are deferred until a concrete need justifies their setup. CI does not assess animation clarity or visual quality.
 

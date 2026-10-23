@@ -1,6 +1,6 @@
-import { defineConfig } from 'tsdown';
+import { defineConfig } from "tsdown";
 
 export default defineConfig({
   css: { inject: true },
-  entry: ['./src/index.ts'],
+  entry: ["./src/index.ts"],
 });

@@ -1,8 +1,8 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from "react";
 
-import './DragHint.css';
-import { ClosedHand } from './icons/ClosedHand';
-import { OpenHand } from './icons/OpenHand';
+import "./drag-hint.css";
+import { ClosedHand } from "./icons/closed-hand";
+import { OpenHand } from "./icons/open-hand";
 
 const SCENE_WIDTH = 112;
 const SCENE_HEIGHT = 72;
@@ -16,13 +16,13 @@ export interface DragHintHotspot {
 }
 
 type DragHintStyle = CSSProperties & {
-  '--gestik-drag-hint-duration'?: string;
-  '--gestik-drag-hint-iterations'?: string;
-  '--gestik-drag-hint-play-state'?: 'running' | 'paused';
+  "--gestik-drag-hint-duration"?: string;
+  "--gestik-drag-hint-iterations"?: string;
+  "--gestik-drag-hint-play-state"?: "running" | "paused";
 };
 
 export interface DragHintProps {
-  direction?: 'right' | 'left';
+  direction?: "right" | "left";
   size?: number;
   className?: string;
   icons?: {
@@ -31,12 +31,12 @@ export interface DragHintProps {
   };
   hotspot?: DragHintHotspot;
   duration?: number;
-  iterations?: 'infinite' | number;
+  iterations?: "infinite" | number;
   playing?: boolean;
 }
 
-export function DragHint({
-  direction = 'right',
+export const DragHint = ({
+  direction = "right",
   size = SCENE_WIDTH,
   className,
   icons = DEFAULT_ICONS,
@@ -44,26 +44,28 @@ export function DragHint({
   duration,
   iterations,
   playing,
-}: DragHintProps) {
+}: DragHintProps) => {
   const scale = size / SCENE_WIDTH;
 
   const style: DragHintStyle = {
     height: SCENE_HEIGHT * scale,
     width: size,
     ...(duration !== undefined && {
-      '--gestik-drag-hint-duration': `${duration}ms`,
+      "--gestik-drag-hint-duration": `${duration}ms`,
     }),
     ...(iterations !== undefined && {
-      '--gestik-drag-hint-iterations': String(iterations),
+      "--gestik-drag-hint-iterations": String(iterations),
     }),
     ...(playing !== undefined && {
-      '--gestik-drag-hint-play-state': playing ? 'running' : 'paused',
+      "--gestik-drag-hint-play-state": playing ? "running" : "paused",
     }),
   };
 
   return (
     <span
-      className={className ? `gestik-drag-hint ${className}` : 'gestik-drag-hint'}
+      className={
+        className ? `gestik-drag-hint ${className}` : "gestik-drag-hint"
+      }
       data-direction={direction}
       aria-hidden="true"
       style={style}
@@ -80,7 +82,15 @@ export function DragHint({
           height="32"
           fill="none"
         >
-          <rect x="1" y="1" width="30" height="30" rx="7" strokeWidth="2" strokeDasharray="4 4" />
+          <rect
+            x="1"
+            y="1"
+            width="30"
+            height="30"
+            rx="7"
+            strokeWidth="2"
+            strokeDasharray="4 4"
+          />
         </svg>
 
         <span className="gestik-drag-hint__drag-group">
@@ -113,4 +123,4 @@ export function DragHint({
       </span>
     </span>
   );
-}
+};

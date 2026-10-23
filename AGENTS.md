@@ -22,6 +22,7 @@ The docs resolve `@gestik/react` through its built exports. Run `bun run build` 
 ## Implementation
 
 - Keep the library independent of the docs app and its UI dependencies.
+- Adopt Ultracite's lint and formatting defaults. Update code to follow the presets instead of adding overrides to preserve an old style. Add a scoped override only for a concrete compatibility or project requirement, and explain why in the config.
 - Preserve public props, defaults, exports, and CSS variables unless the task calls for an API change. Update examples and documentation when behavior changes.
 - Follow the existing component's structure before adding a new abstraction or dependency. Explain a new dependency's purpose in the change description.
 - Keep animation styling in CSS where practical, namespace public CSS variables with `--gestik-`, and preserve proportional layout when changing component size.
