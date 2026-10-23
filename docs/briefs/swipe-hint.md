@@ -11,7 +11,7 @@ Demonstrate a horizontal touch swipe. A pointing hand makes contact, travels in 
 - Support `right` (default) and `left`. Direction describes finger travel.
 - Reserve a 112 by 72 pixel scene by default. `size` sets the width and scales the scene proportionally, including the icon, travel, and contact indicator.
 - Use a 2200 ms cycle, infinite iterations, and automatic playback by default. Match DragHint's `duration`, `iterations`, and `playing` controls. Duration is measured in milliseconds; pausing and resuming preserve the current frame.
-- Reinforce contact by compressing the hand to 90% around its fingertip as the circle appears. Start at 8% of the cycle, peak with the pulse at 14%, and stay compressed through travel until 58%. Return to full size by 72%, before fading. Releasing before travel reads as a separate click followed by a swipe. Keep the existing travel, release, and loop timing, which passed visual review.
+- Reinforce contact by compressing the hand to 90% around its fingertip as the circle appears. Start at 8% of the cycle and peak with the pulse at 14%. Hold through most of the travel, then restore size from 48% to 58% of the cycle, so travel and scale finish together. These percentages follow the configured duration. Releasing before travel reads as a separate click followed by a swipe; releasing after travel separates the two endings. Keep the existing travel and loop timing, which passed visual review.
 - Keep the current pointing-hand icon while a replacement is designed separately.
 - Changing direction restarts the visual cycle. Consumers can change the React `key` to replay a completed finite animation. A completed cycle rests visibly at its starting position; the return movement is hidden.
 - Allow `className`, a decorative custom `icon`, and a normalized `hotspot` for its contact point. Use namespaced CSS variables for colors and playback defaults.
@@ -21,7 +21,7 @@ Demonstrate a horizontal touch swipe. A pointing hand makes contact, travels in 
 ## Review criteria
 
 - Both directions clearly indicate a swipe; the hand keeps its orientation.
-- The hand compresses with the contact pulse, stays pressed while moving, and returns to full size near the end of the gesture. The fingertip stays aligned with the contact indicator through the press, including custom sizes and hotspots. The illustration stays inside its reserved scene.
+- The hand compresses with the contact pulse and stays pressed through most of the movement. It starts growing near the end of travel, reaching full size exactly when movement ends. The fingertip stays aligned with the contact indicator through the press, including custom sizes and hotspots. The illustration stays inside its reserved scene.
 - All animated parts pause together. Finite iterations end in a visible resting pose, and replay works after completion.
 - Reduced motion creates no active animations; accompanying text identifies the direction.
 - Documentation includes playback controls, API defaults, customization, and accessibility guidance, with unique section and control IDs.
