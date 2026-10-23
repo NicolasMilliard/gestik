@@ -1,0 +1,173 @@
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { DragHint } from '@gestik/react';
+import { useState } from 'react';
+
+type Direction = 'left' | 'right';
+type Iterations = 1 | 2 | 'infinite';
+
+const directionItems = [
+  { label: 'Right', value: 'right' },
+  { label: 'Left', value: 'left' },
+];
+
+const iterationItems = [
+  { label: 'Infinite', value: 'infinite' },
+  { label: 'Once', value: '1' },
+  { label: 'Twice', value: '2' },
+];
+
+export function DragHintDemo() {
+  const [direction, setDirection] = useState<Direction>('right');
+  const [size, setSize] = useState(112);
+  const [duration, setDuration] = useState(2800);
+  const [iterations, setIterations] = useState<Iterations>('infinite');
+  const [playing, setPlaying] = useState(true);
+  const [previewKey, setPreviewKey] = useState(0);
+
+  const iterationsCode =
+    iterations === 'infinite' ? 'iterations="infinite"' : `iterations={${iterations}}`;
+
+  const example = `import { DragHint } from '@gestik/react';
+
+<DragHint
+  direction="${direction}"
+  size={${size}}
+  duration={${duration}}
+  ${iterationsCode}
+  playing={${playing}}
+/>`;
+
+  function replay() {
+    setPlaying(true);
+    setPreviewKey((key) => key + 1);
+  }
+
+  return (
+    <section aria-label="Interactive DragHint preview">
+      <div className="grid overflow-hidden rounded-2xl border border-zinc-200 lg:grid-cols-[minmax(0,1fr)_260px]">
+        <div className="flex min-h-72 flex-col items-center justify-center gap-6 px-6 py-10 sm:min-h-80">
+          <DragHint
+            key={previewKey}
+            direction={direction}
+            size={size}
+            duration={duration}
+            iterations={iterations}
+            playing={playing}
+          />
+          <p className="text-sm text-zinc-600">Drag the square to the {direction}.</p>
+        </div>
+
+        <div className="border-t border-zinc-200 bg-zinc-50 p-5 lg:border-t-0 lg:border-l">
+          <h3 className="mb-6 text-sm font-semibold">Preview settings</h3>
+
+          <div className="mb-5">
+            <span id="direction-label" className="block text-sm font-medium">
+              Direction
+            </span>
+            <Select
+              items={directionItems}
+              value={direction}
+              onValueChange={(value) => {
+                if (value === 'left' || value === 'right') setDirection(value);
+              }}
+            >
+              <SelectTrigger aria-labelledby="direction-label" className="mt-2 w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent alignItemWithTrigger={false}>
+                <SelectItem value="right">Right</SelectItem>
+                <SelectItem value="left">Left</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <label className="mb-5 block text-sm font-medium">
+            <span className="flex items-center justify-between">
+              <span>Size</span>
+              <output className="font-normal text-zinc-500">{size}px</output>
+            </span>
+            <input
+              className="mt-3 w-full accent-orange-700"
+              type="range"
+              min="80"
+              max="180"
+              step="4"
+              value={size}
+              onChange={(event) => setSize(Number(event.target.value))}
+            />
+          </label>
+
+          <label className="mb-5 block text-sm font-medium">
+            <span className="flex items-center justify-between">
+              <span>Duration</span>
+              <output className="font-normal text-zinc-500">{duration}ms</output>
+            </span>
+            <input
+              className="mt-3 w-full accent-orange-700"
+              type="range"
+              min="1200"
+              max="5000"
+              step="200"
+              value={duration}
+              onChange={(event) => setDuration(Number(event.target.value))}
+            />
+          </label>
+
+          <div>
+            <span id="iterations-label" className="block text-sm font-medium">
+              Iterations
+            </span>
+            <Select
+              items={iterationItems}
+              value={String(iterations)}
+              onValueChange={(value) => {
+                if (value !== 'infinite' && value !== '1' && value !== '2') return;
+                setIterations(value === '1' ? 1 : value === '2' ? 2 : 'infinite');
+                setPreviewKey((key) => key + 1);
+              }}
+            >
+              <SelectTrigger aria-labelledby="iterations-label" className="mt-2 w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent alignItemWithTrigger={false}>
+                <SelectItem value="infinite">Infinite</SelectItem>
+                <SelectItem value="1">Once</SelectItem>
+                <SelectItem value="2">Twice</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="mt-7 flex gap-2">
+            <Button
+              className="flex-1"
+              variant="outline"
+              type="button"
+              onClick={() => setPlaying((current) => !current)}
+            >
+              {playing ? 'Pause' : 'Resume'}
+            </Button>
+            <Button className="flex-1" variant="outline" type="button" onClick={replay}>
+              Replay
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
+        <div className="border-b border-zinc-200 px-5 py-3 text-xs font-semibold text-zinc-500">
+          React
+        </div>
+        <pre className="overflow-x-auto p-5 text-xs leading-6 sm:text-sm">
+          <code>{example}</code>
+        </pre>
+      </div>
+    </section>
+  );
+}
