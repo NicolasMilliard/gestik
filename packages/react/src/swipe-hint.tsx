@@ -7,7 +7,7 @@ const SCENE_WIDTH = 112;
 const SCENE_HEIGHT = 72;
 
 const DEFAULT_ICON = <PointingHand />;
-const DEFAULT_HOTSPOT = { x: 11 / 24, y: 2 / 24 };
+const DEFAULT_HOTSPOT = { x: 8 / 24, y: 2 / 24 };
 
 export interface SwipeHintHotspot {
   x: number;

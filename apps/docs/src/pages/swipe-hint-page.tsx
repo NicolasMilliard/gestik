@@ -28,7 +28,7 @@ const propRows = [
   ],
   [
     "hotspot",
-    "{ x: 11 / 24, y: 2 / 24 }",
+    "{ x: 8 / 24, y: 2 / 24 }",
     "The contact point in normalized icon coordinates.",
   ],
   ["className", "—", "A class for styling the hint."],
