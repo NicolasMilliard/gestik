@@ -1,23 +1,17 @@
-import { DragHint } from '@gestik/react';
+import { DocsSidebar } from './components/DocsSidebar';
+import { OverviewSection } from './components/OverviewSection';
+import { DragHintPage } from './pages/DragHintPage';
 
 function App() {
   return (
-    <main>
-      <h1>Gestik</h1>
+    <div className="min-h-screen bg-white font-sans text-zinc-900 lg:grid lg:grid-cols-[240px_minmax(0,1fr)]">
+      <DocsSidebar />
 
-      <section aria-labelledby="drag-hint-title">
-        <h2 id="drag-hint-title">DragHint</h2>
-        <figure>
-          <DragHint />
-          <figcaption>Drag to the right.</figcaption>
-        </figure>
-
-        <figure>
-          <DragHint className="custom-drag-hint" direction="left" size={84} />
-          <figcaption>Drag to the left.</figcaption>
-        </figure>
-      </section>
-    </main>
+      <main className="mx-auto w-full max-w-5xl px-5 py-12 sm:px-8 lg:px-12 lg:py-16" id="top">
+        <OverviewSection />
+        <DragHintPage />
+      </main>
+    </div>
   );
 }
 
