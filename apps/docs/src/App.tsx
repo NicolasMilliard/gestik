@@ -13,7 +13,7 @@ function App() {
         </figure>
 
         <figure>
-          <DragHint direction="left" size={84} className="custom-drag-hint" />
+          <DragHint className="custom-drag-hint" direction="left" size={84} />
           <figcaption>Drag to the left.</figcaption>
         </figure>
       </section>

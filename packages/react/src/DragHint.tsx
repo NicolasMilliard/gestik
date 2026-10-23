@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import './DragHint.css';
 import { ClosedHand } from './icons/ClosedHand';
 import { OpenHand } from './icons/OpenHand';
@@ -11,6 +11,12 @@ export interface DragHintHotspot {
   y: number;
 }
 
+type DragHintStyle = CSSProperties & {
+  '--gestik-drag-hint-duration'?: string;
+  '--gestik-drag-hint-iterations'?: string;
+  '--gestik-drag-hint-play-state'?: 'running' | 'paused';
+};
+
 export interface DragHintProps {
   direction?: 'right' | 'left';
   size?: number;
@@ -20,6 +26,9 @@ export interface DragHintProps {
     grabbing: ReactNode;
   };
   hotspot?: DragHintHotspot;
+  duration?: number;
+  iterations?: 'infinite' | number;
+  playing?: boolean;
 }
 
 export function DragHint({
@@ -28,15 +37,32 @@ export function DragHint({
   className,
   icons = { idle: <OpenHand />, grabbing: <ClosedHand /> },
   hotspot = { x: 0.44, y: 0 },
+  duration,
+  iterations,
+  playing,
 }: DragHintProps) {
   const scale = size / SCENE_WIDTH;
+
+  const style: DragHintStyle = {
+    width: size,
+    height: SCENE_HEIGHT * scale,
+    ...(duration !== undefined && {
+      '--gestik-drag-hint-duration': `${duration}ms`,
+    }),
+    ...(iterations !== undefined && {
+      '--gestik-drag-hint-iterations': String(iterations),
+    }),
+    ...(playing !== undefined && {
+      '--gestik-drag-hint-play-state': playing ? 'running' : 'paused',
+    }),
+  };
 
   return (
     <span
       className={className ? `gestik-drag-hint ${className}` : 'gestik-drag-hint'}
       data-direction={direction}
       aria-hidden="true"
-      style={{ width: size, height: SCENE_HEIGHT * scale }}
+      style={style}
     >
       <span
         key={direction}
