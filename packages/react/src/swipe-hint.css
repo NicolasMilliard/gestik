@@ -123,12 +123,13 @@
 @keyframes gestik-swipe-hint-press {
   0%,
   8%,
-  24%,
+  72%,
   100% {
     transform: scale(1);
   }
 
-  14% {
+  14%,
+  58% {
     transform: scale(0.9);
   }
 }
