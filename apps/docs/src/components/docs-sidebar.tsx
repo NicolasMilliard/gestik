@@ -31,10 +31,16 @@ export const DocsSidebar = () => (
         Components
       </span>
       <a
-        className="rounded-lg bg-zinc-200 px-3 py-2 font-medium"
+        className="rounded-lg px-3 py-2 text-zinc-600 hover:bg-zinc-200"
         href="#drag-hint"
       >
         DragHint
+      </a>
+      <a
+        className="rounded-lg px-3 py-2 text-zinc-600 hover:bg-zinc-200"
+        href="#swipe-hint"
+      >
+        SwipeHint
       </a>
     </nav>
 

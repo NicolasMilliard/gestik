@@ -1,6 +1,7 @@
 import { DocsSidebar } from "./components/docs-sidebar";
 import { OverviewSection } from "./components/overview-section";
 import { DragHintPage } from "./pages/drag-hint-page";
+import { SwipeHintPage } from "./pages/swipe-hint-page";
 
 const App = () => (
   <div className="min-h-screen bg-white font-sans text-zinc-900 lg:grid lg:grid-cols-[240px_minmax(0,1fr)]">
@@ -12,6 +13,7 @@ const App = () => (
     >
       <OverviewSection />
       <DragHintPage />
+      <SwipeHintPage />
     </main>
   </div>
 );
