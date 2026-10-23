@@ -1,3 +1,6 @@
+import { DragHint } from '@gestik/react';
+import { useState } from 'react';
+
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -6,8 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { DragHint } from '@gestik/react';
-import { useState } from 'react';
 
 type Direction = 'left' | 'right';
 type Iterations = 1 | 2 | 'infinite';
@@ -22,6 +23,8 @@ const iterationItems = [
   { label: 'Once', value: '1' },
   { label: 'Twice', value: '2' },
 ];
+
+const iterationValues = { '1': 1, '2': 2, infinite: 'infinite' } as const;
 
 export function DragHintDemo() {
   const [direction, setDirection] = useState<Direction>('right');
@@ -75,7 +78,9 @@ export function DragHintDemo() {
               items={directionItems}
               value={direction}
               onValueChange={(value) => {
-                if (value === 'left' || value === 'right') setDirection(value);
+                if (value === 'left' || value === 'right') {
+                  setDirection(value);
+                }
               }}
             >
               <SelectTrigger aria-labelledby="direction-label" className="mt-2 w-full">
@@ -128,8 +133,10 @@ export function DragHintDemo() {
               items={iterationItems}
               value={String(iterations)}
               onValueChange={(value) => {
-                if (value !== 'infinite' && value !== '1' && value !== '2') return;
-                setIterations(value === '1' ? 1 : value === '2' ? 2 : 'infinite');
+                if (value !== 'infinite' && value !== '1' && value !== '2') {
+                  return;
+                }
+                setIterations(iterationValues[value]);
                 setPreviewKey((key) => key + 1);
               }}
             >

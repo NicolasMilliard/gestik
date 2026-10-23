@@ -1,10 +1,14 @@
 import type { CSSProperties, ReactNode } from 'react';
+
 import './DragHint.css';
 import { ClosedHand } from './icons/ClosedHand';
 import { OpenHand } from './icons/OpenHand';
 
 const SCENE_WIDTH = 112;
 const SCENE_HEIGHT = 72;
+
+const DEFAULT_ICONS = { grabbing: <ClosedHand />, idle: <OpenHand /> };
+const DEFAULT_HOTSPOT = { x: 0.44, y: 0 };
 
 export interface DragHintHotspot {
   x: number;
@@ -35,8 +39,8 @@ export function DragHint({
   direction = 'right',
   size = SCENE_WIDTH,
   className,
-  icons = { idle: <OpenHand />, grabbing: <ClosedHand /> },
-  hotspot = { x: 0.44, y: 0 },
+  icons = DEFAULT_ICONS,
+  hotspot = DEFAULT_HOTSPOT,
   duration,
   iterations,
   playing,
@@ -44,8 +48,8 @@ export function DragHint({
   const scale = size / SCENE_WIDTH;
 
   const style: DragHintStyle = {
-    width: size,
     height: SCENE_HEIGHT * scale,
+    width: size,
     ...(duration !== undefined && {
       '--gestik-drag-hint-duration': `${duration}ms`,
     }),

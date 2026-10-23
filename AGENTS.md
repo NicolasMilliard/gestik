@@ -1,0 +1,42 @@
+# Working on Gestik
+
+Gestik provides animated hints that demonstrate an interaction. The consuming application owns gesture handling and decides when to show a hint.
+
+## Repository map
+
+- `packages/react`: public React components, CSS, icons, and Vitest tests.
+- `apps/docs`: Vite documentation and interactive component examples.
+- `oxlint.config.ts` and `oxfmt.config.ts`: shared Ultracite presets and explained project overrides. Follow these configs rather than duplicating their rules here.
+
+## Commands
+
+Use Bun, at the version in `package.json`, and keep `bun.lock` in sync.
+
+- `bun install --frozen-lockfile`: install the committed dependency graph.
+- `bun run dev`: build the library and start the docs app.
+- `bun run fix`: apply lint and formatting fixes; inspect the resulting diff.
+- `bun run verify`: run the same lint, format, build, type, and test checks as CI.
+
+The docs resolve `@gestik/react` through its built exports. Run `bun run build` before checking or building the docs in a fresh checkout. See `CONTRIBUTING.md` for individual commands and validation expectations.
+
+## Implementation
+
+- Keep the library independent of the docs app and its UI dependencies.
+- Preserve public props, defaults, exports, and CSS variables unless the task calls for an API change. Update examples and documentation when behavior changes.
+- Follow the existing component's structure before adding a new abstraction or dependency. Explain a new dependency's purpose in the change description.
+- Keep animation styling in CSS where practical, namespace public CSS variables with `--gestik-`, and preserve proportional layout when changing component size.
+- Keep decorative hints out of the accessibility tree and out of the tab order. Preserve reduced-motion support and explain accompanying instructions in docs.
+
+## Validation and review
+
+- Run `bun run verify` before handing off code changes. Report any check that could not run and why; do not describe an unrun check as passing.
+- Test observable behavior and public contracts. Add tests when behavior changes or a regression needs coverage; avoid tests that only repeat implementation.
+- For motion or visual changes, inspect the relevant docs example in a browser, including direction, sizing, playback, and reduced motion as applicable. Unit tests and a successful build do not establish visual quality.
+- Review the final diff for unintended behavior, accessibility regressions, unrelated edits, and unnecessary API growth. Never weaken a check merely to obtain a passing result. Explain any necessary rule exception at its scope.
+
+## Learning from feedback
+
+- After meaningful feedback or an unexpected issue, identify the cause and whether the lesson is specific to the change or reusable. Report it in the conversation or PR, including where it belongs.
+- Put deterministic checks in tooling or tests; put repository-specific judgment in these instructions or `CONTRIBUTING.md`. Keep machine-specific settings and preferences that apply across projects outside the repository.
+- Capture clear, reusable lessons autonomously in the narrowest relevant place, with a reason or example. Keep inferred preferences provisional in the PR until supported; a correction to one animation does not define every gesture.
+- Keep instructions short. Refine existing guidance, remove stale or conflicting rules, and avoid copying the linter's rule catalogue into agent instructions.
