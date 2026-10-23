@@ -71,21 +71,6 @@ export const SwipeHint = ({
         className="gestik-swipe-hint__stage"
         style={{ transform: `scale(${scale})` }}
       >
-        <svg
-          className="gestik-swipe-hint__track"
-          viewBox="0 0 112 72"
-          width="112"
-          height="72"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          focusable="false"
-        >
-          <path d="M26 28h56m-6-6 6 6-6 6" />
-        </svg>
-
         <span className="gestik-swipe-hint__gesture">
           <span className="gestik-swipe-hint__contact" />
           <span
@@ -94,7 +79,14 @@ export const SwipeHint = ({
               transform: `translate(${-hotspot.x * 100}%, ${-hotspot.y * 100}%)`,
             }}
           >
-            {icon}
+            <span
+              className="gestik-swipe-hint__icon"
+              style={{
+                transformOrigin: `${hotspot.x * 100}% ${hotspot.y * 100}%`,
+              }}
+            >
+              {icon}
+            </span>
           </span>
         </span>
       </span>

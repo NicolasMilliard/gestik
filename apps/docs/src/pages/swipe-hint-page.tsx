@@ -97,10 +97,10 @@ export const SwipeHintPage = () => (
         Styling
       </h3>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
-        Use CSS variables to color the hand, its surface, the contact pulse, and
-        the directional arrow. A custom <code>icon</code> fills a 32 by 32 pixel
-        box before scaling. Set <code>hotspot</code> to its fingertip:
-        coordinates run from 0 to 1 across that box.
+        Use CSS variables to color the hand, its surface, and the contact pulse.
+        A custom <code>icon</code> fills a 32 by 32 pixel box before scaling.
+        Set <code>hotspot</code> to its fingertip: coordinates run from 0 to 1
+        across that box. The hand compresses around this point during contact.
       </p>
 
       <div className="mt-6 flex items-center gap-5 rounded-xl border border-zinc-200 p-5">
@@ -119,8 +119,6 @@ export const SwipeHintPage = () => (
   --gestik-swipe-hint-icon-color: #0e7490;
   --gestik-swipe-hint-surface: #ecfeff;
   --gestik-swipe-hint-contact-color: #0891b2;
-  --gestik-swipe-hint-track-color: #0e7490;
-  --gestik-swipe-hint-track-opacity: 0.5;
 }`}</code>
         </pre>
       </div>
@@ -136,9 +134,9 @@ export const SwipeHintPage = () => (
       <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
         SwipeHint is decorative and ignores pointer events. Pair it with visible
         instructions and accessible controls for the actual interaction. Under
-        reduced motion, a static hand and arrow retain the direction without a
-        pulse or movement. Custom icons should be static and non-interactive
-        too.
+        reduced motion, the hand stays still, with no press, pulse, or travel;
+        the accompanying instruction communicates direction. Custom icons should
+        be static and non-interactive too.
       </p>
     </section>
   </article>

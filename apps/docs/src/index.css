@@ -9,8 +9,6 @@
   --gestik-swipe-hint-icon-color: #0e7490;
   --gestik-swipe-hint-surface: #ecfeff;
   --gestik-swipe-hint-contact-color: #0891b2;
-  --gestik-swipe-hint-track-color: #0e7490;
-  --gestik-swipe-hint-track-opacity: 0.5;
 }
 
 .custom-drag-hint {

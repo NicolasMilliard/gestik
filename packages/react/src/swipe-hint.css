@@ -28,18 +28,6 @@
   transform-origin: 0 0;
 }
 
-.gestik-swipe-hint__track {
-  position: absolute;
-  inset: 0;
-  display: block;
-  color: var(--gestik-swipe-hint-track-color, currentColor);
-  opacity: var(--gestik-swipe-hint-track-opacity, 0.35);
-}
-
-.gestik-swipe-hint[data-direction="left"] .gestik-swipe-hint__track {
-  transform: scaleX(-1);
-}
-
 .gestik-swipe-hint__gesture {
   position: absolute;
   top: 28px;
@@ -73,6 +61,14 @@
   width: 32px;
   height: 32px;
   color: var(--gestik-swipe-hint-icon-color, inherit);
+}
+
+.gestik-swipe-hint__icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: gestik-swipe-hint-press var(--gestik-swipe-hint-duration)
+    ease-in-out var(--gestik-swipe-hint-iterations) both;
 }
 
 @keyframes gestik-swipe-hint-travel {
@@ -124,14 +120,29 @@
   }
 }
 
+@keyframes gestik-swipe-hint-press {
+  0%,
+  8%,
+  24%,
+  100% {
+    transform: scale(1);
+  }
+
+  14% {
+    transform: scale(0.9);
+  }
+}
+
 .gestik-swipe-hint__gesture,
-.gestik-swipe-hint__contact {
+.gestik-swipe-hint__contact,
+.gestik-swipe-hint__icon {
   animation-play-state: var(--gestik-swipe-hint-play-state);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .gestik-swipe-hint__gesture,
-  .gestik-swipe-hint__contact {
+  .gestik-swipe-hint__contact,
+  .gestik-swipe-hint__icon {
     animation: none;
   }
 }

@@ -41,7 +41,10 @@ describe(SwipeHint, () => {
     expect(
       container.firstElementChild?.classList.contains("custom-hint")
     ).toBeTruthy();
-    expect(icon.parentElement?.style.transform).toBe("translate(-25%, -75%)");
+    const anchor = icon.closest<HTMLElement>(".gestik-swipe-hint__icon-anchor");
+
+    expect(anchor?.style.transform).toBe("translate(-25%, -75%)");
+    expect(icon.parentElement?.style.transformOrigin).toBe("25% 75%");
   });
 
   it("applies finite playback settings and can pause and resume", () => {
