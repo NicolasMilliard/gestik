@@ -6,6 +6,7 @@ Gestik provides animated hints that demonstrate an interaction. The consuming ap
 
 - `packages/react`: public React components, CSS, icons, and Vitest tests.
 - `apps/docs`: Vite documentation and interactive component examples.
+- `docs/briefs`: component behavior briefs and local visual decisions for review.
 - `oxlint.config.ts` and `oxfmt.config.ts`: shared Ultracite presets and explained project overrides. Follow these configs rather than duplicating their rules here.
 
 ## Commands
@@ -26,7 +27,9 @@ The docs resolve `@gestik/react` through its built exports. Run `bun run build` 
 - Preserve public props, defaults, exports, and CSS variables unless the task calls for an API change. Update examples and documentation when behavior changes.
 - Follow the existing component's structure before adding a new abstraction or dependency. Explain a new dependency's purpose in the change description.
 - Keep animation styling in CSS where practical, namespace public CSS variables with `--gestik-`, and preserve proportional layout when changing component size.
+- Let the gesture communicate movement. Avoid arrows by default; add a directional graphic only when it resolves a clear ambiguity.
 - Keep decorative hints out of the accessibility tree and out of the tab order. Preserve reduced-motion support and explain accompanying instructions in docs.
+- Use unique IDs across component demos and connect slider labels explicitly with `htmlFor`. A label containing both an `output` and an input can otherwise name the output instead of the input.
 
 ## Validation and review
 

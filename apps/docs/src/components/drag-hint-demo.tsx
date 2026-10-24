@@ -100,12 +100,16 @@ export const DragHintDemo = () => {
             </Select>
           </div>
 
-          <label className="mb-5 block text-sm font-medium">
+          <label
+            className="mb-5 block text-sm font-medium"
+            htmlFor="drag-hint-size"
+          >
             <span className="flex items-center justify-between">
               <span>Size</span>
               <output className="font-normal text-zinc-500">{size}px</output>
             </span>
             <input
+              id="drag-hint-size"
               className="mt-3 w-full accent-orange-700"
               type="range"
               min="80"
@@ -116,7 +120,10 @@ export const DragHintDemo = () => {
             />
           </label>
 
-          <label className="mb-5 block text-sm font-medium">
+          <label
+            className="mb-5 block text-sm font-medium"
+            htmlFor="drag-hint-duration"
+          >
             <span className="flex items-center justify-between">
               <span>Duration</span>
               <output className="font-normal text-zinc-500">
@@ -124,6 +131,7 @@ export const DragHintDemo = () => {
               </output>
             </span>
             <input
+              id="drag-hint-duration"
               className="mt-3 w-full accent-orange-700"
               type="range"
               min="1200"

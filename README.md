@@ -2,7 +2,7 @@
 
 Animated interaction hints for React interfaces. Gestik demonstrates a gesture; your application handles the interaction and decides when to show the hint.
 
-The project currently includes `DragHint` and an interactive documentation app.
+The project includes `DragHint`, `SwipeHint`, and an interactive documentation app.
 
 ## Development
 
