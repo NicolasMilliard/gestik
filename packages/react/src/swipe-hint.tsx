@@ -132,7 +132,6 @@ export const SwipeHint = ({
           />
         </svg>
         <span className="gestik-swipe-hint__gesture">
-          <span className="gestik-swipe-hint__contact" />
           <span
             className="gestik-swipe-hint__icon-anchor"
             style={{

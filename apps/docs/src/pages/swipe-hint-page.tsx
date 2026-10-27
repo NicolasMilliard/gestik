@@ -91,17 +91,18 @@ export const SwipeHintPage = () => (
         Styling
       </h2>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
-        Use CSS variables to color the hand, its surface, contact pulse, and
-        trail. The trail matches the icon&apos;s full color and follows the
-        fingertip with a small gap. Its oldest part starts fading early during
-        the swipe, with a soft edge that follows the moving finger. It uses a
-        2px stroke with rounded ends and scales with the scene. Override
+        Use CSS variables to color the hand, its surface, and trail. The trail
+        matches the icon&apos;s full color and follows the fingertip with a
+        small gap. Its oldest part starts fading early during the swipe, with a
+        soft edge that follows the moving finger. It uses a 2px stroke with
+        rounded ends and scales with the scene. Override
         <code> --gestik-swipe-hint-trail-color </code> to give it a separate
         color. The built-in hand has a transparent interior by default; set the
         surface color to give it a solid background. A custom <code>icon</code>{" "}
         fills a 32 by 32 pixel box before scaling. Set <code>hotspot</code> to
         its fingertip: coordinates run from 0 to 1 across that box. The hand
-        compresses around this point during contact.
+        compresses around this point as the swipe begins, then returns to full
+        size as travel ends.
       </p>
 
       <div className="mt-6 flex items-center gap-5 rounded-xl border border-zinc-200 p-5">
@@ -119,7 +120,6 @@ export const SwipeHintPage = () => (
           <code>{`.custom-swipe-hint {
   --gestik-swipe-hint-icon-color: #0e7490;
   --gestik-swipe-hint-surface: #ecfeff;
-  --gestik-swipe-hint-contact-color: #0891b2;
 }`}</code>
         </pre>
       </div>
@@ -135,9 +135,9 @@ export const SwipeHintPage = () => (
       <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
         SwipeHint is decorative and ignores pointer events. Pair it with visible
         instructions and accessible controls for the actual interaction. Under
-        reduced motion, the hand stays still, with no press, pulse, trail, or
-        travel; the accompanying instruction communicates direction. Custom
-        icons should be static and non-interactive too.
+        reduced motion, the hand stays still, with no press, trail, or travel;
+        the accompanying instruction communicates direction. Custom icons should
+        be static and non-interactive too.
       </p>
     </section>
   </article>

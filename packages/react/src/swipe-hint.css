@@ -65,21 +65,6 @@
     linear var(--gestik-swipe-hint-iterations) both;
 }
 
-.gestik-swipe-hint__contact {
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  display: block;
-  box-sizing: border-box;
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--gestik-swipe-hint-contact-color, currentColor);
-  border-radius: 50%;
-  opacity: 0;
-  animation: gestik-swipe-hint-contact var(--gestik-swipe-hint-duration)
-    ease-out var(--gestik-swipe-hint-iterations) both;
-}
-
 .gestik-swipe-hint__icon-anchor {
   position: absolute;
   top: 0;
@@ -100,7 +85,7 @@
 
 @keyframes gestik-swipe-hint-travel {
   0%,
-  24% {
+  8% {
     transform: translateX(0);
     opacity: 1;
     animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -129,33 +114,15 @@
   }
 }
 
-@keyframes gestik-swipe-hint-contact {
-  0%,
-  8% {
-    transform: scale(0.35);
-    opacity: 0;
-  }
-
-  14% {
-    opacity: 0.6;
-  }
-
-  24%,
-  100% {
-    transform: scale(1.2);
-    opacity: 0;
-  }
-}
-
 @keyframes gestik-swipe-hint-trail {
   0%,
-  24% {
+  8% {
     stroke-dashoffset: 1.0892857143;
     opacity: 0;
     animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  26% {
+  10% {
     opacity: 1;
   }
 
@@ -174,11 +141,11 @@
 
 @keyframes gestik-swipe-hint-trail-fade {
   0%,
-  31% {
+  18% {
     transform: translateX(14px);
   }
 
-  60%,
+  61%,
   100% {
     transform: translateX(78px);
   }
@@ -199,7 +166,6 @@
 }
 
 .gestik-swipe-hint__gesture,
-.gestik-swipe-hint__contact,
 .gestik-swipe-hint__icon,
 .gestik-swipe-hint__trail path,
 .gestik-swipe-hint__trail-fade {
@@ -208,7 +174,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .gestik-swipe-hint__gesture,
-  .gestik-swipe-hint__contact,
   .gestik-swipe-hint__icon,
   .gestik-swipe-hint__trail path,
   .gestik-swipe-hint__trail-fade {
