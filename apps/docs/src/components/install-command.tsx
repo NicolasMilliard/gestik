@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
+import { CopyIcon } from "@phosphor-icons/react/dist/csr/Copy";
+import { useEffect, useState } from "react";
 
 const commands = {
   bun: "bun add @gestik/react",
@@ -12,6 +14,30 @@ const packageManagers = ["npm", "pnpm", "yarn", "bun"] as const;
 export const InstallCommand = () => {
   const [manager, setManager] =
     useState<(typeof packageManagers)[number]>("npm");
+  const [feedback, setFeedback] = useState<{
+    command: string;
+    status: "copied" | "error";
+  } | null>(null);
+  const command = commands[manager];
+  const status = feedback?.command === command ? feedback.status : null;
+
+  useEffect(() => {
+    if (feedback?.status !== "copied") {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => setFeedback(null), 2000);
+    return () => window.clearTimeout(timeout);
+  }, [feedback]);
+
+  const copyCommand = async () => {
+    try {
+      await navigator.clipboard.writeText(command);
+      setFeedback({ command, status: "copied" });
+    } catch {
+      setFeedback({ command, status: "error" });
+    }
+  };
 
   return (
     <div className="max-w-lg">
@@ -22,21 +48,52 @@ export const InstallCommand = () => {
             key={name}
             type="button"
             aria-pressed={manager === name}
-            onClick={() => setManager(name)}
+            onClick={() => {
+              setManager(name);
+              setFeedback(null);
+            }}
           >
             {name}
           </button>
         ))}
       </fieldset>
-      <pre
-        className="overflow-x-auto rounded-xl border border-zinc-100 bg-zinc-50/70 px-4 py-3.5 text-sm text-zinc-600"
+      <div className="flex items-center rounded-xl border border-zinc-100 bg-zinc-50/70 pr-2">
+        <pre
+          className="min-w-0 flex-1 overflow-x-auto px-3 py-3.5 text-xs text-zinc-600 sm:px-4 sm:text-sm"
+          aria-live="polite"
+        >
+          <span className="mr-3 text-zinc-400 select-none" aria-hidden="true">
+            $
+          </span>
+          <code>{command}</code>
+        </pre>
+        <button
+          className="grid size-8 shrink-0 place-items-center rounded-md text-zinc-500 hover:bg-zinc-100/70 hover:text-zinc-700 focus-visible:outline-2 focus-visible:outline-brand"
+          type="button"
+          aria-label={
+            status === "copied"
+              ? "Copied install command"
+              : "Copy install command"
+          }
+          onClick={copyCommand}
+        >
+          {status === "copied" ? (
+            <CheckIcon size={18} aria-hidden="true" focusable="false" />
+          ) : (
+            <CopyIcon size={18} aria-hidden="true" focusable="false" />
+          )}
+        </button>
+      </div>
+      <output
+        className={
+          status === "error" ? "mt-2 block text-xs text-zinc-600" : "sr-only"
+        }
         aria-live="polite"
       >
-        <span className="mr-3 text-zinc-400 select-none" aria-hidden="true">
-          $
-        </span>
-        <code>{commands[manager]}</code>
-      </pre>
+        {status === "copied" && "Install command copied."}
+        {status === "error" &&
+          "Could not copy. Select and copy the command manually."}
+      </output>
       <p className="mt-3 text-xs leading-5 text-zinc-500">
         Install commands are a preview. The package is not published yet.
       </p>
