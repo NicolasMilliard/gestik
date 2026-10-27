@@ -7,7 +7,8 @@ const SCENE_WIDTH = 112;
 const SCENE_HEIGHT = 72;
 
 const DEFAULT_ICON = <PointingHand />;
-const DEFAULT_HOTSPOT = { x: 8 / 24, y: 2 / 24 };
+// The fingertip in the icon's 256-unit viewBox.
+const DEFAULT_HOTSPOT = { x: 116 / 256, y: 16 / 256 };
 
 export interface SwipeHintHotspot {
   x: number;

@@ -8,7 +8,8 @@ const SCENE_WIDTH = 112;
 const SCENE_HEIGHT = 72;
 
 const DEFAULT_ICONS = { grabbing: <ClosedHand />, idle: <OpenHand /> };
-const DEFAULT_HOTSPOT = { x: 0.44, y: 0 };
+// Both poses share this palm point and the same wrist position.
+const DEFAULT_HOTSPOT = { x: 128 / 256, y: 152 / 256 };
 
 export interface DragHintHotspot {
   x: number;

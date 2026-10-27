@@ -28,7 +28,7 @@ const propRows = [
   ],
   [
     "hotspot",
-    "{ x: 8 / 24, y: 2 / 24 }",
+    "{ x: 116 / 256, y: 16 / 256 }",
     "The contact point in normalized icon coordinates.",
   ],
   ["className", "—", "A class for styling the hint."],
@@ -98,9 +98,11 @@ export const SwipeHintPage = () => (
       </h3>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
         Use CSS variables to color the hand, its surface, and the contact pulse.
-        A custom <code>icon</code> fills a 32 by 32 pixel box before scaling.
-        Set <code>hotspot</code> to its fingertip: coordinates run from 0 to 1
-        across that box. The hand compresses around this point during contact.
+        The built-in hand has a transparent interior by default; set the surface
+        color to give it a solid background. A custom <code>icon</code> fills a
+        32 by 32 pixel box before scaling. Set <code>hotspot</code> to its
+        fingertip: coordinates run from 0 to 1 across that box. The hand
+        compresses around this point during contact.
       </p>
 
       <div className="mt-6 flex items-center gap-5 rounded-xl border border-zinc-200 p-5">

@@ -1,6 +1,6 @@
 # SwipeHint behavior brief
 
-Updated after the first visual review; code review is still pending. Motion timing and visual choices here are local to SwipeHint and can evolve with feedback.
+Updated for the new pointing-hand artwork. Motion timing and visual choices here are local to SwipeHint and can evolve with feedback.
 
 ## Intent
 
@@ -12,7 +12,7 @@ Demonstrate a horizontal touch swipe. A pointing hand makes contact, travels in 
 - Reserve a 112 by 72 pixel scene by default. `size` sets the width and scales the scene proportionally, including the icon, travel, and contact indicator.
 - Use a 2200 ms cycle, infinite iterations, and automatic playback by default. Match DragHint's `duration`, `iterations`, and `playing` controls. Duration is measured in milliseconds; pausing and resuming preserve the current frame.
 - Reinforce contact by compressing the hand to 90% around its fingertip as the circle appears. Start at 8% of the cycle and peak with the pulse at 14%. Hold through most of the travel, then restore size from 48% to 58% of the cycle, so travel and scale finish together. These percentages follow the configured duration. Releasing before travel reads as a separate click followed by a swipe; releasing after travel separates the two endings. Keep the existing travel and loop timing, which passed visual review.
-- Use the supplied pointing-hand icon. Its fingertip is at SVG coordinates (8, 2) in the 24 by 24 viewBox, so the default hotspot is `{ x: 8 / 24, y: 2 / 24 }`. Recheck contact alignment whenever the illustration changes.
+- Use the supplied pointing-hand icon. Its fingertip is at SVG coordinates (116, 16) in the 256 by 256 viewBox, so the default hotspot is `{ x: 116 / 256, y: 16 / 256 }`. Recheck contact alignment and press origin whenever the illustration changes.
 - Changing direction restarts the visual cycle. Consumers can change the React `key` to replay a completed finite animation. A completed cycle rests visibly at its starting position; the return movement is hidden.
 - Allow `className`, a decorative custom `icon`, and a normalized `hotspot` for its contact point. Use namespaced CSS variables for colors and playback defaults.
 - Keep the hint decorative, non-focusable, and transparent to pointer events. Pair it with visible instructions and an accessible implementation of the actual interaction.

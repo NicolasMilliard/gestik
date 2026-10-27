@@ -36,6 +36,7 @@ CI runs `bun install --frozen-lockfile` and `bun run verify` for pull requests a
 - Adopt Ultracite's formatting and lint defaults, including quotes, wrapping, imports, arrow functions, and kebab-case filenames. Migrate existing code instead of preserving its style through overrides. Keep public component names and API behavior stable. The formatter resolves the docs app's custom Tailwind theme.
 - Fast Refresh export checks apply to docs source; the Vitest environment tag is allowed in tests. These exceptions stay scoped to the files that need them.
 - TypeScript checks run separately. Type-aware Oxlint analysis, browser automation, agent hooks, and specialist agent roles are deferred until a concrete need justifies their setup. CI does not assess animation clarity or visual quality.
+- When replacing an icon, fit its SVG to the component's icon box and derive the hotspot from its viewBox. For multi-pose hints, use a shared contact point so switching poses does not shift the wrist. Check the contact point through scaling and animation in the browser; fixed SVG dimensions can silently overflow the anchor.
 
 ## Evolving the rules
 

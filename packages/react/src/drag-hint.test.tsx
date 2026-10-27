@@ -25,6 +25,22 @@ describe(DragHint, () => {
     expect(hint?.style.height).toBe("54px");
   });
 
+  it("fits both built-in poses to their shared hotspot box", () => {
+    const { container } = render(<DragHint />);
+    const anchor = container.querySelector<HTMLElement>(
+      ".gestik-drag-hint__icon-anchor"
+    );
+    const icons = anchor?.querySelectorAll("svg");
+
+    expect(anchor?.style.transform).toBe("translate(-50%, -59.375%)");
+    expect(icons).toHaveLength(2);
+    for (const icon of icons ?? []) {
+      expect(icon.getAttribute("width")).toBe("100%");
+      expect(icon.getAttribute("height")).toBe("100%");
+      expect(icon.getAttribute("focusable")).toBe("false");
+    }
+  });
+
   it("renders custom poses at the requested hotspot", () => {
     const { container } = render(
       <DragHint

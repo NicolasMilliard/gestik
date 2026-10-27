@@ -28,6 +28,20 @@ describe(SwipeHint, () => {
     expect(hint.style.height).toBe("108px");
   });
 
+  it("anchors the built-in hand and its press at the fingertip", () => {
+    const { container } = render(<SwipeHint />);
+    const anchor = container.querySelector<HTMLElement>(
+      ".gestik-swipe-hint__icon-anchor"
+    );
+    const icon = anchor?.querySelector("svg");
+
+    expect(anchor?.style.transform).toBe("translate(-45.3125%, -6.25%)");
+    expect(icon?.parentElement?.style.transformOrigin).toBe("45.3125% 6.25%");
+    expect(icon?.getAttribute("width")).toBe("100%");
+    expect(icon?.getAttribute("height")).toBe("100%");
+    expect(icon?.getAttribute("focusable")).toBe("false");
+  });
+
   it("renders a custom icon at its normalized contact point", () => {
     const { container } = render(
       <SwipeHint

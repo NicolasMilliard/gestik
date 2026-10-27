@@ -20,7 +20,7 @@ const propRows = [
   ["icons", "Built-in hands", "Custom idle and grabbing illustrations."],
   [
     "hotspot",
-    "{ x: 0.44, y: 0 }",
+    "{ x: 128 / 256, y: 152 / 256 }",
     "Interaction point in normalized icon coordinates.",
   ],
   ["className", "—", "A class for styling the hint."],
@@ -79,7 +79,11 @@ export const DragHintPage = () => (
       </h3>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
         Use <code>className</code> and CSS variables to color the square,
-        destination, and icons independently.
+        destination, and icons independently. Custom icons fill a 24 by 24 pixel
+        box before scaling. Set <code>hotspot</code> to the same contact point
+        in both poses; the built-in hands use their shared palm point so the
+        wrist stays aligned when grabbing and releasing. The surface color is
+        rendered at 20% opacity for the duotone fill.
       </p>
 
       <div className="mt-6 flex items-center gap-5 rounded-xl border border-zinc-200 p-5">
