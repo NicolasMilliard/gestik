@@ -67,7 +67,9 @@ describe("Docs navigation", () => {
     const button = screen.getByRole("button", { name: manager });
     fireEvent.click(button);
 
-    expect(screen.getByText(command)).toBeDefined();
+    expect(screen.getByText("@gestik/react").closest("code")?.textContent).toBe(
+      command
+    );
     expect(button.getAttribute("aria-pressed")).toBe("true");
     expect(screen.getAllByRole("button", { pressed: true })).toHaveLength(1);
     expect(screen.getByText(/package is not published yet/u)).toBeDefined();

@@ -2,11 +2,13 @@ import { CheckIcon } from "@phosphor-icons/react/dist/csr/Check";
 import { CopyIcon } from "@phosphor-icons/react/dist/csr/Copy";
 import { useEffect, useState } from "react";
 
-const commands = {
-  bun: "bun add @gestik/react",
-  npm: "npm install @gestik/react",
-  pnpm: "pnpm add @gestik/react",
-  yarn: "yarn add @gestik/react",
+const packageName = "@gestik/react";
+
+const commandPrefixes = {
+  bun: "bun add",
+  npm: "npm install",
+  pnpm: "pnpm add",
+  yarn: "yarn add",
 };
 
 const packageManagers = ["npm", "pnpm", "yarn", "bun"] as const;
@@ -18,7 +20,8 @@ export const InstallCommand = () => {
     command: string;
     status: "copied" | "error";
   } | null>(null);
-  const command = commands[manager];
+  const commandPrefix = commandPrefixes[manager];
+  const command = `${commandPrefix} ${packageName}`;
   const status = feedback?.command === command ? feedback.status : null;
 
   useEffect(() => {
@@ -65,7 +68,9 @@ export const InstallCommand = () => {
           <span className="mr-3 text-zinc-400 select-none" aria-hidden="true">
             $
           </span>
-          <code>{command}</code>
+          <code>
+            {commandPrefix} <span className="text-brand">{packageName}</span>
+          </code>
         </pre>
         <button
           className="icon-button relative isolate grid size-11 shrink-0 place-items-center rounded-lg text-zinc-500 hover:text-zinc-700 focus-visible:outline-2 focus-visible:outline-brand"
