@@ -6,7 +6,7 @@ import { components } from "../lib/components";
 
 export const HomePage = () => (
   <>
-    <title>Gestik — Animated interaction hints for React</title>
+    <title>Gestik</title>
     <OverviewSection />
     <InstallCommand />
 
