@@ -150,8 +150,8 @@
 }
 
 @theme inline {
-  --color-brand: #4c6fa5;
-  --color-brand-soft: #eff4fb;
+  --color-brand: #c24c24;
+  --color-brand-soft: #fdf7f4;
   --font-heading: var(--font-sans);
   --font-sans: "Figtree Variable", sans-serif;
   --font-mono: "Paper Mono", ui-monospace, monospace;
