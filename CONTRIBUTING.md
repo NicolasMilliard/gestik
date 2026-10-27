@@ -21,7 +21,7 @@ Run these from the repository root:
 | `bun run format:check` | Check formatting with the shared Oxfmt configuration |
 | `bun run build` | Build the React package and its public declarations |
 | `bun run typecheck` | Type-check tooling and all workspaces; build the library first |
-| `bun run test` | Run the React package's Vitest suite |
+| `bun run test` | Run the React package and docs Vitest suites |
 | `bun run build:docs` | Type-check and build the documentation app |
 | `bun run verify` | Run all of the above checks in dependency order |
 

@@ -70,7 +70,7 @@ export const SwipeHintDemo = () => {
         </div>
 
         <div className="border-t border-zinc-200 bg-zinc-50 p-5 lg:border-t-0 lg:border-l">
-          <h3 className="mb-6 text-sm font-semibold">Preview settings</h3>
+          <h2 className="mb-6 text-sm font-semibold">Preview settings</h2>
 
           <div className="mb-5">
             <span

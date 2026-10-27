@@ -35,15 +35,13 @@ const propRows = [
 ] as const;
 
 export const SwipeHintPage = () => (
-  <article
-    className="mt-20 scroll-mt-8 border-t border-zinc-200 pt-16"
-    id="swipe-hint"
-  >
+  <article id="swipe-hint">
+    <title>SwipeHint — Gestik</title>
     <header className="mb-8">
       <p className="mb-2 text-sm font-medium text-orange-700">
         Component / SwipeHint
       </p>
-      <h2 className="text-3xl font-semibold tracking-tight">SwipeHint</h2>
+      <h1 className="text-3xl font-semibold tracking-tight">SwipeHint</h1>
       <p className="mt-3 text-zinc-600">
         Show a fingertip drawing a rounded line in the swipe direction. Use it
         for touch interactions such as browsing a carousel or moving between
@@ -54,12 +52,12 @@ export const SwipeHintPage = () => (
     <SwipeHintDemo />
 
     <section className="mt-16" aria-labelledby="swipe-hint-props-title">
-      <h3
+      <h2
         className="text-2xl font-semibold tracking-tight"
         id="swipe-hint-props-title"
       >
         Props
-      </h3>
+      </h2>
       <p className="mt-3 text-sm leading-6 text-zinc-600">
         Direction describes the finger&apos;s movement. Playback controls work
         the same way as DragHint: changing direction starts a new cycle, and
@@ -91,12 +89,12 @@ export const SwipeHintPage = () => (
     </section>
 
     <section className="mt-16" aria-labelledby="swipe-hint-styling-title">
-      <h3
+      <h2
         className="text-2xl font-semibold tracking-tight"
         id="swipe-hint-styling-title"
       >
         Styling
-      </h3>
+      </h2>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
         Use CSS variables to color the hand, its surface, contact pulse, and
         trail. The trail matches the icon&apos;s full color and follows the
@@ -133,12 +131,12 @@ export const SwipeHintPage = () => (
     </section>
 
     <section className="mt-16" aria-labelledby="swipe-hint-accessibility-title">
-      <h3
+      <h2
         className="text-2xl font-semibold tracking-tight"
         id="swipe-hint-accessibility-title"
       >
         Accessibility
-      </h3>
+      </h2>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
         SwipeHint is decorative and ignores pointer events. Pair it with visible
         instructions and accessible controls for the actual interaction. Under

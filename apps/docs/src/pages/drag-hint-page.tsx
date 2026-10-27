@@ -34,11 +34,12 @@ const propRows = [
 
 export const DragHintPage = () => (
   <article id="drag-hint">
+    <title>DragHint — Gestik</title>
     <header className="mb-8">
       <p className="mb-2 text-sm font-medium text-orange-700">
         Component / DragHint
       </p>
-      <h2 className="text-3xl font-semibold tracking-tight">DragHint</h2>
+      <h1 className="text-3xl font-semibold tracking-tight">DragHint</h1>
       <p className="mt-3 text-zinc-600">
         Show how to drag an element from one position to another.
       </p>
@@ -49,9 +50,9 @@ export const DragHintPage = () => (
     <DragHintMaskDemo />
 
     <section className="mt-16" aria-labelledby="props-title">
-      <h3 className="text-2xl font-semibold tracking-tight" id="props-title">
+      <h2 className="text-2xl font-semibold tracking-tight" id="props-title">
         Props
-      </h3>
+      </h2>
       <p className="mt-3 text-sm leading-6 text-zinc-600">
         Start with the defaults, then adjust the motion and illustrations to fit
         your interface.
@@ -82,9 +83,9 @@ export const DragHintPage = () => (
     </section>
 
     <section className="mt-16" aria-labelledby="styling-title">
-      <h3 className="text-2xl font-semibold tracking-tight" id="styling-title">
+      <h2 className="text-2xl font-semibold tracking-tight" id="styling-title">
         Styling
-      </h3>
+      </h2>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
         Use <code>className</code> and CSS variables to color the square,
         destination, and icons independently. Custom icons fill a 24 by 24 pixel
@@ -120,12 +121,12 @@ export const DragHintPage = () => (
     </section>
 
     <section className="mt-16" aria-labelledby="accessibility-title">
-      <h3
+      <h2
         className="text-2xl font-semibold tracking-tight"
         id="accessibility-title"
       >
         Accessibility
-      </h3>
+      </h2>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
         DragHint is decorative, so pair it with visible instructions. It stays
         static when the user prefers reduced motion.

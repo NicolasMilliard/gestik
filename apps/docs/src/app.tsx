@@ -1,21 +1,50 @@
+import { useEffect, useRef } from "react";
+import { Route, Routes, useLocation } from "react-router";
+
 import { DocsSidebar } from "./components/docs-sidebar";
-import { OverviewSection } from "./components/overview-section";
-import { DragHintPage } from "./pages/drag-hint-page";
-import { SwipeHintPage } from "./pages/swipe-hint-page";
+import { components } from "./lib/components";
+import { HomePage } from "./pages/home-page";
+import { NotFoundPage } from "./pages/not-found-page";
 
-const App = () => (
-  <div className="min-h-screen bg-white font-sans text-zinc-900 lg:grid lg:grid-cols-[240px_minmax(0,1fr)]">
-    <DocsSidebar />
+const App = () => {
+  const { pathname } = useLocation();
+  const previousPath = useRef(pathname);
+  const main = useRef<HTMLElement>(null);
 
-    <main
-      className="mx-auto w-full max-w-5xl px-5 py-12 sm:px-8 lg:px-12 lg:py-16"
-      id="top"
-    >
-      <OverviewSection />
-      <DragHintPage />
-      <SwipeHintPage />
-    </main>
-  </div>
-);
+  useEffect(() => {
+    if (previousPath.current !== pathname) {
+      previousPath.current = pathname;
+      main.current?.focus({ preventScroll: true });
+      window.scrollTo(0, 0);
+    }
+  }, [pathname]);
+
+  return (
+    <div className="min-h-screen bg-white font-sans text-zinc-900 lg:grid lg:grid-cols-[240px_minmax(0,1fr)]">
+      <a
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:ring-2 focus:ring-orange-700"
+        href="#main-content"
+      >
+        Skip to content
+      </a>
+      <DocsSidebar />
+
+      <main
+        className="mx-auto w-full max-w-5xl px-5 py-12 outline-none sm:px-8 lg:px-12 lg:py-16"
+        id="main-content"
+        ref={main}
+        tabIndex={-1}
+      >
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          {components.map(({ path, Page }) => (
+            <Route key={path} path={path} element={<Page />} />
+          ))}
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </main>
+    </div>
+  );
+};
 
 export default App;
