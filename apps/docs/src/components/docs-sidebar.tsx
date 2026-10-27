@@ -35,12 +35,14 @@ export const DocsSidebar = () => {
           to="/"
           onClick={closeMenu}
         >
-          <span
-            className="grid size-7 place-items-center rounded-lg bg-brand-soft text-base text-brand"
+          <img
+            alt=""
+            className="size-7"
+            height={28}
+            src="/favicon.svg"
+            width={28}
             aria-hidden="true"
-          >
-            g.
-          </span>
+          />
           gestik
         </Link>
         <button
