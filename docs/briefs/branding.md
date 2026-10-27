@@ -11,6 +11,7 @@ The requested direction is a lighter interface: less text, smaller headings, lig
 - Highlight only the package name in install commands with the accent color.
 - Playground animation stages use a subtle 16px dot grid that fades toward the edges; keep the instruction and hint fully visible above it.
 - On small screens, keep navigation behind a three-line menu button that becomes a close icon when expanded. Match the copy button's press and icon swap feedback, with the close icon staying visible while navigation is open. Use Phosphor for docs UI icons, including the install command's copy action; the package stays independent of this docs dependency.
+- Select trigger carets point up while the popup is open and down when closed, using Base UI's popup state.
 - Keep the install copy icon at 18px inside a 44px click target. Compress its background and icon separately on press, then shrink and fade between copy and check. Keep the check for two seconds, and switch instantly under reduced motion. The hit area stays stable while the visual layers scale.
 - Keep decorative hints out of the accessibility tree and preserve visible focus, active navigation, and readable text contrast while softening the interface.
 

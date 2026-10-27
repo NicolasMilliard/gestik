@@ -44,7 +44,7 @@ const SelectTrigger = ({
     <SelectPrimitive.Icon
       render={
         <CaretDownIcon
-          className="pointer-events-none size-4 text-muted-foreground"
+          className="pointer-events-none size-4 text-muted-foreground data-popup-open:rotate-180"
           aria-hidden="true"
           focusable="false"
         />
