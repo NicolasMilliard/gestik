@@ -62,7 +62,7 @@ export const InstallCommand = () => {
       </fieldset>
       <div className="flex items-center rounded-xl border border-zinc-100 bg-zinc-50/70 pr-1">
         <pre
-          className="min-w-0 flex-1 overflow-x-auto px-3 py-3.5 text-xs text-zinc-600 sm:px-4 sm:text-sm"
+          className="min-w-0 flex-1 overflow-x-auto px-3 py-3.5 text-xs font-extralight text-zinc-600 sm:px-4 sm:text-sm"
           aria-live="polite"
         >
           <span className="mr-3 text-zinc-400 select-none" aria-hidden="true">
