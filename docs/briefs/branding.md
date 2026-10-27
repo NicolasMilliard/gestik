@@ -2,6 +2,7 @@
 
 The requested direction is a lighter interface: less text, smaller headings, lighter font weights, and compact component previews.
 
+- Use Figtree for headings and interface text, with Paper Mono for install commands and code. Serve the fonts with the docs and preserve the existing sizes and weights. Keep demo action rows able to wrap at narrow widths so longer labels stay inside the page.
 - Avoid labels that repeat the title. `Gestik / React` and `Component / DragHint` added weight without helping users navigate.
 - Let the home gallery explain the library. Keep “Show users how.” and remove the explanatory paragraph; retain the package publication notice and useful component instructions.
 - Keep each home preview square, with its name on the same quiet surface. The former full-width rectangles and separate white caption strips made the containers dominate the hints.

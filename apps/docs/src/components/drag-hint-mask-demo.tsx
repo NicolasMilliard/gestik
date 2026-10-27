@@ -79,7 +79,7 @@ export const DragHintMaskDemo = () => {
           </div>
         ))}
       </div>
-      <div className="mt-3 flex gap-2">
+      <div className="mt-3 flex flex-wrap gap-2">
         <Button variant="outline" onClick={() => setPlaying(!playing)}>
           {playing ? "Pause icon examples" : "Resume icon examples"}
         </Button>
