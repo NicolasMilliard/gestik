@@ -57,7 +57,7 @@ export const DragHintDemo = () => {
   return (
     <section aria-label="Interactive DragHint preview">
       <div className="grid overflow-hidden rounded-2xl border border-zinc-200 lg:grid-cols-[minmax(0,1fr)_260px]">
-        <div className="flex min-h-72 flex-col items-center justify-center gap-6 px-6 py-10 sm:min-h-80">
+        <div className="playground-preview flex min-h-72 flex-col items-center justify-center gap-6 px-6 py-10 sm:min-h-80">
           <DragHint
             key={previewKey}
             direction={direction}
@@ -72,7 +72,7 @@ export const DragHintDemo = () => {
         </div>
 
         <div className="border-t border-zinc-200 bg-zinc-50 p-5 lg:border-t-0 lg:border-l">
-          <h2 className="mb-6 text-sm font-semibold">Preview settings</h2>
+          <h2 className="mb-6 text-sm font-medium">Preview settings</h2>
 
           <div className="mb-5">
             <span id="direction-label" className="block text-sm font-medium">
@@ -110,7 +110,7 @@ export const DragHintDemo = () => {
             </span>
             <input
               id="drag-hint-size"
-              className="mt-3 w-full accent-orange-700"
+              className="mt-3 w-full accent-brand"
               type="range"
               min="80"
               max="180"
@@ -132,7 +132,7 @@ export const DragHintDemo = () => {
             </span>
             <input
               id="drag-hint-duration"
-              className="mt-3 w-full accent-orange-700"
+              className="mt-3 w-full accent-brand"
               type="range"
               min="1200"
               max="5000"
@@ -193,7 +193,7 @@ export const DragHintDemo = () => {
       </div>
 
       <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 text-xs font-semibold text-zinc-500">
+        <div className="border-b border-zinc-200 px-5 py-3 text-xs font-medium text-zinc-500">
           React
         </div>
         <pre className="overflow-x-auto p-5 text-xs leading-6 sm:text-sm">

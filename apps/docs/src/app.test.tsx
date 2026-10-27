@@ -67,10 +67,65 @@ describe("Docs navigation", () => {
     const button = screen.getByRole("button", { name: manager });
     fireEvent.click(button);
 
-    expect(screen.getByText(command)).toBeDefined();
+    expect(screen.getByText("@gestik/react").closest("code")?.textContent).toBe(
+      command
+    );
     expect(button.getAttribute("aria-pressed")).toBe("true");
     expect(screen.getAllByRole("button", { pressed: true })).toHaveLength(1);
     expect(screen.getByText(/package is not published yet/u)).toBeDefined();
+  });
+
+  it("opens and closes the mobile navigation with its button", () => {
+    renderAt("/");
+    const toggle = screen.getByRole("button", { name: "Open navigation" });
+
+    expect(toggle.getAttribute("aria-expanded")).toBe("false");
+    fireEvent.click(toggle);
+    expect(
+      screen
+        .getByRole("button", { name: "Close navigation" })
+        .getAttribute("aria-expanded")
+    ).toBe("true");
+
+    fireEvent.click(toggle);
+    expect(
+      screen
+        .getByRole("button", { name: "Open navigation" })
+        .getAttribute("aria-expanded")
+    ).toBe("false");
+  });
+
+  it("closes navigation with Escape and returns focus to the menu button", () => {
+    renderAt("/");
+    const toggle = screen.getByRole("button", { name: "Open navigation" });
+    fireEvent.click(toggle);
+    within(screen.getByRole("navigation", { name: "Documentation" }))
+      .getByRole("link", { name: "Overview" })
+      .focus();
+
+    fireEvent.keyDown(window, { key: "Escape" });
+
+    expect(toggle.getAttribute("aria-expanded")).toBe("false");
+    expect(document.activeElement).toBe(toggle);
+  });
+
+  it.each([
+    ["Overview", "/"],
+    ["DragHint", "/drag-hint"],
+    ["SwipeHint", "/swipe-hint"],
+  ])("closes navigation after choosing %s", (name, path) => {
+    renderAt("/");
+    const toggle = screen.getByRole("button", { name: "Open navigation" });
+    fireEvent.click(toggle);
+
+    fireEvent.click(
+      within(
+        screen.getByRole("navigation", { name: "Documentation" })
+      ).getByRole("link", { name })
+    );
+
+    expect(window.location.pathname).toBe(path);
+    expect(toggle.getAttribute("aria-expanded")).toBe("false");
   });
 
   it.each([

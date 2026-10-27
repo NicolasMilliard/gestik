@@ -46,7 +46,7 @@ export const DragHintMaskDemo = () => {
 
   return (
     <section className="mt-16" aria-labelledby="drag-hint-icons-title">
-      <h2 className="text-2xl font-semibold" id="drag-hint-icons-title">
+      <h2 className="text-xl font-medium" id="drag-hint-icons-title">
         Filled, outline, and duotone icons
       </h2>
       <p className="mt-3 text-sm leading-6 text-zinc-600">
@@ -79,7 +79,7 @@ export const DragHintMaskDemo = () => {
           </div>
         ))}
       </div>
-      <div className="mt-3 flex gap-2">
+      <div className="mt-3 flex flex-wrap gap-2">
         <Button variant="outline" onClick={() => setPlaying(!playing)}>
           {playing ? "Pause icon examples" : "Resume icon examples"}
         </Button>

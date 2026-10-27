@@ -38,14 +38,9 @@ export const SwipeHintPage = () => (
   <article id="swipe-hint">
     <title>SwipeHint — Gestik</title>
     <header className="mb-8">
-      <p className="mb-2 text-sm font-medium text-orange-700">
-        Component / SwipeHint
-      </p>
-      <h1 className="text-3xl font-semibold tracking-tight">SwipeHint</h1>
-      <p className="mt-3 text-zinc-600">
-        Show a fingertip drawing a rounded line in the swipe direction. Use it
-        for touch interactions such as browsing a carousel or moving between
-        cards.
+      <h1 className="text-3xl font-normal tracking-tight">SwipeHint</h1>
+      <p className="mt-3 text-sm leading-6 text-zinc-500">
+        Show how to swipe through a carousel or between cards.
       </p>
     </header>
 
@@ -53,7 +48,7 @@ export const SwipeHintPage = () => (
 
     <section className="mt-16" aria-labelledby="swipe-hint-props-title">
       <h2
-        className="text-2xl font-semibold tracking-tight"
+        className="text-xl font-medium tracking-tight"
         id="swipe-hint-props-title"
       >
         Props
@@ -90,7 +85,7 @@ export const SwipeHintPage = () => (
 
     <section className="mt-16" aria-labelledby="swipe-hint-styling-title">
       <h2
-        className="text-2xl font-semibold tracking-tight"
+        className="text-xl font-medium tracking-tight"
         id="swipe-hint-styling-title"
       >
         Styling
@@ -117,7 +112,7 @@ export const SwipeHintPage = () => (
       </div>
 
       <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 text-xs font-semibold text-zinc-500">
+        <div className="border-b border-zinc-200 px-5 py-3 text-xs font-medium text-zinc-500">
           CSS
         </div>
         <pre className="overflow-x-auto p-5 text-xs leading-6 sm:text-sm">
@@ -132,7 +127,7 @@ export const SwipeHintPage = () => (
 
     <section className="mt-16" aria-labelledby="swipe-hint-accessibility-title">
       <h2
-        className="text-2xl font-semibold tracking-tight"
+        className="text-xl font-medium tracking-tight"
         id="swipe-hint-accessibility-title"
       >
         Accessibility

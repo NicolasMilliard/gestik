@@ -36,11 +36,8 @@ export const DragHintPage = () => (
   <article id="drag-hint">
     <title>DragHint — Gestik</title>
     <header className="mb-8">
-      <p className="mb-2 text-sm font-medium text-orange-700">
-        Component / DragHint
-      </p>
-      <h1 className="text-3xl font-semibold tracking-tight">DragHint</h1>
-      <p className="mt-3 text-zinc-600">
+      <h1 className="text-3xl font-normal tracking-tight">DragHint</h1>
+      <p className="mt-3 text-sm leading-6 text-zinc-500">
         Show how to drag an element from one position to another.
       </p>
     </header>
@@ -50,7 +47,7 @@ export const DragHintPage = () => (
     <DragHintMaskDemo />
 
     <section className="mt-16" aria-labelledby="props-title">
-      <h2 className="text-2xl font-semibold tracking-tight" id="props-title">
+      <h2 className="text-xl font-medium tracking-tight" id="props-title">
         Props
       </h2>
       <p className="mt-3 text-sm leading-6 text-zinc-600">
@@ -83,7 +80,7 @@ export const DragHintPage = () => (
     </section>
 
     <section className="mt-16" aria-labelledby="styling-title">
-      <h2 className="text-2xl font-semibold tracking-tight" id="styling-title">
+      <h2 className="text-xl font-medium tracking-tight" id="styling-title">
         Styling
       </h2>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
@@ -104,7 +101,7 @@ export const DragHintPage = () => (
       </div>
 
       <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 text-xs font-semibold text-zinc-500">
+        <div className="border-b border-zinc-200 px-5 py-3 text-xs font-medium text-zinc-500">
           CSS
         </div>
         <pre className="overflow-x-auto p-5 text-xs leading-6 sm:text-sm">
@@ -122,7 +119,7 @@ export const DragHintPage = () => (
 
     <section className="mt-16" aria-labelledby="accessibility-title">
       <h2
-        className="text-2xl font-semibold tracking-tight"
+        className="text-xl font-medium tracking-tight"
         id="accessibility-title"
       >
         Accessibility
