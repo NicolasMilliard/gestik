@@ -57,7 +57,7 @@ export const InstallCommand = () => {
           </button>
         ))}
       </fieldset>
-      <div className="flex items-center rounded-xl border border-zinc-100 bg-zinc-50/70 pr-2">
+      <div className="flex items-center rounded-xl border border-zinc-100 bg-zinc-50/70 pr-1">
         <pre
           className="min-w-0 flex-1 overflow-x-auto px-3 py-3.5 text-xs text-zinc-600 sm:px-4 sm:text-sm"
           aria-live="polite"
@@ -68,8 +68,9 @@ export const InstallCommand = () => {
           <code>{command}</code>
         </pre>
         <button
-          className="grid size-8 shrink-0 place-items-center rounded-md text-zinc-500 hover:bg-zinc-100/70 hover:text-zinc-700 focus-visible:outline-2 focus-visible:outline-brand"
+          className="icon-button relative isolate grid size-11 shrink-0 place-items-center rounded-lg text-zinc-500 hover:text-zinc-700 focus-visible:outline-2 focus-visible:outline-brand"
           type="button"
+          data-copied={status === "copied"}
           aria-label={
             status === "copied"
               ? "Copied install command"
@@ -77,11 +78,18 @@ export const InstallCommand = () => {
           }
           onClick={copyCommand}
         >
-          {status === "copied" ? (
-            <CheckIcon size={18} aria-hidden="true" focusable="false" />
-          ) : (
-            <CopyIcon size={18} aria-hidden="true" focusable="false" />
-          )}
+          <span className="icon-button__icons size-[18px]" aria-hidden="true">
+            <CopyIcon
+              className="icon-button__default"
+              size={18}
+              focusable="false"
+            />
+            <CheckIcon
+              className="icon-button__alternate"
+              size={18}
+              focusable="false"
+            />
+          </span>
         </button>
       </div>
       <output

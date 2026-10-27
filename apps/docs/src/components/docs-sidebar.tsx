@@ -44,7 +44,7 @@ export const DocsSidebar = () => {
           gestik
         </Link>
         <button
-          className="grid size-10 place-items-center rounded-lg text-zinc-500 hover:bg-zinc-100/70 hover:text-zinc-700 focus-visible:outline-2 focus-visible:outline-brand lg:hidden"
+          className="icon-button relative isolate grid size-11 shrink-0 place-items-center rounded-lg text-zinc-500 hover:text-zinc-700 focus-visible:outline-2 focus-visible:outline-brand lg:hidden"
           ref={menuButton}
           type="button"
           aria-label={menuOpen ? "Close navigation" : "Open navigation"}
@@ -52,11 +52,18 @@ export const DocsSidebar = () => {
           aria-controls="docs-navigation"
           onClick={() => setMenuOpen((open) => !open)}
         >
-          {menuOpen ? (
-            <XIcon size={22} aria-hidden="true" focusable="false" />
-          ) : (
-            <ListIcon size={22} aria-hidden="true" focusable="false" />
-          )}
+          <span className="icon-button__icons size-[22px]" aria-hidden="true">
+            <ListIcon
+              className="icon-button__default"
+              size={22}
+              focusable="false"
+            />
+            <XIcon
+              className="icon-button__alternate"
+              size={22}
+              focusable="false"
+            />
+          </span>
         </button>
       </div>
 

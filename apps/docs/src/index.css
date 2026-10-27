@@ -5,6 +5,90 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.icon-button::before {
+  position: absolute;
+  z-index: -1;
+  inset: 2px;
+  border-radius: 8px;
+  background-color: transparent;
+  content: "";
+  transition:
+    background-color 160ms ease-out,
+    transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (hover: hover) {
+  .icon-button:hover::before {
+    background-color: color-mix(
+      in oklab,
+      var(--color-zinc-100) 70%,
+      transparent
+    );
+  }
+}
+
+.icon-button__icons {
+  position: relative;
+  transition: transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.icon-button:active::before {
+  background-color: var(--color-zinc-100);
+  transform: scale(0.96);
+  transition-duration: 80ms;
+}
+
+.icon-button:active .icon-button__icons {
+  transform: scale(0.85);
+  transition-duration: 80ms;
+}
+
+.icon-button__icons > :where(svg) {
+  position: absolute;
+  inset: 0;
+  transition:
+    opacity 80ms ease-out,
+    transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.icon-button__default {
+  opacity: 1;
+  transform: scale(1);
+  transition-delay: 60ms;
+}
+
+.icon-button__alternate {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.icon-button:is([data-copied="true"], [aria-expanded="true"])
+  .icon-button__default {
+  opacity: 0;
+  transform: scale(0.5);
+  transition-delay: 0ms;
+}
+
+.icon-button:is([data-copied="true"], [aria-expanded="true"])
+  .icon-button__alternate {
+  opacity: 1;
+  transform: scale(1);
+  transition-delay: 60ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-button::before,
+  .icon-button__icons,
+  .icon-button__icons > :where(svg) {
+    transition: none;
+  }
+
+  .icon-button:active::before,
+  .icon-button:active .icon-button__icons {
+    transform: none;
+  }
+}
+
 .custom-swipe-hint {
   --gestik-swipe-hint-icon-color: #0e7490;
   --gestik-swipe-hint-surface: #ecfeff;
