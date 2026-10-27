@@ -10,7 +10,7 @@
     "dev": "bun run build && bun --filter @gestik/docs dev",
     "build": "bun --filter @gestik/react build",
     "build:docs": "bun --filter @gestik/docs build",
-    "test": "bun --filter @gestik/react test",
+    "test": "bun --filter '*' test",
     "typecheck": "tsc --noEmit && bun --filter '*' typecheck",
     "lint": "oxlint . --deny-warnings",
     "lint:fix": "oxlint . --fix --deny-warnings",

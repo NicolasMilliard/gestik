@@ -46,9 +46,9 @@ export const DragHintMaskDemo = () => {
 
   return (
     <section className="mt-16" aria-labelledby="drag-hint-icons-title">
-      <h3 className="text-2xl font-semibold" id="drag-hint-icons-title">
+      <h2 className="text-2xl font-semibold" id="drag-hint-icons-title">
         Filled, outline, and duotone icons
-      </h3>
+      </h2>
       <p className="mt-3 text-sm leading-6 text-zinc-600">
         The same silhouette works with all three styles. The square,
         destination, and shadow are cut away behind the hand, revealing the

@@ -1,0 +1,166 @@
+/** @vitest-environment jsdom */
+
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
+import { BrowserRouter } from "react-router";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+import App from "./app";
+
+const renderAt = (path: string) => {
+  window.history.replaceState(null, "", path);
+  return render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
+};
+
+describe("Docs navigation", () => {
+  beforeEach(() => {
+    vi.spyOn(window, "scrollTo").mockImplementation(vi.fn());
+  });
+
+  afterEach(() => {
+    cleanup();
+    vi.restoreAllMocks();
+    window.history.replaceState(null, "", "/");
+  });
+
+  it("shows an alphabetical live gallery without playground controls on the home page", () => {
+    renderAt("/");
+
+    const gallery = screen.getByRole("region", { name: "Components" });
+    const links = within(gallery).getAllByRole("link");
+
+    expect(
+      links.map((link) => [link.textContent, link.getAttribute("href")])
+    ).toStrictEqual([
+      ["DragHint", "/drag-hint"],
+      ["SwipeHint", "/swipe-hint"],
+    ]);
+    expect(
+      gallery.querySelectorAll(".gestik-drag-hint, .gestik-swipe-hint")
+    ).toHaveLength(2);
+    expect(screen.queryByRole("slider")).toBeNull();
+    expect(screen.queryByRole("heading", { name: "Props" })).toBeNull();
+    expect(
+      screen
+        .getByRole("link", { name: "Overview" })
+        .getAttribute("aria-current")
+    ).toBe("page");
+  });
+
+  it.each([
+    ["npm", "npm install @gestik/react"],
+    ["pnpm", "pnpm add @gestik/react"],
+    ["yarn", "yarn add @gestik/react"],
+    ["bun", "bun add @gestik/react"],
+  ])("shows the install command for %s", (manager, command) => {
+    renderAt("/");
+    const button = screen.getByRole("button", { name: manager });
+    fireEvent.click(button);
+
+    expect(screen.getByText(command)).toBeDefined();
+    expect(button.getAttribute("aria-pressed")).toBe("true");
+    expect(screen.getAllByRole("button", { pressed: true })).toHaveLength(1);
+    expect(screen.getByText(/package is not published yet/u)).toBeDefined();
+  });
+
+  it.each([
+    ["/drag-hint", "DragHint", "SwipeHint"],
+    ["/swipe-hint", "SwipeHint", "DragHint"],
+  ])(
+    "opens %s directly with only its own documentation",
+    (path, name, otherName) => {
+      renderAt(path);
+
+      expect(screen.getByRole("heading", { level: 1, name })).toBeDefined();
+      expect([
+        screen.queryByRole("heading", { name: otherName }),
+        screen.queryByRole("heading", { name: "Show users how." }),
+      ]).toStrictEqual([null, null]);
+      expect(
+        screen.getByRole("region", { name: `Interactive ${name} preview` })
+      ).toBeDefined();
+      expect(screen.getByRole("heading", { name: "Props" })).toBeDefined();
+    }
+  );
+
+  it.each([
+    ["/drag-hint", "DragHint"],
+    ["/swipe-hint", "SwipeHint"],
+  ])("identifies the active page at %s", (path, name) => {
+    renderAt(path);
+    expect(
+      screen.getByRole("link", { name }).getAttribute("aria-current")
+    ).toBe("page");
+    expect(
+      screen
+        .getByRole("link", { name: "Overview" })
+        .getAttribute("aria-current")
+    ).toBeNull();
+    expect(document.title).toBe(`${name} — Gestik`);
+  });
+
+  it("navigates from gallery and sidebar links and focuses the new content", () => {
+    renderAt("/");
+    const gallery = screen.getByRole("region", { name: "Components" });
+    fireEvent.click(within(gallery).getByRole("link", { name: "DragHint" }));
+
+    expect(window.location.pathname).toBe("/drag-hint");
+    expect(
+      screen.getByRole("heading", {
+        name: "Filled, outline, and duotone icons",
+      })
+    ).toBeDefined();
+    expect(document.activeElement).toBe(screen.getByRole("main"));
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
+
+    fireEvent.click(screen.getByRole("link", { name: "SwipeHint" }));
+    expect(window.location.pathname).toBe("/swipe-hint");
+  });
+
+  it("follows browser back and forward through component and home pages", async () => {
+    renderAt("/");
+    const gallery = screen.getByRole("region", { name: "Components" });
+    fireEvent.click(within(gallery).getByRole("link", { name: "DragHint" }));
+    fireEvent.click(screen.getByRole("link", { name: "SwipeHint" }));
+
+    window.history.back();
+    await waitFor(() => {
+      expect(
+        screen.getByRole("heading", { level: 1, name: "DragHint" })
+      ).toBeDefined();
+    });
+    window.history.back();
+    await waitFor(() => {
+      expect(
+        screen.getByRole("heading", { name: "Show users how." })
+      ).toBeDefined();
+    });
+    window.history.forward();
+    await waitFor(() => {
+      expect(
+        screen.getByRole("heading", { level: 1, name: "DragHint" })
+      ).toBeDefined();
+    });
+  });
+
+  it("offers a way home from an unknown URL", () => {
+    renderAt("/missing-component");
+
+    expect(
+      screen.getByRole("heading", { name: "Page not found" })
+    ).toBeDefined();
+    fireEvent.click(screen.getByRole("link", { name: "Back to overview" }));
+    expect(window.location.pathname).toBe("/");
+    expect(screen.getByRole("region", { name: "Components" })).toBeDefined();
+  });
+});
