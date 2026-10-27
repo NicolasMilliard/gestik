@@ -57,7 +57,7 @@ export const DragHintDemo = () => {
   return (
     <section aria-label="Interactive DragHint preview">
       <div className="grid overflow-hidden rounded-2xl border border-zinc-200 lg:grid-cols-[minmax(0,1fr)_260px]">
-        <div className="flex min-h-72 flex-col items-center justify-center gap-6 px-6 py-10 sm:min-h-80">
+        <div className="playground-preview flex min-h-72 flex-col items-center justify-center gap-6 px-6 py-10 sm:min-h-80">
           <DragHint
             key={previewKey}
             direction={direction}

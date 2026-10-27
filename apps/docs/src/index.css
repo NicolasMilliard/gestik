@@ -13,6 +13,27 @@
   src: url("/fonts/paper-mono-variable.woff2") format("woff2");
 }
 
+.playground-preview {
+  position: relative;
+  isolation: isolate;
+}
+
+.playground-preview::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--foreground) 14%, transparent) 0.8px,
+    transparent 0.8px
+  );
+  background-position: center;
+  background-size: 16px 16px;
+  content: "";
+  mask-image: radial-gradient(ellipse at center, #000 25%, transparent 80%);
+  pointer-events: none;
+}
+
 .icon-button::before {
   position: absolute;
   z-index: -1;

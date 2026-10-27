@@ -8,6 +8,7 @@ The requested direction is a lighter interface: less text, smaller headings, lig
 - Keep each home preview square, with its name on the same quiet surface. The former full-width rectangles and separate white caption strips made the containers dominate the hints.
 - Give the sidebar the same soft gray surface as the cards and install command, so it stays distinct from the white content area.
 - Highlight only the package name in install commands with the blue accent.
+- Playground animation stages use a subtle 16px dot grid that fades toward the edges; keep the instruction and hint fully visible above it.
 - On small screens, keep navigation behind a three-line menu button that becomes a close icon when expanded. Match the copy button's press and icon swap feedback, with the close icon staying visible while navigation is open. Use Phosphor for docs UI icons, including the install command's copy action; the package stays independent of this docs dependency.
 - Keep the install copy icon at 18px inside a 44px click target. Compress its background and icon separately on press, then shrink and fade between copy and check. Keep the check for two seconds, and switch instantly under reduced motion. The hit area stays stable while the visual layers scale.
 - Keep decorative hints out of the accessibility tree and preserve visible focus, active navigation, and readable text contrast while softening the interface.
