@@ -20,6 +20,22 @@
   --gestik-drag-hint-surface: #ecfeff;
 }
 
+.drag-mask-example {
+  background-color: #fafafa;
+  background-image: repeating-conic-gradient(
+    #e4e4e7 0% 25%,
+    transparent 0% 50%
+  );
+  background-size: 16px 16px;
+}
+
+.drag-mask-example__hint {
+  --gestik-drag-hint-icon-color: #155e75;
+  --gestik-drag-hint-square-fill: #fda4af;
+  --gestik-drag-hint-square-stroke: #9f1239;
+  --gestik-drag-hint-target-stroke: #9f1239;
+}
+
 @theme inline {
   --font-heading: var(--font-sans);
   --font-sans: "Geist Variable", sans-serif;

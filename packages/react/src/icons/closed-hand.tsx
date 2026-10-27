@@ -1,9 +1,18 @@
+import type { IconSilhouette } from "../icon-mask";
+
+export const CLOSED_HAND_SILHOUETTE: IconSilhouette = {
+  path: "M188 80a27.8 27.8 0 0 0-13.36 3.4 28 28 0 0 0-46.64-11A28 28 0 0 0 80 92v20H68a28 28 0 0 0-28 28v12a88 88 0 0 0 176 0v-44a28 28 0 0 0-28-28Z",
+  viewBox: "0 0 256 256",
+};
+
+const OUTLINE = `${CLOSED_HAND_SILHOUETTE.path}m12 72a72 72 0 0 1-144 0v-12a12 12 0 0 1 12-12h12v24a8 8 0 0 0 16 0V92a12 12 0 0 1 24 0v28a8 8 0 0 0 16 0V92a12 12 0 0 1 24 0v28a8 8 0 0 0 16 0v-12a12 12 0 0 1 24 0Z`;
+
 export const ClosedHand = () => (
   <svg
     width="100%"
     height="100%"
     fill="currentColor"
-    viewBox="0 0 256 256"
+    viewBox={CLOSED_HAND_SILHOUETTE.viewBox}
     focusable="false"
   >
     <path
@@ -11,6 +20,6 @@ export const ClosedHand = () => (
       d="M208 108v44a80 80 0 0 1-160 0v-12a20 20 0 0 1 20-20h20V92a20 20 0 0 1 40 0 20 20 0 0 1 40 0v16a20 20 0 0 1 40 0"
       opacity="0.2"
     />
-    <path d="M188 80a27.8 27.8 0 0 0-13.36 3.4 28 28 0 0 0-46.64-11A28 28 0 0 0 80 92v20H68a28 28 0 0 0-28 28v12a88 88 0 0 0 176 0v-44a28 28 0 0 0-28-28m12 72a72 72 0 0 1-144 0v-12a12 12 0 0 1 12-12h12v24a8 8 0 0 0 16 0V92a12 12 0 0 1 24 0v28a8 8 0 0 0 16 0V92a12 12 0 0 1 24 0v28a8 8 0 0 0 16 0v-12a12 12 0 0 1 24 0Z" />
+    <path d={OUTLINE} />
   </svg>
 );

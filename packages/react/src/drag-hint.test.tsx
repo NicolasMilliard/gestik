@@ -71,6 +71,95 @@ describe(DragHint, () => {
       ".gestik-drag-hint__icon-anchor"
     );
     expect(anchor?.style.transform).toBe("translate(-25%, -75%)");
+    expect(container.querySelector("mask")).toBeNull();
+  });
+
+  it("keeps each instance's background connected to its own mask", () => {
+    const { container, rerender } = render(
+      <>
+        <DragHint />
+        <DragHint direction="left" />
+      </>
+    );
+    const hints = container.querySelectorAll(".gestik-drag-hint");
+    const maskIds = [...hints].map((hint) => {
+      const mask = hint.querySelector("mask");
+      const background = hint.querySelector<HTMLElement>(
+        ".gestik-drag-hint__background"
+      );
+
+      expect(mask).not.toBeNull();
+      expect(background?.style.mask.replaceAll('"', "")).toBe(
+        `url(#${mask?.id})`
+      );
+      expect(
+        background?.querySelector(".gestik-drag-hint__square")
+      ).not.toBeNull();
+      expect(
+        background?.querySelector(".gestik-drag-hint__destination")
+      ).not.toBeNull();
+      expect(
+        background?.querySelector(".gestik-drag-hint__icon-anchor")
+      ).toBeNull();
+      return mask?.id;
+    });
+
+    expect(new Set(maskIds).size).toBe(2);
+
+    rerender(
+      <>
+        <DragHint direction="left" />
+        <DragHint />
+      </>
+    );
+
+    expect(
+      [...container.querySelectorAll("mask")].map((mask) => mask.id)
+    ).toStrictEqual(maskIds);
+  });
+
+  it("positions custom silhouettes using the icon box and hotspot", () => {
+    const icons = {
+      grabbing: <svg data-testid="grabbing-pose" />,
+      idle: <svg data-testid="idle-pose" />,
+    };
+    const iconMasks = {
+      grabbing: { path: "M10 10h80v80H10Z", viewBox: "0 0 100 100" },
+      idle: { path: "M4 4h16v16H4Z", viewBox: "0 0 24 24" },
+    };
+    const { container, rerender } = render(
+      <DragHint
+        icons={icons}
+        iconMasks={iconMasks}
+        hotspot={{ x: 0.25, y: 0.75 }}
+      />
+    );
+
+    for (const pose of ["idle", "grabbing"] as const) {
+      const silhouette = container.querySelector(
+        `.gestik-drag-hint__mask--${pose}`
+      );
+
+      expect(silhouette?.getAttribute("viewBox")).toBe(iconMasks[pose].viewBox);
+      expect(
+        ["x", "y", "width", "height"].map((attribute) =>
+          silhouette?.getAttribute(attribute)
+        )
+      ).toStrictEqual(["10", "-2", "24", "24"]);
+      expect(silhouette?.querySelector("path")?.getAttribute("d")).toBe(
+        iconMasks[pose].path
+      );
+      // Custom components render once, outside the mask.
+      expect(screen.getAllByTestId(`${pose}-pose`)).toHaveLength(1);
+    }
+
+    rerender(<DragHint icons={icons} />);
+
+    expect(container.querySelector("mask")).toBeNull();
+    expect(
+      container.querySelector<HTMLElement>(".gestik-drag-hint__background")
+        ?.style.mask
+    ).toBe("");
   });
 
   it("applies playback settings and can resume", () => {

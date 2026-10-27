@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table";
 
 import { DragHintDemo } from "../components/drag-hint-demo";
+import { DragHintMaskDemo } from "../components/drag-hint-mask-demo";
 
 const propRows = [
   ["direction", '"right"', "Drag left or right."],
@@ -18,6 +19,11 @@ const propRows = [
   ["iterations", '"infinite"', "Total number of cycles, or infinite."],
   ["playing", "true", "Pause or resume at the current frame."],
   ["icons", "Built-in hands", "Custom idle and grabbing illustrations."],
+  [
+    "iconMasks",
+    "Built-in hand silhouettes",
+    "Filled paths and viewBoxes for the idle and grabbing cutouts. Supply these with custom icons to enable masking.",
+  ],
   [
     "hotspot",
     "{ x: 128 / 256, y: 152 / 256 }",
@@ -39,6 +45,8 @@ export const DragHintPage = () => (
     </header>
 
     <DragHintDemo />
+
+    <DragHintMaskDemo />
 
     <section className="mt-16" aria-labelledby="props-title">
       <h3 className="text-2xl font-semibold tracking-tight" id="props-title">
