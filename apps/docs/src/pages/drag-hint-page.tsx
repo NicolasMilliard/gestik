@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table";
 
 import { DragHintDemo } from "../components/drag-hint-demo";
+import { DragHintMaskDemo } from "../components/drag-hint-mask-demo";
 
 const propRows = [
   ["direction", '"right"', "Drag left or right."],
@@ -19,8 +20,13 @@ const propRows = [
   ["playing", "true", "Pause or resume at the current frame."],
   ["icons", "Built-in hands", "Custom idle and grabbing illustrations."],
   [
+    "iconMasks",
+    "Built-in hand silhouettes",
+    "Filled paths and viewBoxes for the idle and grabbing cutouts. Supply these with custom icons to enable masking.",
+  ],
+  [
     "hotspot",
-    "{ x: 0.44, y: 0 }",
+    "{ x: 0.5, y: 0 }",
     "Interaction point in normalized icon coordinates.",
   ],
   ["className", "—", "A class for styling the hint."],
@@ -39,6 +45,8 @@ export const DragHintPage = () => (
     </header>
 
     <DragHintDemo />
+
+    <DragHintMaskDemo />
 
     <section className="mt-16" aria-labelledby="props-title">
       <h3 className="text-2xl font-semibold tracking-tight" id="props-title">
@@ -79,7 +87,12 @@ export const DragHintPage = () => (
       </h3>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
         Use <code>className</code> and CSS variables to color the square,
-        destination, and icons independently.
+        destination, and icons independently. Custom icons fill a 24 by 24 pixel
+        box before scaling. Set <code>hotspot</code> to the same contact point
+        in both poses; the built-in hands use a shared top-center hotspot to sit
+        across the square&apos;s lower edge, with the wrist aligned when
+        grabbing and releasing. The surface color is rendered at 20% opacity for
+        the duotone fill.
       </p>
 
       <div className="mt-6 flex items-center gap-5 rounded-xl border border-zinc-200 p-5">

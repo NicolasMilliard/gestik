@@ -1,5 +1,6 @@
 .gestik-drag-hint {
   --_gestik-start-x: 12px;
+  --_gestik-start-y: 25px;
   --_gestik-target-x: 68px;
   --_gestik-travel: 56px;
   --gestik-drag-hint-duration: 2800ms;
@@ -32,9 +33,18 @@
 
 .gestik-drag-hint__destination {
   position: absolute;
-  top: 25px;
+  top: var(--_gestik-start-y);
   left: var(--_gestik-target-x);
   display: block;
+}
+
+.gestik-drag-hint__background {
+  position: absolute;
+  inset: 0;
+}
+
+.gestik-drag-hint__mask-origin {
+  transform: translate(var(--_gestik-start-x), var(--_gestik-start-y));
 }
 
 .gestik-drag-hint__destination rect {
@@ -64,15 +74,23 @@
 
 .gestik-drag-hint__drag-group {
   position: absolute;
-  top: 25px;
+  top: var(--_gestik-start-y);
   left: var(--_gestik-start-x);
   width: 32px;
   height: 32px;
+}
+
+.gestik-drag-hint__drag-group,
+.gestik-drag-hint__mask-travel {
   animation: gestik-drag-hint-travel var(--gestik-drag-hint-duration) linear
     var(--gestik-drag-hint-iterations) both;
 }
 
-.gestik-drag-hint__drag-group::before {
+.gestik-drag-hint__drag-group {
+  animation-name: gestik-drag-hint-travel, gestik-drag-hint-visibility;
+}
+
+:where(.gestik-drag-hint__background) .gestik-drag-hint__drag-group::before {
   position: absolute;
   inset: 2px;
   border-radius: 6px;
@@ -88,6 +106,10 @@
   display: block;
   width: 32px;
   height: 32px;
+}
+
+.gestik-drag-hint__lift-group,
+.gestik-drag-hint__mask-lift {
   animation: gestik-drag-hint-lift var(--gestik-drag-hint-duration) ease-in-out
     var(--gestik-drag-hint-iterations) both;
 }
@@ -98,49 +120,51 @@
   display: block;
 }
 
-.gestik-drag-hint__icon--idle {
+.gestik-drag-hint__icon--idle,
+.gestik-drag-hint__mask--idle {
   opacity: 1;
   animation: gestik-drag-hint-idle var(--gestik-drag-hint-duration)
     steps(1, end) var(--gestik-drag-hint-iterations) both;
 }
 
-.gestik-drag-hint__icon--grabbing {
+.gestik-drag-hint__icon--grabbing,
+.gestik-drag-hint__mask--grabbing {
   opacity: 0;
   animation: gestik-drag-hint-grabbing var(--gestik-drag-hint-duration)
     steps(1, end) var(--gestik-drag-hint-iterations) both;
 }
 
 @keyframes gestik-drag-hint-travel {
-  0% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-
+  0%,
   26% {
     transform: translateX(0);
-    opacity: 1;
     animation-timing-function: cubic-bezier(0.45, 0, 0.2, 1);
   }
 
   60%,
-  82% {
-    transform: translateX(var(--_gestik-travel));
-    opacity: 1;
-  }
-
+  82%,
   83% {
     transform: translateX(var(--_gestik-travel));
-    opacity: 0;
   }
 
-  84% {
-    transform: translateX(0);
-    opacity: 0;
-  }
-
+  84%,
   100% {
     transform: translateX(0);
+  }
+}
+
+/* Keep the cutout opaque during the loop fade so translucent icons never
+   reveal the square underneath. Only the visible layers fade. */
+@keyframes gestik-drag-hint-visibility {
+  0%,
+  82%,
+  100% {
     opacity: 1;
+  }
+
+  83%,
+  84% {
+    opacity: 0;
   }
 }
 
@@ -216,7 +240,11 @@
 .gestik-drag-hint__drag-group::before,
 .gestik-drag-hint__lift-group,
 .gestik-drag-hint__icon--idle,
-.gestik-drag-hint__icon--grabbing {
+.gestik-drag-hint__icon--grabbing,
+.gestik-drag-hint__mask-travel,
+.gestik-drag-hint__mask-lift,
+.gestik-drag-hint__mask--idle,
+.gestik-drag-hint__mask--grabbing {
   animation-play-state: var(--gestik-drag-hint-play-state);
 }
 
@@ -225,7 +253,11 @@
   .gestik-drag-hint__drag-group::before,
   .gestik-drag-hint__lift-group,
   .gestik-drag-hint__icon--idle,
-  .gestik-drag-hint__icon--grabbing {
+  .gestik-drag-hint__icon--grabbing,
+  .gestik-drag-hint__mask-travel,
+  .gestik-drag-hint__mask-lift,
+  .gestik-drag-hint__mask--idle,
+  .gestik-drag-hint__mask--grabbing {
     animation: none;
   }
 }

@@ -1,14 +1,23 @@
 import type { CSSProperties, ReactNode } from "react";
+import { useId } from "react";
 
 import "./drag-hint.css";
-import { ClosedHand } from "./icons/closed-hand";
-import { OpenHand } from "./icons/open-hand";
+import type { IconSilhouette } from "./icon-mask";
+import { IconMask } from "./icon-mask";
+import { CLOSED_HAND_SILHOUETTE, ClosedHand } from "./icons/closed-hand";
+import { OPEN_HAND_SILHOUETTE, OpenHand } from "./icons/open-hand";
 
 const SCENE_WIDTH = 112;
 const SCENE_HEIGHT = 72;
+const ICON_SIZE = 24;
 
 const DEFAULT_ICONS = { grabbing: <ClosedHand />, idle: <OpenHand /> };
-const DEFAULT_HOTSPOT = { x: 0.44, y: 0 };
+const DEFAULT_ICON_MASKS = {
+  grabbing: CLOSED_HAND_SILHOUETTE,
+  idle: OPEN_HAND_SILHOUETTE,
+};
+// A shared top-center hotspot places both poses across the square's lower edge.
+const DEFAULT_HOTSPOT = { x: 0.5, y: 0 };
 
 export interface DragHintHotspot {
   x: number;
@@ -29,6 +38,10 @@ export interface DragHintProps {
     idle: ReactNode;
     grabbing: ReactNode;
   };
+  iconMasks?: {
+    idle: IconSilhouette;
+    grabbing: IconSilhouette;
+  };
   hotspot?: DragHintHotspot;
   duration?: number;
   iterations?: "infinite" | number;
@@ -40,12 +53,16 @@ export const DragHint = ({
   size = SCENE_WIDTH,
   className,
   icons = DEFAULT_ICONS,
+  iconMasks,
   hotspot = DEFAULT_HOTSPOT,
   duration,
   iterations,
   playing,
 }: DragHintProps) => {
+  const maskId = useId();
   const scale = size / SCENE_WIDTH;
+  const masks =
+    iconMasks ?? (icons === DEFAULT_ICONS ? DEFAULT_ICON_MASKS : undefined);
 
   const style: DragHintStyle = {
     height: SCENE_HEIGHT * scale,
@@ -75,36 +92,79 @@ export const DragHint = ({
         className="gestik-drag-hint__stage"
         style={{ transform: `scale(${scale})` }}
       >
-        <svg
-          className="gestik-drag-hint__destination"
-          viewBox="0 0 32 32"
-          width="32"
-          height="32"
-          fill="none"
+        {masks && (
+          <IconMask id={maskId} width={SCENE_WIDTH} height={SCENE_HEIGHT}>
+            <g className="gestik-drag-hint__mask-origin">
+              <g className="gestik-drag-hint__mask-travel">
+                <g className="gestik-drag-hint__mask-lift">
+                  {(["idle", "grabbing"] as const).map((pose) => (
+                    <svg
+                      key={pose}
+                      className={`gestik-drag-hint__mask--${pose}`}
+                      x={16 - hotspot.x * ICON_SIZE}
+                      y={16 - hotspot.y * ICON_SIZE}
+                      width={ICON_SIZE}
+                      height={ICON_SIZE}
+                      viewBox={masks[pose].viewBox}
+                      focusable="false"
+                    >
+                      <path d={masks[pose].path} />
+                    </svg>
+                  ))}
+                </g>
+              </g>
+            </g>
+          </IconMask>
+        )}
+
+        <span
+          className="gestik-drag-hint__background"
+          style={masks ? { mask: `url(#${maskId})` } : undefined}
         >
-          <rect
-            x="1"
-            y="1"
-            width="30"
-            height="30"
-            rx="7"
-            strokeWidth="2"
-            strokeDasharray="4 4"
-          />
-        </svg>
+          <svg
+            className="gestik-drag-hint__destination"
+            viewBox="0 0 32 32"
+            width="32"
+            height="32"
+            fill="none"
+            focusable="false"
+          >
+            <rect
+              x="1"
+              y="1"
+              width="30"
+              height="30"
+              rx="7"
+              strokeWidth="2"
+              strokeDasharray="4 4"
+            />
+          </svg>
+
+          <span className="gestik-drag-hint__drag-group">
+            <span className="gestik-drag-hint__lift-group">
+              <svg
+                className="gestik-drag-hint__square"
+                viewBox="0 0 32 32"
+                width="32"
+                height="32"
+                fill="none"
+                focusable="false"
+              >
+                <rect
+                  x="1"
+                  y="1"
+                  width="30"
+                  height="30"
+                  rx="7"
+                  strokeWidth="2"
+                />
+              </svg>
+            </span>
+          </span>
+        </span>
 
         <span className="gestik-drag-hint__drag-group">
           <span className="gestik-drag-hint__lift-group">
-            <svg
-              className="gestik-drag-hint__square"
-              viewBox="0 0 32 32"
-              width="32"
-              height="32"
-              fill="none"
-            >
-              <rect x="1" y="1" width="30" height="30" rx="7" strokeWidth="2" />
-            </svg>
-
             <span
               className="gestik-drag-hint__icon-anchor"
               style={{

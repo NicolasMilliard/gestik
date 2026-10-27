@@ -1,18 +1,25 @@
+import type { IconSilhouette } from "../icon-mask";
+
+export const OPEN_HAND_SILHOUETTE: IconSilhouette = {
+  path: "M188 48a27.75 27.75 0 0 0-12 2.71V44a28 28 0 0 0-54.65-8.6A28 28 0 0 0 80 60v64l-3.82-6.13a28 28 0 0 0-48.6 27.82c16 33.77 28.93 57.72 43.72 72.69C86.24 233.54 103.2 240 128 240a88.1 88.1 0 0 0 88-88V76a28 28 0 0 0-28-28Z",
+  viewBox: "0 0 256 256",
+};
+
+const OUTLINE = `${OPEN_HAND_SILHOUETTE.path}m12 104a72.08 72.08 0 0 1-72 72c-20.38 0-33.51-4.88-45.33-16.85C69.44 193.74 57.26 171 41.9 138.58a6 6 0 0 0-.3-.58 12 12 0 0 1 20.79-12 2 2 0 0 0 .14.23l18.67 30A8 8 0 0 0 96 152V60a12 12 0 0 1 24 0v60a8 8 0 0 0 16 0V44a12 12 0 0 1 24 0v76a8 8 0 0 0 16 0V76a12 12 0 0 1 24 0Z`;
+
 export const OpenHand = () => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
     width="100%"
     height="100%"
-    fill="none"
+    fill="currentColor"
+    viewBox={OPEN_HAND_SILHOUETTE.viewBox}
+    focusable="false"
   >
     <path
-      fill="var(--gestik-drag-hint-surface, white)"
-      d="M4 12.5 2 15l4.5 5 5 2 7-1 3.5-5-.5-9.5H18V5l-3.5-1L12 2 9.5 4l-3 1-.5 8.5z"
+      fill="var(--gestik-drag-hint-surface, currentColor)"
+      d="M208 76v76a80 80 0 0 1-80 80c-44.18 0-60.75-21.28-93.32-90a20 20 0 0 1 34.64-20L88 152V60a20 20 0 0 1 40 0V44a20 20 0 0 1 40 0v32a20 20 0 0 1 40 0"
+      opacity="0.2"
     />
-    <path
-      fill="currentColor"
-      d="M12 1a2.996 2.996 0 0 1 2.892 2.214 3 3 0 0 1 3.229.665c.373.373.635.835.77 1.335A2.997 2.997 0 0 1 23 8v6a9 9 0 0 1-9 9h-2c-3.069 0-5.02-.968-6.694-2.63l-.003-.003-3.6-3.6-.035-.037A3.001 3.001 0 0 1 5 11.933V6a3 3 0 0 1 4.107-2.786A3 3 0 0 1 12 1m0 2a1 1 0 0 0-1 1v6.5a1 1 0 1 1-2 0V6a1 1 0 0 0-2 0v7.586l.707.707a1 1 0 1 1-1.414 1.414l-1.736-1.736a1 1 0 0 0-1.414 1.408l3.57 3.571C8.02 20.247 9.47 21 12 21h2a7 7 0 0 0 7-7V8a1 1 0 0 0-2 0v3a1 1 0 1 1-2 0V6a1 1 0 0 0-2 0v4a1 1 0 1 1-2 0V4a1 1 0 0 0-1-1"
-    />
+    <path d={OUTLINE} />
   </svg>
 );
