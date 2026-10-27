@@ -16,8 +16,8 @@ const DEFAULT_ICON_MASKS = {
   grabbing: CLOSED_HAND_SILHOUETTE,
   idle: OPEN_HAND_SILHOUETTE,
 };
-// Both poses share this palm point and the same wrist position.
-const DEFAULT_HOTSPOT = { x: 128 / 256, y: 152 / 256 };
+// A shared top-center hotspot places both poses across the square's lower edge.
+const DEFAULT_HOTSPOT = { x: 0.5, y: 0 };
 
 export interface DragHintHotspot {
   x: number;

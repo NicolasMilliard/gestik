@@ -25,20 +25,31 @@ describe(DragHint, () => {
     expect(hint?.style.height).toBe("54px");
   });
 
-  it("fits both built-in poses to their shared hotspot box", () => {
+  it("positions both built-in poses and cutouts at the square's lower edge", () => {
     const { container } = render(<DragHint />);
     const anchor = container.querySelector<HTMLElement>(
       ".gestik-drag-hint__icon-anchor"
     );
     const icons = anchor?.querySelectorAll("svg");
 
-    expect(anchor?.style.transform).toBe("translate(-50%, -59.375%)");
+    expect(anchor?.style.transform).toBe("translate(-50%, 0%)");
     expect(icons).toHaveLength(2);
     for (const icon of icons ?? []) {
-      expect(icon.getAttribute("width")).toBe("100%");
-      expect(icon.getAttribute("height")).toBe("100%");
-      expect(icon.getAttribute("focusable")).toBe("false");
+      expect(
+        ["width", "height", "focusable"].map((attribute) =>
+          icon.getAttribute(attribute)
+        )
+      ).toStrictEqual(["100%", "100%", "false"]);
     }
+    expect(
+      [...container.querySelectorAll("mask svg")].map((mask) => [
+        mask.getAttribute("x"),
+        mask.getAttribute("y"),
+      ])
+    ).toStrictEqual([
+      ["4", "16"],
+      ["4", "16"],
+    ]);
   });
 
   it("renders custom poses at the requested hotspot", () => {

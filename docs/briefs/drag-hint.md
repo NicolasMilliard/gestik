@@ -5,6 +5,7 @@ The moving square, its shadow, and the destination share a scene-sized SVG lumin
 ## Shape and animation contract
 
 - The built-in silhouettes reuse each hand's outer contour. Keep the silhouette and outline geometry together when updating artwork.
+- The default hotspot is `{ x: 0.5, y: 0 }`. Its shared top-center anchor places the hand across the square's lower edge in both poses. The filled, outline, and duotone demos inherit this default so their placement stays consistent with the main preview.
 - Custom `icons` can provide `iconMasks`, an idle/grabbing pair of `IconSilhouette` values. Each contains a filled SVG `path` and the visible icon's `viewBox`. Include the area inside hollow outlines. Custom icons without masks retain their previous unmasked behavior; do not assume they have the built-in hand shape.
 - The mask uses the same 24px icon box, hotspot, travel, lift, and pose keyframes as the visible icon. ViewBox origins and aspect ratios follow normal SVG sizing. Custom icons should fill their box and be static; additional transforms or animations inside a custom icon need equivalent silhouette geometry.
 - Keep the cutout opaque during loop fades; fading it would reveal the square through a translucent hand. Scope shadow styling without increasing specificity above the reduced-motion and playback overrides.

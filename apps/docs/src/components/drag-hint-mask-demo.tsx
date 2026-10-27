@@ -65,7 +65,6 @@ export const DragHintMaskDemo = () => {
                 key={replay}
                 size={168}
                 className="drag-mask-example__hint"
-                hotspot={{ x: 0.5, y: 0 }}
                 icons={{
                   grabbing: <DemoHand pose="grabbing" variant={variant} />,
                   idle: <DemoHand pose="idle" variant={variant} />,
@@ -108,7 +107,6 @@ export const DragHintMaskDemo = () => {
     idle: { path: openHandSilhouette, viewBox: "0 0 24 24" },
     grabbing: { path: closedHandSilhouette, viewBox: "0 0 24 24" },
   }}
-  hotspot={{ x: 0.5, y: 0 }}
 />`}</code>
       </pre>
     </section>
