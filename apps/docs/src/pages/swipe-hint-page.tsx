@@ -45,8 +45,9 @@ export const SwipeHintPage = () => (
       </p>
       <h2 className="text-3xl font-semibold tracking-tight">SwipeHint</h2>
       <p className="mt-3 text-zinc-600">
-        Show a fingertip making contact and swiping in a direction. Use it for
-        touch interactions such as browsing a carousel or moving between cards.
+        Show a fingertip drawing a rounded line in the swipe direction. Use it
+        for touch interactions such as browsing a carousel or moving between
+        cards.
       </p>
     </header>
 
@@ -97,11 +98,16 @@ export const SwipeHintPage = () => (
         Styling
       </h3>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
-        Use CSS variables to color the hand, its surface, and the contact pulse.
-        The built-in hand has a transparent interior by default; set the surface
-        color to give it a solid background. A custom <code>icon</code> fills a
-        32 by 32 pixel box before scaling. Set <code>hotspot</code> to its
-        fingertip: coordinates run from 0 to 1 across that box. The hand
+        Use CSS variables to color the hand, its surface, contact pulse, and
+        trail. The trail matches the icon&apos;s full color and follows the
+        fingertip with a small gap. Its oldest part starts fading early during
+        the swipe, with a soft edge that follows the moving finger. It uses a
+        2px stroke with rounded ends and scales with the scene. Override
+        <code> --gestik-swipe-hint-trail-color </code> to give it a separate
+        color. The built-in hand has a transparent interior by default; set the
+        surface color to give it a solid background. A custom <code>icon</code>{" "}
+        fills a 32 by 32 pixel box before scaling. Set <code>hotspot</code> to
+        its fingertip: coordinates run from 0 to 1 across that box. The hand
         compresses around this point during contact.
       </p>
 
@@ -136,9 +142,9 @@ export const SwipeHintPage = () => (
       <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
         SwipeHint is decorative and ignores pointer events. Pair it with visible
         instructions and accessible controls for the actual interaction. Under
-        reduced motion, the hand stays still, with no press, pulse, or travel;
-        the accompanying instruction communicates direction. Custom icons should
-        be static and non-interactive too.
+        reduced motion, the hand stays still, with no press, pulse, trail, or
+        travel; the accompanying instruction communicates direction. Custom
+        icons should be static and non-interactive too.
       </p>
     </section>
   </article>

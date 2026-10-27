@@ -38,6 +38,33 @@
     var(--gestik-swipe-hint-iterations) both;
 }
 
+.gestik-swipe-hint__trail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+}
+
+.gestik-swipe-hint__trail path {
+  stroke: var(
+    --gestik-swipe-hint-trail-color,
+    var(--gestik-swipe-hint-icon-color, currentColor)
+  );
+  stroke-dasharray: 1 2;
+  /* The normalized gap is 5 / 56: 4px plus the 1px round cap.
+     Literal dash values interpolate smoothly across browsers. */
+  stroke-dashoffset: 1.0892857143;
+  opacity: 0;
+  animation: gestik-swipe-hint-trail var(--gestik-swipe-hint-duration) linear
+    var(--gestik-swipe-hint-iterations) both;
+}
+
+.gestik-swipe-hint__trail-fade {
+  transform: translateX(14px);
+  animation: gestik-swipe-hint-trail-fade var(--gestik-swipe-hint-duration)
+    linear var(--gestik-swipe-hint-iterations) both;
+}
+
 .gestik-swipe-hint__contact {
   position: absolute;
   top: -10px;
@@ -120,6 +147,43 @@
   }
 }
 
+@keyframes gestik-swipe-hint-trail {
+  0%,
+  24% {
+    stroke-dashoffset: 1.0892857143;
+    opacity: 0;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  26% {
+    opacity: 1;
+  }
+
+  58%,
+  80% {
+    stroke-dashoffset: 0.0892857143;
+    opacity: 1;
+  }
+
+  81%,
+  100% {
+    stroke-dashoffset: 1.0892857143;
+    opacity: 0;
+  }
+}
+
+@keyframes gestik-swipe-hint-trail-fade {
+  0%,
+  31% {
+    transform: translateX(14px);
+  }
+
+  60%,
+  100% {
+    transform: translateX(78px);
+  }
+}
+
 @keyframes gestik-swipe-hint-press {
   0%,
   8%,
@@ -136,14 +200,18 @@
 
 .gestik-swipe-hint__gesture,
 .gestik-swipe-hint__contact,
-.gestik-swipe-hint__icon {
+.gestik-swipe-hint__icon,
+.gestik-swipe-hint__trail path,
+.gestik-swipe-hint__trail-fade {
   animation-play-state: var(--gestik-swipe-hint-play-state);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .gestik-swipe-hint__gesture,
   .gestik-swipe-hint__contact,
-  .gestik-swipe-hint__icon {
+  .gestik-swipe-hint__icon,
+  .gestik-swipe-hint__trail path,
+  .gestik-swipe-hint__trail-fade {
     animation: none;
   }
 }

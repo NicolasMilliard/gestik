@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
+import { useId } from "react";
 
 import "./swipe-hint.css";
 import { PointingHand } from "./icons/pointing-hand";
@@ -42,6 +43,7 @@ export const SwipeHint = ({
   iterations,
   playing,
 }: SwipeHintProps) => {
+  const trailId = useId();
   const scale = size / SCENE_WIDTH;
 
   const style: SwipeHintStyle = {
@@ -72,6 +74,63 @@ export const SwipeHint = ({
         className="gestik-swipe-hint__stage"
         style={{ transform: `scale(${scale})` }}
       >
+        <svg
+          className="gestik-swipe-hint__trail"
+          viewBox="0 0 112 72"
+          width={SCENE_WIDTH}
+          height={SCENE_HEIGHT}
+          fill="none"
+          focusable="false"
+        >
+          <defs>
+            <linearGradient
+              id={`${trailId}-fade`}
+              gradientUnits="userSpaceOnUse"
+              x1="0"
+              x2="12"
+            >
+              <stop offset="0" stopColor="white" stopOpacity="0" />
+              <stop offset="0.25" stopColor="white" stopOpacity="0.15625" />
+              <stop offset="0.5" stopColor="white" stopOpacity="0.5" />
+              <stop offset="0.75" stopColor="white" stopOpacity="0.84375" />
+              <stop offset="1" stopColor="white" />
+            </linearGradient>
+            <mask
+              id={`${trailId}-mask`}
+              x="0"
+              y="0"
+              width={SCENE_WIDTH}
+              height={SCENE_HEIGHT}
+              maskUnits="userSpaceOnUse"
+              maskContentUnits="userSpaceOnUse"
+              style={{ maskType: "alpha" }}
+            >
+              <g
+                transform={
+                  direction === "left"
+                    ? "translate(108 0) scale(-1 1)"
+                    : undefined
+                }
+              >
+                <g className="gestik-swipe-hint__trail-fade">
+                  <rect
+                    x="-112"
+                    width="336"
+                    height={SCENE_HEIGHT}
+                    fill={`url(#${trailId}-fade)`}
+                  />
+                </g>
+              </g>
+            </mask>
+          </defs>
+          <path
+            d={direction === "left" ? "M82 28H26" : "M26 28H82"}
+            pathLength="1"
+            strokeWidth="2"
+            strokeLinecap="round"
+            mask={`url(#${trailId}-mask)`}
+          />
+        </svg>
         <span className="gestik-swipe-hint__gesture">
           <span className="gestik-swipe-hint__contact" />
           <span

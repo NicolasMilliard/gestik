@@ -42,6 +42,25 @@ describe(SwipeHint, () => {
     expect(icon?.getAttribute("focusable")).toBe("false");
   });
 
+  it("draws a rounded trail from the contact point in either direction", () => {
+    const { container, rerender } = render(<SwipeHint size={168} />);
+    const trail = container.querySelector(".gestik-swipe-hint__trail");
+    const path = trail?.querySelector("path");
+
+    expect(trail?.getAttribute("focusable")).toBe("false");
+    expect(path?.getAttribute("d")).toBe("M26 28H82");
+    expect(path?.getAttribute("stroke-width")).toBe("2");
+    expect(path?.getAttribute("stroke-linecap")).toBe("round");
+
+    rerender(<SwipeHint direction="left" size={168} />);
+
+    expect(
+      container
+        .querySelector(".gestik-swipe-hint__trail path")
+        ?.getAttribute("d")
+    ).toBe("M82 28H26");
+  });
+
   it("renders a custom icon at its normalized contact point", () => {
     const { container } = render(
       <SwipeHint
@@ -59,6 +78,31 @@ describe(SwipeHint, () => {
 
     expect(anchor?.style.transform).toBe("translate(-25%, -75%)");
     expect(icon.parentElement?.style.transformOrigin).toBe("25% 75%");
+  });
+
+  it("keeps each trail connected to its own fade mask and gradient", () => {
+    const { container } = render(
+      <>
+        <SwipeHint />
+        <SwipeHint direction="left" />
+      </>
+    );
+    const maskIds = [
+      ...container.querySelectorAll(".gestik-swipe-hint__trail"),
+    ].map((trail) => {
+      const mask = trail.querySelector("mask");
+      const gradient = trail.querySelector("linearGradient");
+
+      expect(trail.querySelector("path")?.getAttribute("mask")).toBe(
+        `url(#${mask?.id})`
+      );
+      expect(mask?.querySelector("rect")?.getAttribute("fill")).toBe(
+        `url(#${gradient?.id})`
+      );
+      return mask?.id;
+    });
+
+    expect(new Set(maskIds).size).toBe(2);
   });
 
   it("applies finite playback settings and can pause and resume", () => {
