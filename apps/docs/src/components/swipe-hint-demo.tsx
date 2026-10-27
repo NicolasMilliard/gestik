@@ -70,7 +70,7 @@ export const SwipeHintDemo = () => {
         </div>
 
         <div className="border-t border-zinc-200 bg-zinc-50 p-5 lg:border-t-0 lg:border-l">
-          <h2 className="mb-6 text-sm font-semibold">Preview settings</h2>
+          <h2 className="mb-6 text-sm font-medium">Preview settings</h2>
 
           <div className="mb-5">
             <span
@@ -111,7 +111,7 @@ export const SwipeHintDemo = () => {
             </span>
             <input
               id="swipe-hint-size"
-              className="mt-3 w-full accent-orange-700"
+              className="mt-3 w-full accent-brand"
               type="range"
               min="80"
               max="180"
@@ -133,7 +133,7 @@ export const SwipeHintDemo = () => {
             </span>
             <input
               id="swipe-hint-duration"
-              className="mt-3 w-full accent-orange-700"
+              className="mt-3 w-full accent-brand"
               type="range"
               min="800"
               max="4000"
@@ -197,7 +197,7 @@ export const SwipeHintDemo = () => {
       </div>
 
       <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 text-xs font-semibold text-zinc-500">
+        <div className="border-b border-zinc-200 px-5 py-3 text-xs font-medium text-zinc-500">
           React
         </div>
         <pre className="overflow-x-auto p-5 text-xs leading-6 sm:text-sm">

@@ -20,9 +20,9 @@ const App = () => {
   }, [pathname]);
 
   return (
-    <div className="min-h-screen bg-white font-sans text-zinc-900 lg:grid lg:grid-cols-[240px_minmax(0,1fr)]">
+    <div className="min-h-screen bg-white font-sans text-zinc-700 lg:grid lg:grid-cols-[216px_minmax(0,1fr)]">
       <a
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:ring-2 focus:ring-orange-700"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:ring-2 focus:ring-brand"
         href="#main-content"
       >
         Skip to content
@@ -30,7 +30,7 @@ const App = () => {
       <DocsSidebar />
 
       <main
-        className="mx-auto w-full max-w-5xl px-5 py-12 outline-none sm:px-8 lg:px-12 lg:py-16"
+        className="mx-auto w-full max-w-4xl px-5 py-10 outline-none sm:px-8 lg:px-12 lg:py-16"
         id="main-content"
         ref={main}
         tabIndex={-1}
