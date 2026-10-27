@@ -93,10 +93,11 @@ export const DragHintPage = () => (
         the duotone fill.
       </p>
 
-      <div className="mt-6 flex items-center gap-5 rounded-xl border border-zinc-200 p-5">
-        <DragHint className="custom-drag-hint" size={84} />
-        <span className="text-sm text-zinc-600">
-          Example using the custom colors in <code>index.css</code>.
+      <div className="mt-6 flex flex-col items-center gap-5 rounded-xl border border-zinc-200 p-5 sm:flex-row">
+        <DragHint className="custom-drag-hint shrink-0" size={112} />
+        <span className="text-center text-sm text-zinc-600 sm:text-left">
+          Drag the teal square to the violet destination. The amber hand shows
+          the gesture.
         </span>
       </div>
 
@@ -106,12 +107,12 @@ export const DragHintPage = () => (
         </div>
         <pre className="overflow-x-auto p-5 text-xs leading-6 sm:text-sm">
           <code>{`.custom-drag-hint {
-  --gestik-drag-hint-square-stroke: #155e75;
-  --gestik-drag-hint-target-stroke: #155e75;
+  --gestik-drag-hint-square-stroke: #0f766e;
+  --gestik-drag-hint-target-stroke: #7c3aed;
   --gestik-drag-hint-target-stroke-opacity: 0.65;
-  --gestik-drag-hint-square-fill: rgb(236 254 255 / 85%);
-  --gestik-drag-hint-icon-color: #0e7490;
-  --gestik-drag-hint-surface: #ecfeff;
+  --gestik-drag-hint-square-fill: #ccfbf1;
+  --gestik-drag-hint-icon-color: #b45309;
+  --gestik-drag-hint-surface: #f59e0b;
 }`}</code>
         </pre>
       </div>

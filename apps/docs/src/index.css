@@ -124,12 +124,12 @@
 }
 
 .custom-drag-hint {
-  --gestik-drag-hint-square-stroke: #155e75;
-  --gestik-drag-hint-target-stroke: #155e75;
+  --gestik-drag-hint-square-stroke: #0f766e;
+  --gestik-drag-hint-target-stroke: #7c3aed;
   --gestik-drag-hint-target-stroke-opacity: 0.65;
-  --gestik-drag-hint-square-fill: rgb(236 254 255 / 85%);
-  --gestik-drag-hint-icon-color: #0e7490;
-  --gestik-drag-hint-surface: #ecfeff;
+  --gestik-drag-hint-square-fill: #ccfbf1;
+  --gestik-drag-hint-icon-color: #b45309;
+  --gestik-drag-hint-surface: #f59e0b;
 }
 
 .drag-mask-example {
@@ -142,10 +142,12 @@
 }
 
 .drag-mask-example__hint {
-  --gestik-drag-hint-icon-color: #155e75;
-  --gestik-drag-hint-square-fill: #fda4af;
-  --gestik-drag-hint-square-stroke: #9f1239;
-  --gestik-drag-hint-target-stroke: #9f1239;
+  --gestik-drag-hint-square-fill: color-mix(
+    in srgb,
+    var(--color-brand) 30%,
+    white
+  );
+  color: var(--color-brand);
 }
 
 @theme inline {
