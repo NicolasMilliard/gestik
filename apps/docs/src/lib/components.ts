@@ -1,6 +1,7 @@
 import {
   DragHint,
   HoldHint,
+  ResizeHint,
   ScrollHint,
   ShortcutHint,
   SwipeHint,
@@ -8,6 +9,7 @@ import {
 
 import { DragHintPage } from "../pages/drag-hint-page";
 import { HoldHintPage } from "../pages/hold-hint-page";
+import { ResizeHintPage } from "../pages/resize-hint-page";
 import { ScrollHintPage } from "../pages/scroll-hint-page";
 import { ShortcutHintPage } from "../pages/shortcut-hint-page";
 import { SwipeHintPage } from "../pages/swipe-hint-page";
@@ -24,6 +26,12 @@ export const components = [
     Preview: HoldHint,
     name: "HoldHint",
     path: "/hold-hint",
+  },
+  {
+    Page: ResizeHintPage,
+    Preview: ResizeHint,
+    name: "ResizeHint",
+    path: "/resize-hint",
   },
   {
     Page: ScrollHintPage,
