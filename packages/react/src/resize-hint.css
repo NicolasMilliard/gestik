@@ -1,0 +1,130 @@
+.gestik-resize-hint {
+  --gestik-resize-hint-duration: 2200ms;
+  --gestik-resize-hint-iterations: infinite;
+  --gestik-resize-hint-play-state: running;
+
+  position: relative;
+  display: inline-block;
+  width: 112px;
+  height: 88px;
+  vertical-align: middle;
+  pointer-events: none;
+  color: var(--gestik-resize-hint-color, inherit);
+}
+
+.gestik-resize-hint__stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 112px;
+  height: 88px;
+  transform-origin: 0 0;
+}
+
+.gestik-resize-hint__frame {
+  width: 32px;
+  height: 24px;
+  stroke: var(--gestik-resize-hint-frame-color, currentColor);
+  animation: gestik-resize-hint-grow var(--gestik-resize-hint-duration) linear
+    var(--gestik-resize-hint-iterations) both;
+}
+
+.gestik-resize-hint__travel {
+  animation: gestik-resize-hint-travel var(--gestik-resize-hint-duration) linear
+    var(--gestik-resize-hint-iterations) both;
+}
+
+.gestik-resize-hint__press {
+  transform-origin: 0 0;
+  animation: gestik-resize-hint-press var(--gestik-resize-hint-duration)
+    ease-in-out var(--gestik-resize-hint-iterations) both;
+}
+
+/* Hide the reset so the return never demonstrates shrinking the frame. */
+.gestik-resize-hint__artwork {
+  animation: gestik-resize-hint-visibility var(--gestik-resize-hint-duration)
+    linear var(--gestik-resize-hint-iterations) both;
+}
+
+@keyframes gestik-resize-hint-grow {
+  0%,
+  8% {
+    width: 32px;
+    height: 24px;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  58%,
+  80% {
+    width: 56px;
+    height: 42px;
+  }
+
+  81%,
+  100% {
+    width: 32px;
+    height: 24px;
+  }
+}
+
+@keyframes gestik-resize-hint-travel {
+  0%,
+  8% {
+    transform: translate(0, 0);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  58%,
+  80% {
+    transform: translate(24px, 18px);
+  }
+
+  81%,
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes gestik-resize-hint-press {
+  0%,
+  8%,
+  58%,
+  100% {
+    transform: scale(1);
+  }
+
+  14%,
+  48% {
+    transform: scale(0.9);
+  }
+}
+
+@keyframes gestik-resize-hint-visibility {
+  0%,
+  72%,
+  100% {
+    opacity: 1;
+  }
+
+  80%,
+  86% {
+    opacity: 0;
+  }
+}
+
+.gestik-resize-hint__frame,
+.gestik-resize-hint__travel,
+.gestik-resize-hint__press,
+.gestik-resize-hint__artwork {
+  animation-play-state: var(--gestik-resize-hint-play-state);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gestik-resize-hint__frame,
+  .gestik-resize-hint__travel,
+  .gestik-resize-hint__press,
+  .gestik-resize-hint__artwork {
+    animation: none;
+  }
+}

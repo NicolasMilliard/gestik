@@ -47,15 +47,16 @@ describe("Docs navigation", () => {
     ).toStrictEqual([
       ["DragHint", "#/drag-hint"],
       ["HoldHint", "#/hold-hint"],
+      ["ResizeHint", "#/resize-hint"],
       ["ScrollHint", "#/scroll-hint"],
       ["ShortcutHint", "#/shortcut-hint"],
       ["SwipeHint", "#/swipe-hint"],
     ]);
     expect(
       gallery.querySelectorAll(
-        ".gestik-drag-hint, .gestik-hold-hint, .gestik-scroll-hint, .gestik-shortcut-hint, .gestik-swipe-hint"
+        ".gestik-drag-hint, .gestik-hold-hint, .gestik-resize-hint, .gestik-scroll-hint, .gestik-shortcut-hint, .gestik-swipe-hint"
       )
-    ).toHaveLength(5);
+    ).toHaveLength(6);
     expect(screen.queryByRole("slider")).toBeNull();
     expect(screen.queryByRole("heading", { name: "Props" })).toBeNull();
     expect(
@@ -121,6 +122,7 @@ describe("Docs navigation", () => {
     ["Overview", "/"],
     ["DragHint", "/drag-hint"],
     ["HoldHint", "/hold-hint"],
+    ["ResizeHint", "/resize-hint"],
     ["ScrollHint", "/scroll-hint"],
     ["ShortcutHint", "/shortcut-hint"],
     ["SwipeHint", "/swipe-hint"],
@@ -143,6 +145,7 @@ describe("Docs navigation", () => {
   it.each([
     ["/drag-hint", "DragHint", "SwipeHint"],
     ["/hold-hint", "HoldHint", "SwipeHint"],
+    ["/resize-hint", "ResizeHint", "SwipeHint"],
     ["/scroll-hint", "ScrollHint", "SwipeHint"],
     ["/shortcut-hint", "ShortcutHint", "SwipeHint"],
     ["/swipe-hint", "SwipeHint", "DragHint"],
@@ -166,6 +169,7 @@ describe("Docs navigation", () => {
   it.each([
     ["/drag-hint", "DragHint"],
     ["/hold-hint", "HoldHint"],
+    ["/resize-hint", "ResizeHint"],
     ["/scroll-hint", "ScrollHint"],
     ["/shortcut-hint", "ShortcutHint"],
     ["/swipe-hint", "SwipeHint"],

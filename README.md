@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/NicolasMilliard/gestik/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/NicolasMilliard/gestik/actions/workflows/ci.yml)
 
-Animated gesture hints for React interfaces. Show users how to drag, hold, swipe, and scroll.
+Animated gesture hints for React interfaces. Show users how to drag, hold, resize, swipe, and scroll.
 
 Gestik demonstrates the movement a person makes to interact. Your application handles the gesture and decides when to show the hint.
 
@@ -14,6 +14,7 @@ Gestik demonstrates the movement a person makes to interact. Your application ha
 | --- | --- | --- |
 | `DragHint` | Drag an element from one position to another | [Try DragHint](https://nicolasmilliard.github.io/gestik/#/drag-hint) |
 | `HoldHint` | Press and keep a finger in place | [Try HoldHint](https://nicolasmilliard.github.io/gestik/#/hold-hint) |
+| `ResizeHint` | Pull a corner outward to make an element larger | [Try ResizeHint](https://nicolasmilliard.github.io/gestik/#/resize-hint) |
 | `ScrollHint` | Move vertically to explore content | [Try ScrollHint](https://nicolasmilliard.github.io/gestik/#/scroll-hint) |
 | `ShortcutHint` | Hold keys together to perform a keyboard shortcut | [Try ShortcutHint](https://nicolasmilliard.github.io/gestik/#/shortcut-hint) |
 | `SwipeHint` | Press and swipe left or right | [Try SwipeHint](https://nicolasmilliard.github.io/gestik/#/swipe-hint) |
