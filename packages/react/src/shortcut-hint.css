@@ -1,0 +1,94 @@
+.gestik-shortcut-hint {
+  --gestik-shortcut-hint-duration: 2400ms;
+  --gestik-shortcut-hint-iterations: infinite;
+  --gestik-shortcut-hint-play-state: running;
+
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  pointer-events: none;
+}
+
+.gestik-shortcut-hint__stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 72px;
+  transform-origin: 0 0;
+}
+
+.gestik-shortcut-hint__keystroke {
+  display: flex;
+  align-items: center;
+}
+
+.gestik-shortcut-hint__separator {
+  width: 16px;
+  color: var(--gestik-shortcut-hint-color, inherit);
+  font:
+    14px/1 ui-sans-serif,
+    system-ui,
+    sans-serif;
+  text-align: center;
+  opacity: 0.45;
+}
+
+.gestik-shortcut-hint__keycap {
+  box-sizing: border-box;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 6px;
+  border: 2px solid var(--gestik-shortcut-hint-color, currentColor);
+  border-radius: 8px;
+  background: var(--gestik-shortcut-hint-surface, #fff);
+  box-shadow: 0 4px 0 var(--gestik-shortcut-hint-color, currentColor);
+  color: var(--gestik-shortcut-hint-color, inherit);
+  font:
+    500 16px/1 ui-sans-serif,
+    system-ui,
+    sans-serif;
+  animation: gestik-shortcut-hint-press var(--gestik-shortcut-hint-duration)
+    var(--gestik-shortcut-hint-iterations) both;
+  /* Every key shares a full cycle; easing places its press within that cycle. */
+  animation-timing-function: linear(
+    0 0% var(--gestik-shortcut-hint-press-start),
+    1 var(--gestik-shortcut-hint-press-end) 56%,
+    0 64% 100%
+  );
+  animation-play-state: var(--gestik-shortcut-hint-play-state);
+}
+
+.gestik-shortcut-hint__icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.gestik-shortcut-hint__keycap > svg {
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes gestik-shortcut-hint-press {
+  from {
+    box-shadow: 0 4px 0 var(--gestik-shortcut-hint-color, currentColor);
+    transform: translateY(0);
+  }
+
+  to {
+    box-shadow: 0 1px 0 var(--gestik-shortcut-hint-color, currentColor);
+    transform: translateY(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gestik-shortcut-hint__keycap {
+    animation: none;
+  }
+}

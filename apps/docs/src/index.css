@@ -122,6 +122,11 @@
   --gestik-scroll-hint-color: #0e7490;
 }
 
+.custom-shortcut-hint {
+  --gestik-shortcut-hint-color: #0e7490;
+  --gestik-shortcut-hint-surface: #ecfeff;
+}
+
 .custom-swipe-hint {
   --gestik-swipe-hint-icon-color: #0e7490;
   --gestik-swipe-hint-surface: #ecfeff;
