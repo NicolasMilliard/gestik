@@ -1,6 +1,7 @@
-import { DragHint, SwipeHint } from "@gestik/react";
+import { DragHint, ScrollHint, SwipeHint } from "@gestik/react";
 
 import { DragHintPage } from "../pages/drag-hint-page";
+import { ScrollHintPage } from "../pages/scroll-hint-page";
 import { SwipeHintPage } from "../pages/swipe-hint-page";
 
 export const components = [
@@ -9,6 +10,12 @@ export const components = [
     Preview: DragHint,
     name: "DragHint",
     path: "/drag-hint",
+  },
+  {
+    Page: ScrollHintPage,
+    Preview: ScrollHint,
+    name: "ScrollHint",
+    path: "/scroll-hint",
   },
   {
     Page: SwipeHintPage,

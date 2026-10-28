@@ -1,0 +1,52 @@
+.gestik-scroll-hint {
+  --gestik-scroll-hint-duration: 2400ms;
+  --gestik-scroll-hint-iterations: infinite;
+  --gestik-scroll-hint-play-state: running;
+
+  position: relative;
+  display: inline-block;
+  width: 112px;
+  height: 88px;
+  vertical-align: middle;
+  pointer-events: none;
+}
+
+.gestik-scroll-hint__stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 112px;
+  height: 88px;
+  transform-origin: 0 0;
+}
+
+.gestik-scroll-hint__motion {
+  position: absolute;
+  top: 16px;
+  left: 40px;
+  display: block;
+  width: 32px;
+  height: 32px;
+  color: var(--gestik-scroll-hint-color, inherit);
+  animation: gestik-scroll-hint-travel var(--gestik-scroll-hint-duration)
+    ease-in-out var(--gestik-scroll-hint-iterations) both;
+  animation-play-state: var(--gestik-scroll-hint-play-state);
+}
+
+@keyframes gestik-scroll-hint-travel {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gestik-scroll-hint__motion {
+    animation: none;
+  }
+}

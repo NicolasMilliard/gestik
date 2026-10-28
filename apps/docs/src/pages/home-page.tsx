@@ -11,7 +11,7 @@ export const HomePage = () => (
     <InstallCommand />
 
     <section className="mt-8" aria-label="Components">
-      <ul className="grid max-w-lg grid-cols-2 gap-3 sm:gap-4">
+      <ul className="grid max-w-lg grid-cols-2 gap-3 sm:gap-4 xl:max-w-none xl:grid-cols-3">
         {components.map(({ name, path, Preview }) => (
           <li key={path}>
             <Link
