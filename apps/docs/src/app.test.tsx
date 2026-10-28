@@ -43,11 +43,14 @@ describe("Docs navigation", () => {
       links.map((link) => [link.textContent, link.getAttribute("href")])
     ).toStrictEqual([
       ["DragHint", "/drag-hint"],
+      ["ScrollHint", "/scroll-hint"],
       ["SwipeHint", "/swipe-hint"],
     ]);
     expect(
-      gallery.querySelectorAll(".gestik-drag-hint, .gestik-swipe-hint")
-    ).toHaveLength(2);
+      gallery.querySelectorAll(
+        ".gestik-drag-hint, .gestik-scroll-hint, .gestik-swipe-hint"
+      )
+    ).toHaveLength(3);
     expect(screen.queryByRole("slider")).toBeNull();
     expect(screen.queryByRole("heading", { name: "Props" })).toBeNull();
     expect(
@@ -112,6 +115,7 @@ describe("Docs navigation", () => {
   it.each([
     ["Overview", "/"],
     ["DragHint", "/drag-hint"],
+    ["ScrollHint", "/scroll-hint"],
     ["SwipeHint", "/swipe-hint"],
   ])("closes navigation after choosing %s", (name, path) => {
     renderAt("/");
@@ -130,6 +134,7 @@ describe("Docs navigation", () => {
 
   it.each([
     ["/drag-hint", "DragHint", "SwipeHint"],
+    ["/scroll-hint", "ScrollHint", "SwipeHint"],
     ["/swipe-hint", "SwipeHint", "DragHint"],
   ])(
     "opens %s directly with only its own documentation",
@@ -150,6 +155,7 @@ describe("Docs navigation", () => {
 
   it.each([
     ["/drag-hint", "DragHint"],
+    ["/scroll-hint", "ScrollHint"],
     ["/swipe-hint", "SwipeHint"],
   ])("identifies the active page at %s", (path, name) => {
     renderAt(path);

@@ -3,6 +3,7 @@ export {
   type DragHintHotspot,
   type DragHintProps,
 } from "./drag-hint.js";
+export { ScrollHint, type ScrollHintProps } from "./scroll-hint.js";
 export {
   SwipeHint,
   type SwipeHintHotspot,
