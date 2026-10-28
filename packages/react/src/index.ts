@@ -5,6 +5,11 @@ export {
 } from "./drag-hint.js";
 export { ScrollHint, type ScrollHintProps } from "./scroll-hint.js";
 export {
+  ShortcutHint,
+  type ShortcutHintKeys,
+  type ShortcutHintProps,
+} from "./shortcut-hint.js";
+export {
   SwipeHint,
   type SwipeHintHotspot,
   type SwipeHintProps,
