@@ -1,0 +1,114 @@
+.gestik-hold-hint {
+  --gestik-hold-hint-duration: 3000ms;
+  --gestik-hold-hint-iterations: infinite;
+  --gestik-hold-hint-play-state: running;
+
+  position: relative;
+  display: inline-block;
+  width: 112px;
+  height: 72px;
+  vertical-align: middle;
+  pointer-events: none;
+  color: var(--gestik-hold-hint-color, inherit);
+}
+
+.gestik-hold-hint__stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 112px;
+  height: 72px;
+  transform-origin: 0 0;
+}
+
+.gestik-hold-hint__press {
+  transform-origin: 0 0;
+  animation: gestik-hold-hint-press var(--gestik-hold-hint-duration) ease-in-out
+    var(--gestik-hold-hint-iterations) both;
+}
+
+.gestik-hold-hint__ring {
+  stroke: var(--gestik-hold-hint-ring-color, currentColor);
+  opacity: 0;
+  animation: gestik-hold-hint-ring var(--gestik-hold-hint-duration) linear
+    var(--gestik-hold-hint-iterations) both;
+}
+
+.gestik-hold-hint__track {
+  opacity: 0.15;
+}
+
+.gestik-hold-hint__progress {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  animation: gestik-hold-hint-progress var(--gestik-hold-hint-duration) linear
+    var(--gestik-hold-hint-iterations) both;
+}
+
+@keyframes gestik-hold-hint-press {
+  0%,
+  8%,
+  80%,
+  100% {
+    transform: scale(1);
+  }
+
+  16%,
+  72% {
+    transform: scale(0.9);
+  }
+}
+
+@keyframes gestik-hold-hint-ring {
+  0%,
+  8%,
+  84%,
+  100% {
+    opacity: 0;
+  }
+
+  16%,
+  72% {
+    opacity: 1;
+  }
+}
+
+@keyframes gestik-hold-hint-progress {
+  0%,
+  16% {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+
+  17% {
+    opacity: 1;
+  }
+
+  66%,
+  84% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  85%,
+  100% {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+}
+
+.gestik-hold-hint__press,
+.gestik-hold-hint__ring,
+.gestik-hold-hint__progress {
+  animation-play-state: var(--gestik-hold-hint-play-state);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gestik-hold-hint__press,
+  .gestik-hold-hint__ring,
+  .gestik-hold-hint__progress {
+    animation: none;
+  }
+}

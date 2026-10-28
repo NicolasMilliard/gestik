@@ -118,6 +118,10 @@
   }
 }
 
+.custom-hold-hint {
+  --gestik-hold-hint-color: #0e7490;
+}
+
 .custom-scroll-hint {
   --gestik-scroll-hint-color: #0e7490;
 }
