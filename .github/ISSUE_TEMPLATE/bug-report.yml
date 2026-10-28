@@ -1,0 +1,30 @@
+name: Bug report
+description: Report a problem with a gesture hint or the documentation.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Name the component or docs page and describe the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: How can we reproduce it?
+      description: Include a minimal code example, reproduction link, or docs URL with the settings you used. For motion problems, include direction, size, playback settings, and your reduced-motion preference.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include the Gestik version or commit, browser, operating system, and React version if relevant.
+    validations:
+      required: true

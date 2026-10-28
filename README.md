@@ -1,29 +1,68 @@
 # Gestik
 
-Animated interaction hints for React interfaces. Gestik demonstrates a gesture; your application handles the interaction and decides when to show the hint.
+[![CI](https://github.com/NicolasMilliard/gestik/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/NicolasMilliard/gestik/actions/workflows/ci.yml)
 
-The project includes `DragHint`, `ScrollHint`, `SwipeHint`, and an interactive documentation app.
+Animated gesture hints for React interfaces. Show users how to drag, swipe, and scroll.
 
-Browse the [interactive docs](https://nicolasmilliard.github.io/gestik/). See the [hosting guide](apps/docs/README.md#github-pages) for GitHub Pages setup.
+Gestik demonstrates the movement a person makes to interact. Your application handles the gesture and decides when to show the hint.
+
+**[Explore the interactive docs](https://nicolasmilliard.github.io/gestik/)** to try each animation, adjust its settings, and see its props and examples.
+
+## Components
+
+| Component | Movement | Playground |
+| --- | --- | --- |
+| `DragHint` | Drag an element from one position to another | [Try DragHint](https://nicolasmilliard.github.io/gestik/#/drag-hint) |
+| `ScrollHint` | Move vertically to explore content | [Try ScrollHint](https://nicolasmilliard.github.io/gestik/#/scroll-hint) |
+| `SwipeHint` | Press and swipe left or right | [Try SwipeHint](https://nicolasmilliard.github.io/gestik/#/swipe-hint) |
+
+The hints use CSS animations, scale with their `size`, and support playback controls and custom colors. They are decorative, stay out of the accessibility tree and tab order, and become static when the user prefers reduced motion. Pair them with visible instructions and accessible controls in your application.
+
+## Project status
+
+Gestik is in early development. `@gestik/react` is currently a private workspace package at version `0.0.0` and has not been published to npm. The install commands in the docs are a preview; use the live playgrounds or run this repository locally to explore the components.
+
+## Usage preview
+
+Within this repository, components are imported from `@gestik/react`:
+
+```tsx
+import { SwipeHint } from "@gestik/react";
+
+export const SwipeInstruction = () => (
+  <div>
+    <p>Swipe left to see the next item.</p>
+    <SwipeHint direction="left" />
+  </div>
+);
+```
+
+See the [component docs](https://nicolasmilliard.github.io/gestik/) for animation timing, finite playback, styling, and custom artwork where supported.
 
 ## Development
 
 Use the Bun version recorded in `package.json` and Node.js 22.18 or newer.
 
 ```sh
+git clone https://github.com/NicolasMilliard/gestik.git
+cd gestik
 bun install --frozen-lockfile
 bun run dev
 ```
 
-`bun run dev` builds the React package before starting the Vite docs server.
+`bun run dev` builds the React package before starting the Vite docs server. Open the local URL printed in the terminal.
 
 ```sh
 bun run fix     # Apply lint and formatting fixes
 bun run verify  # Run all CI checks locally
 ```
 
+The React library lives in `packages/react`; the Vite docs app lives in `apps/docs`. See the [hosting guide](apps/docs/README.md#github-pages) for production previews and GitHub Pages deployment.
+
 ## Contributing
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md) for the workflow, validation commands, and how repository conventions evolve. Coding agents should also read [AGENTS.md](AGENTS.md).
+Read [CONTRIBUTING.md](CONTRIBUTING.md) for setup, validation, and contribution guidelines. [Open an issue](https://github.com/NicolasMilliard/gestik/issues/new/choose) to report a bug or propose a gesture hint. For new hints, describe the movement a person should learn and where the hint would help.
 
-Code standards use [Ultracite](https://www.ultracite.ai/) with Oxlint and Oxfmt. Their configuration is shared by the library, docs app, editor integration, and CI.
+## License
+
+Gestik is licensed under [MIT](LICENSE). The docs' bundled fonts retain their [own licenses](apps/docs/public/fonts/README.md).

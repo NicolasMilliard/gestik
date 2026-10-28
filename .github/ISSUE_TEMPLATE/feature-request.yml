@@ -1,0 +1,22 @@
+name: Feature request
+description: Suggest a gesture hint or an improvement to Gestik.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What should the user learn or be able to do?
+      description: Describe the interaction and where the hint would help. For improvements to the docs or existing components, describe the problem you want to solve.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What do you propose?
+      description: For a new hint, describe the movement it should demonstrate. Include sketches, references, or examples if useful.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives or related hints
+      description: Mention any existing Gestik components or other approaches you considered.
