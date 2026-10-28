@@ -8,17 +8,17 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
-import { BrowserRouter } from "react-router";
+import { HashRouter } from "react-router";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import App from "./app";
 
 const renderAt = (path: string) => {
-  window.history.replaceState(null, "", path);
+  window.history.replaceState(null, "", `/gestik/#${path}`);
   return render(
-    <BrowserRouter>
+    <HashRouter>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
@@ -42,9 +42,9 @@ describe("Docs navigation", () => {
     expect(
       links.map((link) => [link.textContent, link.getAttribute("href")])
     ).toStrictEqual([
-      ["DragHint", "/drag-hint"],
-      ["ScrollHint", "/scroll-hint"],
-      ["SwipeHint", "/swipe-hint"],
+      ["DragHint", "#/drag-hint"],
+      ["ScrollHint", "#/scroll-hint"],
+      ["SwipeHint", "#/swipe-hint"],
     ]);
     expect(
       gallery.querySelectorAll(
@@ -128,7 +128,8 @@ describe("Docs navigation", () => {
       ).getByRole("link", { name })
     );
 
-    expect(window.location.pathname).toBe(path);
+    expect(window.location.hash).toBe(`#${path}`);
+    expect(window.location.pathname).toBe("/gestik/");
     expect(toggle.getAttribute("aria-expanded")).toBe("false");
   });
 
@@ -175,7 +176,7 @@ describe("Docs navigation", () => {
     const gallery = screen.getByRole("region", { name: "Components" });
     fireEvent.click(within(gallery).getByRole("link", { name: "DragHint" }));
 
-    expect(window.location.pathname).toBe("/drag-hint");
+    expect(window.location.hash).toBe("#/drag-hint");
     expect(
       screen.getByRole("heading", {
         name: "Filled, outline, and duotone icons",
@@ -185,7 +186,7 @@ describe("Docs navigation", () => {
     expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
 
     fireEvent.click(screen.getByRole("link", { name: "SwipeHint" }));
-    expect(window.location.pathname).toBe("/swipe-hint");
+    expect(window.location.hash).toBe("#/swipe-hint");
   });
 
   it("follows browser back and forward through component and home pages", async () => {
@@ -221,7 +222,19 @@ describe("Docs navigation", () => {
       screen.getByRole("heading", { name: "Page not found" })
     ).toBeDefined();
     fireEvent.click(screen.getByRole("link", { name: "Back to overview" }));
-    expect(window.location.pathname).toBe("/");
+    expect(window.location.hash).toBe("#/");
     expect(screen.getByRole("region", { name: "Components" })).toBeDefined();
+  });
+
+  it("skips to the main content without replacing the component route", () => {
+    renderAt("/drag-hint");
+
+    fireEvent.click(screen.getByRole("link", { name: "Skip to content" }));
+
+    expect(document.activeElement).toBe(screen.getByRole("main"));
+    expect(window.location.hash).toBe("#/drag-hint");
+    expect(
+      screen.getByRole("heading", { level: 1, name: "DragHint" })
+    ).toBeDefined();
   });
 });

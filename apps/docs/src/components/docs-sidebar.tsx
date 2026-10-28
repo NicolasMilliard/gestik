@@ -39,7 +39,7 @@ export const DocsSidebar = () => {
             alt=""
             className="size-7"
             height={28}
-            src="/favicon.svg"
+            src={`${import.meta.env.BASE_URL}favicon.svg`}
             width={28}
             aria-hidden="true"
           />

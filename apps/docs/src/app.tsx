@@ -24,6 +24,11 @@ const App = () => {
       <a
         className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:ring-2 focus:ring-brand"
         href="#main-content"
+        onClick={(event) => {
+          // Focus the content without replacing the hash route.
+          event.preventDefault();
+          main.current?.focus();
+        }}
       >
         Skip to content
       </a>
