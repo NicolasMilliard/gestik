@@ -4,6 +4,8 @@ Animated interaction hints for React interfaces. Gestik demonstrates a gesture; 
 
 The project includes `DragHint`, `ScrollHint`, `SwipeHint`, and an interactive documentation app.
 
+Browse the [interactive docs](https://nicolasmilliard.github.io/gestik/). See the [hosting guide](apps/docs/README.md#github-pages) for GitHub Pages setup.
+
 ## Development
 
 Use the Bun version recorded in `package.json` and Node.js 22.18 or newer.

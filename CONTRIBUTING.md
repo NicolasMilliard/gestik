@@ -27,7 +27,9 @@ Run these from the repository root:
 
 The docs consume the package's built exports, so the library must be built before the docs can resolve it in a clean checkout. `verify` handles this order. Use `bun run test`, since bare `bun test` invokes a different test runner.
 
-CI runs `bun install --frozen-lockfile` and `bun run verify` for pull requests and pushes to `main`. It uses read-only repository permissions and requires no project secrets, so the same checks can run for fork contributions. GitHub may require a maintainer to approve a first-time contributor's workflow run. Requiring the `Verify` check before merging is a separate GitHub branch ruleset setting.
+CI runs `bun install --frozen-lockfile` and `bun run verify` for pull requests and pushes to `main`. The verification job uses read-only repository permissions and requires no project secrets, so the same checks can run for fork contributions. GitHub may require a maintainer to approve a first-time contributor's workflow run. Requiring the `Verify` check before merging is a separate GitHub branch ruleset setting.
+
+After verification succeeds on `main`, CI deploys the built docs to GitHub Pages. Only the deployment job receives Pages and OIDC write permissions; pull requests never publish. The workflow can also be run manually on `main`. See the [docs hosting guide](apps/docs/README.md#github-pages) for the one-time repository setting and production preview commands. Keep public asset URLs relative to Vite's base and use hash routes so shared component links work on static hosting.
 
 ## Baseline decisions
 
