@@ -12,12 +12,12 @@ Gestik demonstrates the movement a person makes to interact. Your application ha
 
 | Component | Movement | Playground |
 | --- | --- | --- |
-| `DragHint` | Drag an element from one position to another | [Try DragHint](https://nicolasmilliard.github.io/gestik/#/drag-hint) |
-| `HoldHint` | Press and keep a finger in place | [Try HoldHint](https://nicolasmilliard.github.io/gestik/#/hold-hint) |
-| `ResizeHint` | Pull a corner outward to make an element larger | [Try ResizeHint](https://nicolasmilliard.github.io/gestik/#/resize-hint) |
-| `ScrollHint` | Move vertically to explore content | [Try ScrollHint](https://nicolasmilliard.github.io/gestik/#/scroll-hint) |
-| `ShortcutHint` | Hold keys together to perform a keyboard shortcut | [Try ShortcutHint](https://nicolasmilliard.github.io/gestik/#/shortcut-hint) |
-| `SwipeHint` | Press and swipe left or right | [Try SwipeHint](https://nicolasmilliard.github.io/gestik/#/swipe-hint) |
+| `DragHint` | Drag an element from one position to another | [Try DragHint](https://nicolasmilliard.github.io/gestik/drag-hint/) |
+| `HoldHint` | Press and keep a finger in place | [Try HoldHint](https://nicolasmilliard.github.io/gestik/hold-hint/) |
+| `ResizeHint` | Pull a corner outward to make an element larger | [Try ResizeHint](https://nicolasmilliard.github.io/gestik/resize-hint/) |
+| `ScrollHint` | Move vertically to explore content | [Try ScrollHint](https://nicolasmilliard.github.io/gestik/scroll-hint/) |
+| `ShortcutHint` | Hold keys together to perform a keyboard shortcut | [Try ShortcutHint](https://nicolasmilliard.github.io/gestik/shortcut-hint/) |
+| `SwipeHint` | Press and swipe left or right | [Try SwipeHint](https://nicolasmilliard.github.io/gestik/swipe-hint/) |
 
 The hints use CSS animations, scale with their `size`, and support playback controls and custom colors. They are decorative, stay out of the accessibility tree and tab order, and become static when the user prefers reduced motion. Pair them with visible instructions and accessible controls in your application.
 

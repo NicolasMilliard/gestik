@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "@tanstack/react-router";
 
 import { InstallCommand } from "../components/install-command";
 import { OverviewSection } from "../components/overview-section";
