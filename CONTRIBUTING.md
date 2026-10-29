@@ -39,6 +39,7 @@ After verification succeeds on `main`, CI deploys the built docs to GitHub Pages
 - Fast Refresh export checks apply to docs source; the Vitest environment tag is allowed in tests. These exceptions stay scoped to the files that need them.
 - TypeScript checks run separately. Type-aware Oxlint analysis, browser automation, agent hooks, and specialist agent roles are deferred until a concrete need justifies their setup. CI does not assess animation clarity or visual quality.
 - When replacing an icon, fit its SVG to the component's icon box and derive the hotspot from its viewBox. For multi-pose hints, use a shared contact point so switching poses does not shift the wrist. Check the contact point through scaling and animation in the browser; fixed SVG dimensions can silently overflow the anchor.
+- Shared artwork must receive component-specific styling explicitly. For example, SwipeHint's surface variable must color its own hand without inheriting DragHint's surface override. Check computed styles in the browser when reviewing CSS variable examples.
 
 ## Evolving the rules
 

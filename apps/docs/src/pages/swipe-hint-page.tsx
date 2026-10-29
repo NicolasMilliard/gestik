@@ -97,12 +97,12 @@ export const SwipeHintPage = () => (
         soft edge that follows the moving finger. It uses a 2px stroke with
         rounded ends and scales with the scene. Override
         <code> --gestik-swipe-hint-trail-color </code> to give it a separate
-        color. The built-in hand has a transparent interior by default; set the
-        surface color to give it a solid background. A custom <code>icon</code>{" "}
-        fills a 32 by 32 pixel box before scaling. Set <code>hotspot</code> to
-        its fingertip: coordinates run from 0 to 1 across that box. The hand
-        compresses around this point as the swipe begins, then returns to full
-        size as travel ends.
+        color. The built-in hand has a duotone fill at 20% opacity; use
+        <code> --gestik-swipe-hint-surface </code> to change its color. A custom{" "}
+        <code>icon</code> fills a 32 by 32 pixel box before scaling. Set{" "}
+        <code>hotspot</code> to its fingertip: coordinates run from 0 to 1
+        across that box. The hand compresses around this point as the swipe
+        begins, then returns to full size as travel ends.
       </p>
 
       <div className="mt-6 flex items-center gap-5 rounded-xl border border-zinc-200 p-5">
@@ -136,8 +136,10 @@ export const SwipeHintPage = () => (
         SwipeHint is decorative and ignores pointer events. Pair it with visible
         instructions and accessible controls for the actual interaction. Under
         reduced motion, the hand stays still, with no press, trail, or travel;
-        the accompanying instruction communicates direction. Custom icons should
-        be static and non-interactive too.
+        the accompanying instruction communicates direction. Custom icons stay
+        inside an inert, hidden subtree and should be static. For looping hints
+        shown alongside other content, provide a pause or dismiss control, or
+        choose a finite iteration count.
       </p>
     </section>
   </article>

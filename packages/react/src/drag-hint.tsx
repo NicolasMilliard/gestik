@@ -31,20 +31,29 @@ type DragHintStyle = CSSProperties & {
 };
 
 export interface DragHintProps {
+  /** Direction of element travel. Defaults to "right"; changing it restarts the cycle. */
   direction?: "right" | "left";
+  /** Scene width in pixels; all artwork and spacing scale proportionally. Defaults to 112. */
   size?: number;
+  /** Class for styling the outer decorative span, including CSS variables. */
   className?: string;
+  /** Decorative, static artwork filling a 24px box in each pose. */
   icons?: {
     idle: ReactNode;
     grabbing: ReactNode;
   };
+  /** Filled SVG silhouettes for custom poses. Custom icons otherwise render without cutouts. */
   iconMasks?: {
     idle: IconSilhouette;
     grabbing: IconSilhouette;
   };
+  /** Contact point in the icon box, from 0 to 1 on each axis. */
   hotspot?: DragHintHotspot;
+  /** Duration of a complete animation cycle in milliseconds. Defaults to 2800. */
   duration?: number;
+  /** CSS iteration count. Defaults to "infinite"; use whole cycles to finish at rest. */
   iterations?: "infinite" | number;
+  /** Pause or resume at the current frame. Defaults to true; change React key to replay. */
   playing?: boolean;
 }
 
@@ -85,6 +94,7 @@ export const DragHint = ({
       }
       data-direction={direction}
       aria-hidden="true"
+      inert
       style={style}
     >
       <span

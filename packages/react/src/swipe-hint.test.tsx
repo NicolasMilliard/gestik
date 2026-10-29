@@ -12,7 +12,10 @@ describe(SwipeHint, () => {
     const { container } = render(<SwipeHint />);
     const hint = container.firstElementChild as HTMLElement;
 
-    expect(hint.getAttribute("aria-hidden")).toBe("true");
+    expect([
+      hint.getAttribute("aria-hidden"),
+      hint.hasAttribute("inert"),
+    ]).toStrictEqual(["true", true]);
     expect(hint.dataset.direction).toBe("right");
     expect(hint.style.width).toBe("112px");
     expect(hint.style.height).toBe("72px");
@@ -65,7 +68,11 @@ describe(SwipeHint, () => {
     const { container } = render(
       <SwipeHint
         className="custom-hint"
-        icon={<svg data-testid="custom-swipe-icon" />}
+        icon={
+          <a href="#example" data-testid="custom-swipe-icon">
+            Custom artwork
+          </a>
+        }
         hotspot={{ x: 0.25, y: 0.75 }}
       />
     );
@@ -78,6 +85,7 @@ describe(SwipeHint, () => {
 
     expect(anchor?.style.transform).toBe("translate(-25%, -75%)");
     expect(icon.parentElement?.style.transformOrigin).toBe("25% 75%");
+    expect(icon.closest("[inert]")).toBe(container.firstElementChild);
   });
 
   it("keeps each trail connected to its own fade mask and gradient", () => {

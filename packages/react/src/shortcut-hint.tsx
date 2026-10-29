@@ -27,11 +27,17 @@ type KeycapStyle = CSSProperties & {
 };
 
 export interface ShortcutHintProps {
+  /** At least two keycaps, in press order. Defaults to ["Command", "K"]. Changing the count restarts playback. */
   keys?: ShortcutHintKeys;
+  /** Scene width in pixels; all artwork and spacing scale proportionally. Defaults to the natural key row width. */
   size?: number;
+  /** Class for styling the outer decorative span, including CSS variables. */
   className?: string;
+  /** Duration of a complete animation cycle in milliseconds. Defaults to 2400. */
   duration?: number;
+  /** CSS iteration count. Defaults to "infinite"; use whole cycles to finish at rest. */
   iterations?: "infinite" | number;
+  /** Pause or resume at the current frame. Defaults to true; change React key to replay. */
   playing?: boolean;
 }
 

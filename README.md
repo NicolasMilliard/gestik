@@ -42,6 +42,12 @@ export const SwipeInstruction = () => (
 
 See the [component docs](https://nicolasmilliard.github.io/gestik/) for animation timing, finite playback, styling, and custom artwork where supported.
 
+All hints share `size` (scene width in pixels), `duration` (a complete cycle in milliseconds), `iterations` (a CSS iteration count or `"infinite"`), `playing`, and `className`. Omitting playback props leaves their namespaced CSS variables in control. `playing={false}` pauses at the current frame; setting it back to `true` resumes. Change the React `key` to replay from the start, including after finite playback. Use whole iteration counts to finish in a resting pose; fractional counts stop partway through a gesture. Reduced motion takes precedence over playback props.
+
+The default width is 112px. `ShortcutHint` instead sizes its scene to fit the key row, starting at 112px for Command + K. Explicit sizes scale the complete scene proportionally. Drag and swipe directions describe the element's or finger's travel; changing direction starts a new cycle. Changing a shortcut's key count also restarts playback.
+
+Custom drag and swipe artwork and shortcut keycaps stay inside an inert, hidden subtree. Supply static illustrations and keep the actual interaction outside the hint. When showing a looping hint alongside other content, provide a way to pause or dismiss it, or use a finite iteration count.
+
 ## Development
 
 Use the Bun version recorded in `package.json` and Node.js 22.18 or newer.

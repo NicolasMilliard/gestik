@@ -13,6 +13,7 @@ describe(DragHint, () => {
     const hint = container.firstElementChild as HTMLElement | null;
 
     expect(hint?.getAttribute("aria-hidden")).toBe("true");
+    expect(hint?.hasAttribute("inert")).toBeTruthy();
     expect(hint?.dataset.direction).toBe("right");
   });
 
@@ -58,7 +59,11 @@ describe(DragHint, () => {
         className="custom-hint"
         icons={{
           grabbing: <svg data-testid="grabbing-pose" />,
-          idle: <svg data-testid="idle-pose" />,
+          idle: (
+            <a href="#example" data-testid="idle-pose">
+              Custom artwork
+            </a>
+          ),
         }}
         hotspot={{ x: 0.25, y: 0.75 }}
       />
@@ -82,7 +87,10 @@ describe(DragHint, () => {
       ".gestik-drag-hint__icon-anchor"
     );
     expect(anchor?.style.transform).toBe("translate(-25%, -75%)");
-    expect(container.querySelector("mask")).toBeNull();
+    expect([
+      container.querySelector("mask"),
+      screen.getByTestId("idle-pose").closest("[inert]"),
+    ]).toStrictEqual([null, container.firstElementChild]);
   });
 
   it("keeps each instance's background connected to its own mask", () => {

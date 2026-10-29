@@ -19,10 +19,15 @@ type HoldHintStyle = CSSProperties & {
 };
 
 export interface HoldHintProps {
+  /** Scene width in pixels; all artwork and spacing scale proportionally. Defaults to 112. */
   size?: number;
+  /** Class for styling the outer decorative span, including CSS variables. */
   className?: string;
+  /** Duration of a complete animation cycle in milliseconds. Defaults to 3000. */
   duration?: number;
+  /** CSS iteration count. Defaults to "infinite"; use whole cycles to finish at rest. */
   iterations?: "infinite" | number;
+  /** Pause or resume at the current frame. Defaults to true; change React key to replay. */
   playing?: boolean;
 }
 
