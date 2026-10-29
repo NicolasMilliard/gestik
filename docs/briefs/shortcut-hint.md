@@ -1,19 +1,18 @@
-# ShortcutHint behavior brief
+# ShortcutHint
 
-The motion and 2px keycap borders passed visual review. These decisions are local to ShortcutHint and can evolve with feedback.
+Show keys held together as a combination. Pressing and releasing each key separately would communicate a sequence of keystrokes.
 
-## Intent
+## Design constraints
 
-Demonstrate a keyboard combination with a row of keycaps. The docs start with Command + K, using the supplied duotone Command artwork unchanged in shape and inheriting `currentColor`. No cursor, hand, or miniature application is needed. The consuming application implements the shortcut and decides when to show the hint.
+- Press from left to right, retain each pressed key until the full combination is down, then release every key together and rest.
+- Keep every key on one full-cycle clock. Use easing to place each press within it; animation delays would complicate synchronization across arbitrary counts and finite playback.
+- Compress the solid base as each key moves downward. Keep 2px borders for legibility, and preserve the key legend without pulses or extra artwork.
+- Support at least two keycaps, enforced by types and runtime validation. Changing their count restarts playback; completed cycles and reduced motion leave all keys released.
+- Let labels and key count determine the natural width. Explicit `size` scales the whole row. Use system keycap typography independently of docs fonts.
+- The exact `Command` label uses the built-in icon; custom keycap artwork stays static, inert, and hidden from assistive technology. The consuming application implements the shortcut; the docs do not intercept it.
 
-## Behavior contract
+## Visual checks
 
-- Configure keycaps through `keys`, an ordered tuple of at least two strings or decorative React elements, with no maximum. Default to `["Command", "K"]`; the exact `Command` label uses the supplied icon. Enforce the minimum in TypeScript and at runtime. Keep custom content inert and out of the accessibility tree.
-- Press keys from left to right, retaining each pressed key until the full combination is down. Press starts span 12%–34% of the cycle regardless of count; each press takes 6%. Hold the complete combination through 56%, release every key together by 64%, and rest through 100%. Sequential taps would communicate a different interaction.
-- Use a 2400ms cycle with infinite automatic playback by default. A 3px downward movement compresses the key's solid base from 4px to 1px; do not add a pulse or change the legend. Keep every key on the same full-cycle clock, without animation delays, so arbitrary counts and finite playback stay synchronized. CSS `linear()` easing places each press within that clock and returns every key to rest at completion.
-- Reserve a 112 by 72px scene for the default combination, including two 36px keycaps and a plus separator. Use 2px borders on all four sides; the earlier 1.5px outline looked too thin on an external display. Longer text labels widen their keycaps; longer combinations reserve additional width at the same natural height. An explicit `size` is the complete scene width and scales all dimensions proportionally.
-- Match the existing `duration`, `iterations`, `playing`, and `className` controls and namespaced CSS playback variables. Pause/resume preserves the frame; a new React `key` replays a finite animation. Changing key count restarts the cycle.
-- Expose color and surface through `--gestik-shortcut-hint-color` and `--gestik-shortcut-hint-surface`. Use system keycap typography independent of the docs font.
-- Reduced motion shows all keys static and released. Pair the decorative row with visible shortcut instructions and an accessible alternative control. The docs do not intercept Command + K.
+Inspect two-, three-, and four-key combinations for held overlap and simultaneous release. Check long labels, custom artwork, proportional sizing, and synchronization during pause/resume and finite completion.
 
-Inspect two-, three-, and four-key combinations, the held overlap, shared release, proportional sizing, pause/resume, finite completion, replay, custom colors, and reduced motion in the browser.
+Implementation: [component](../../packages/react/src/shortcut-hint.tsx), [motion](../../packages/react/src/shortcut-hint.css).

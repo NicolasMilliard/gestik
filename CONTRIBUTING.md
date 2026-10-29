@@ -1,50 +1,46 @@
 # Contributing to Gestik
 
-Use Bun at the version in the root `package.json`, Node.js 22.18 or newer, and `bun install --frozen-lockfile` for a fresh checkout. CI uses Node.js 24.
+Bug fixes, clearer gesture animations, and better examples are welcome. For a new hint, describe the movement it should teach and where it would help.
 
-## Working on a change
+## Get started
 
-1. Create a branch and identify the intended behavior and affected public API.
-2. Implement the smallest coherent change. Update the docs example when a component's behavior or API changes.
-3. Run `bun run fix`, inspect the diff, then run `bun run verify`.
-4. For visual changes, inspect the docs example in a browser and describe what you checked. Include useful visual evidence in the PR when available.
+Use the Bun version in `package.json` and Node.js 22.18 or newer. From the repository root:
 
-## Validation commands
+```sh
+bun install --frozen-lockfile
+bun run dev
+```
 
-Run these from the repository root:
+Open the local URL printed in the terminal. The docs use the library's built exports: `dev` builds them once, so run `bun run build` in another terminal after editing library code.
 
-| Command | Purpose |
-| --- | --- |
-| `bun run check` | Ultracite lint and formatting checks; warnings also fail |
-| `bun run fix` | Apply lint and formatting fixes |
-| `bun run lint` | Run the shared Oxlint configuration |
-| `bun run format:check` | Check formatting with the shared Oxfmt configuration |
-| `bun run build` | Build the React package and its public declarations |
-| `bun run typecheck` | Type-check tooling and all workspaces; build the library first |
-| `bun run test` | Run the React package and docs Vitest suites |
-| `bun run build:docs` | Type-check and build the documentation app |
-| `bun run verify` | Run all of the above checks in dependency order |
+## Find your way
 
-The docs consume the package's built exports, so the library must be built before the docs can resolve it in a clean checkout. `verify` handles this order. Use `bun run test`, since bare `bun test` invokes a different test runner.
+- `packages/react`: public components, CSS, artwork, and unit tests.
+- `apps/docs`: documentation pages and interactive playgrounds.
+- `docs/briefs`: gesture behavior and visual decisions.
 
-CI runs `bun install --frozen-lockfile` and `bun run verify` for pull requests and pushes to `main`. The verification job uses read-only repository permissions and requires no project secrets, so the same checks can run for fork contributions. GitHub may require a maintainer to approve a first-time contributor's workflow run. Requiring the `Verify` check before merging is a separate GitHub branch ruleset setting.
+## Make a change
 
-After verification succeeds on `main`, CI deploys the built docs to GitHub Pages. Only the deployment job receives Pages and OIDC write permissions; pull requests never publish. The workflow can also be run manually on `main`. See the [docs hosting guide](apps/docs/README.md#github-pages) for the one-time repository setting and production preview commands. Keep assets and router links under the fixed `/gestik/` base. The docs build prerenders routes to directory indexes so clean links work on static hosting. Add pages through the shared component metadata to include them in prerendering.
+Create a branch and keep the change focused. Follow the existing component structure and root lint and formatting configurations.
 
-## Baseline decisions
+- Preserve public props, defaults, exports, and CSS variables unless changing them is the purpose of the work. Update examples and behavior tests together.
+- Keep animation styling in CSS, use `--gestik-` variables, and scale the whole scene proportionally. Keep each hint's styling independent when sharing artwork.
+- Fit artwork to its icon box and keep the contact point consistent between poses.
+- Keep hints decorative, outside the accessibility tree and tab order, with reduced-motion support. The consuming application handles the actual gesture.
 
-- Ultracite 8.0.2 supplies the core, React, and Vitest presets over the existing Oxlint/Oxfmt stack. The lockfile fixes resolved versions; update tooling in a dedicated change and review new diagnostics.
-- One root lint configuration covers both workspaces. Nested configs can replace the root rules, so any future workspace config must explicitly inherit them.
-- Adopt Ultracite's formatting and lint defaults, including quotes, wrapping, imports, arrow functions, and kebab-case filenames. Migrate existing code instead of preserving its style through overrides. Keep public component names and API behavior stable. The formatter resolves the docs app's custom Tailwind theme.
-- Fast Refresh export checks apply to docs source; the Vitest environment tag is allowed in tests. These exceptions stay scoped to the files that need them.
-- TypeScript checks run separately. Type-aware Oxlint analysis, browser automation, agent hooks, and specialist agent roles are deferred until a concrete need justifies their setup. CI does not assess animation clarity or visual quality.
-- When replacing an icon, fit its SVG to the component's icon box and derive the hotspot from its viewBox. For multi-pose hints, use a shared contact point so switching poses does not shift the wrist. Check the contact point through scaling and animation in the browser; fixed SVG dimensions can silently overflow the anchor.
-- Shared artwork must receive component-specific styling explicitly. For example, SwipeHint's surface variable must color its own hand without inheriting DragHint's surface override. Check computed styles in the browser when reviewing CSS variable examples.
+## Check your work
 
-The docs test suite also bundles each public hint through the built package with Vite. These checks keep React external, verify that the hint retains its CSS and reduced-motion rules, reject unrelated hint code and styles, and cap each minified JavaScript-plus-CSS bundle at 4 KiB gzipped. Build the library before running these tests. Review actual consumer output when changing the package build; the size of the distributed barrel alone does not measure tree shaking.
+```sh
+bun run fix
+bun run verify
+```
 
-## Evolving the rules
+Inspect the fixes before submitting. `verify` runs lint, formatting, builds, type checks, and tests, including bundle checks, in the same order as CI.
 
-Feedback should reduce repeated corrections. Record the cause, the scope of the lesson, and how a future change can be checked. Prefer a lint rule or behavioral test for a deterministic requirement, and concise guidance for a judgment call. Explain an exception next to its configuration instead of silently disabling a rule. Keep product-specific timing and visual decisions local to their component unless evidence supports a shared convention.
+For a quicker test run, build the library first and use `bun run test`; bare `bun test` invokes a different runner. For visual changes, check the docs in a browser, including sizing, direction, playback, and reduced motion as applicable.
 
-Clear, reusable lessons can be added as part of the implementation. Keep uncertain inferences in the PR description for review. Personal editor or agent preferences belong in local settings; temporary network or sandbox failures belong in the task report. Refine existing guidance before adding more files or process.
+## Open a pull request
+
+Explain the problem, resulting behavior, and any public API changes. Report verification results and anything you could not check; include useful screenshots or recordings for visual changes.
+
+See [AGENTS.md](AGENTS.md) for detailed implementation conventions and the [docs guide](apps/docs/README.md) for production previews and hosting.
