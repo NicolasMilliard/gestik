@@ -101,14 +101,16 @@ export const SwipeHintDemo = () => {
             </Select>
           </div>
 
-          <label
-            className="mb-5 block text-sm font-medium"
-            htmlFor="swipe-hint-size"
-          >
-            <span className="flex items-center justify-between">
-              <span>Size</span>
-              <output className="font-normal text-zinc-500">{size}px</output>
-            </span>
+          <div className="mb-5 text-sm font-medium">
+            <div className="flex items-center justify-between">
+              <label htmlFor="swipe-hint-size">Size</label>
+              <output
+                htmlFor="swipe-hint-size"
+                className="font-normal text-zinc-500"
+              >
+                {size}px
+              </output>
+            </div>
             <input
               id="swipe-hint-size"
               className="mt-3 w-full accent-brand"
@@ -119,18 +121,18 @@ export const SwipeHintDemo = () => {
               value={size}
               onChange={(event) => setSize(Number(event.target.value))}
             />
-          </label>
+          </div>
 
-          <label
-            className="mb-5 block text-sm font-medium"
-            htmlFor="swipe-hint-duration"
-          >
-            <span className="flex items-center justify-between">
-              <span>Duration</span>
-              <output className="font-normal text-zinc-500">
+          <div className="mb-5 text-sm font-medium">
+            <div className="flex items-center justify-between">
+              <label htmlFor="swipe-hint-duration">Duration</label>
+              <output
+                htmlFor="swipe-hint-duration"
+                className="font-normal text-zinc-500"
+              >
                 {duration}ms
               </output>
-            </span>
+            </div>
             <input
               id="swipe-hint-duration"
               className="mt-3 w-full accent-brand"
@@ -141,7 +143,7 @@ export const SwipeHintDemo = () => {
               value={duration}
               onChange={(event) => setDuration(Number(event.target.value))}
             />
-          </label>
+          </div>
 
           <div>
             <span

@@ -75,7 +75,10 @@ export const DragHintDemo = () => {
           <h2 className="mb-6 text-sm font-medium">Preview settings</h2>
 
           <div className="mb-5">
-            <span id="direction-label" className="block text-sm font-medium">
+            <span
+              id="drag-hint-direction-label"
+              className="block text-sm font-medium"
+            >
               Direction
             </span>
             <Select
@@ -88,7 +91,7 @@ export const DragHintDemo = () => {
               }}
             >
               <SelectTrigger
-                aria-labelledby="direction-label"
+                aria-labelledby="drag-hint-direction-label"
                 className="mt-2 w-full"
               >
                 <SelectValue />
@@ -100,14 +103,16 @@ export const DragHintDemo = () => {
             </Select>
           </div>
 
-          <label
-            className="mb-5 block text-sm font-medium"
-            htmlFor="drag-hint-size"
-          >
-            <span className="flex items-center justify-between">
-              <span>Size</span>
-              <output className="font-normal text-zinc-500">{size}px</output>
-            </span>
+          <div className="mb-5 text-sm font-medium">
+            <div className="flex items-center justify-between">
+              <label htmlFor="drag-hint-size">Size</label>
+              <output
+                htmlFor="drag-hint-size"
+                className="font-normal text-zinc-500"
+              >
+                {size}px
+              </output>
+            </div>
             <input
               id="drag-hint-size"
               className="mt-3 w-full accent-brand"
@@ -118,18 +123,18 @@ export const DragHintDemo = () => {
               value={size}
               onChange={(event) => setSize(Number(event.target.value))}
             />
-          </label>
+          </div>
 
-          <label
-            className="mb-5 block text-sm font-medium"
-            htmlFor="drag-hint-duration"
-          >
-            <span className="flex items-center justify-between">
-              <span>Duration</span>
-              <output className="font-normal text-zinc-500">
+          <div className="mb-5 text-sm font-medium">
+            <div className="flex items-center justify-between">
+              <label htmlFor="drag-hint-duration">Duration</label>
+              <output
+                htmlFor="drag-hint-duration"
+                className="font-normal text-zinc-500"
+              >
                 {duration}ms
               </output>
-            </span>
+            </div>
             <input
               id="drag-hint-duration"
               className="mt-3 w-full accent-brand"
@@ -140,10 +145,13 @@ export const DragHintDemo = () => {
               value={duration}
               onChange={(event) => setDuration(Number(event.target.value))}
             />
-          </label>
+          </div>
 
           <div>
-            <span id="iterations-label" className="block text-sm font-medium">
+            <span
+              id="drag-hint-iterations-label"
+              className="block text-sm font-medium"
+            >
               Iterations
             </span>
             <Select
@@ -158,7 +166,7 @@ export const DragHintDemo = () => {
               }}
             >
               <SelectTrigger
-                aria-labelledby="iterations-label"
+                aria-labelledby="drag-hint-iterations-label"
                 className="mt-2 w-full"
               >
                 <SelectValue />

@@ -7,7 +7,9 @@ import { PointingHand } from "./icons/pointing-hand";
 const SCENE_WIDTH = 112;
 const SCENE_HEIGHT = 72;
 
-const DEFAULT_ICON = <PointingHand />;
+const DEFAULT_ICON = (
+  <PointingHand surface="var(--gestik-swipe-hint-surface, currentColor)" />
+);
 // The fingertip in the icon's 256-unit viewBox.
 const DEFAULT_HOTSPOT = { x: 116 / 256, y: 16 / 256 };
 
@@ -23,13 +25,21 @@ type SwipeHintStyle = CSSProperties & {
 };
 
 export interface SwipeHintProps {
+  /** Direction of finger travel. Defaults to "right"; changing it restarts the cycle. */
   direction?: "right" | "left";
+  /** Scene width in pixels; all artwork and spacing scale proportionally. Defaults to 112. */
   size?: number;
+  /** Class for styling the outer decorative span, including CSS variables. */
   className?: string;
+  /** Decorative, static artwork filling a 32px box. */
   icon?: ReactNode;
+  /** Contact point in the icon box, from 0 to 1 on each axis. */
   hotspot?: SwipeHintHotspot;
+  /** Duration of a complete animation cycle in milliseconds. Defaults to 2200. */
   duration?: number;
+  /** CSS iteration count. Defaults to "infinite"; use whole cycles to finish at rest. */
   iterations?: "infinite" | number;
+  /** Pause or resume at the current frame. Defaults to true; change React key to replay. */
   playing?: boolean;
 }
 
@@ -67,6 +77,7 @@ export const SwipeHint = ({
       }
       data-direction={direction}
       aria-hidden="true"
+      inert
       style={style}
     >
       <span

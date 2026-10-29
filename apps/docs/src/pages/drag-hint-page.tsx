@@ -126,8 +126,12 @@ export const DragHintPage = () => (
         Accessibility
       </h2>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
-        DragHint is decorative, so pair it with visible instructions. It stays
-        static when the user prefers reduced motion.
+        DragHint is decorative and ignores pointer events. Pair it with visible
+        instructions and an accessible control for the same action. Custom
+        artwork stays inside an inert, hidden subtree and should be static.
+        Reduced motion leaves the hand and square at rest. For looping hints
+        shown alongside other content, provide a pause or dismiss control, or
+        choose a finite iteration count.
       </p>
     </section>
   </article>

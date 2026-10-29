@@ -7,7 +7,11 @@ export const POINTING_HAND_SILHOUETTE: IconSilhouette = {
 
 const OUTLINE = `${POINTING_HAND_SILHOUETTE.path}m12,64a72.08,72.08,0,0,1-72,72c-37.63,0-47.84-18-81.68-77.68l-4.69-8.27,0-.05A12,12,0,0,1,54,121.61a11.88,11.88,0,0,1,6-1.6,12,12,0,0,1,10.41,6,1.76,1.76,0,0,0,.14.23l18.67,30A8,8,0,0,0,104,152V44a12,12,0,0,1,24,0v68a8,8,0,0,0,16,0V100a12,12,0,0,1,24,0v20a8,8,0,0,0,16,0v-4a12,12,0,0,1,24,0Z`;
 
-export const PointingHand = () => (
+export const PointingHand = ({
+  surface = "currentColor",
+}: {
+  surface?: string;
+}) => (
   <svg
     width="100%"
     height="100%"
@@ -16,7 +20,7 @@ export const PointingHand = () => (
     focusable="false"
   >
     <path
-      fill="var(--gestik-drag-hint-surface, currentColor)"
+      fill={surface}
       d="M216,116v36a80,80,0,0,1-80,80c-44.18,0-55.81-24-93.32-90a20,20,0,0,1,34.64-20L96,152V44a20,20,0,0,1,40,0v56a20,20,0,0,1,40,0v16a20,20,0,0,1,40,0Z"
       opacity="0.2"
     />
