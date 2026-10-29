@@ -1,20 +1,16 @@
-# Gestik documentation
+# Gestik docs
 
-Interactive examples and component documentation, built with Vite and React.
+The Vite, React, and TanStack Router app for interactive examples at [nicolasmilliard.github.io/gestik](https://nicolasmilliard.github.io/gestik/).
 
-Run `bun run dev` from the repository root to build `@gestik/react` and start the docs server. Run `bun run build:docs` after building the library to produce a production docs build.
+## Develop and preview
 
-The home route (`#/`) shows an alphabetical gallery of live hints and preview install commands. Each component has its own route (`#/drag-hint`, `#/scroll-hint`, `#/swipe-hint`) with its playground, code, examples, and props. Add components to `src/lib/components.ts` to include them in the routes, sidebar, and sorted gallery.
+Run from the repository root after following [CONTRIBUTING.md](../../CONTRIBUTING.md):
 
-The docs use React Router's hash routing so opening or refreshing a component URL works on GitHub Pages without an SPA fallback. Vite's relative asset base keeps scripts, styles, fonts, and branding under the site's directory, including the `/gestik/` project path.
+```sh
+bun run dev
+```
 
-## GitHub Pages
-
-The docs are published at <https://nicolasmilliard.github.io/gestik/> after deployment. Share a component directly with a URL such as <https://nicolasmilliard.github.io/gestik/#/drag-hint>.
-
-To enable hosting, open the repository's **Settings → Pages** and select **GitHub Actions** as the source under **Build and deployment**. Merge the deployment workflow into `main`; every successful CI run on `main` uploads `apps/docs/dist` and deploys it to the `github-pages` environment. Pull requests run the same verification without publishing. To retry a deployment without a commit, run **CI → Run workflow** on `main` in the Actions tab.
-
-To preview the production build, run these commands from the repository root:
+This builds `@gestik/react` once and starts the docs server. After library edits, run `bun run build` again. To preview the production site:
 
 ```sh
 bun run build
@@ -22,8 +18,26 @@ bun run build:docs
 bun --filter @gestik/docs preview
 ```
 
-Open the URL printed by Vite. Component links use the same hash routes locally and on GitHub Pages.
+Open the printed URL under `/gestik/`.
 
-Run `bun run test` from the repository root to test both the library and docs navigation.
+## Maintain pages
 
-See the root [README](../../README.md) and [contribution guide](../../CONTRIBUTING.md) for setup and shared validation commands.
+Add components to [src/lib/components.ts](src/lib/components.ts) to register their routes, sidebar links, sorted gallery entries, and prerendered pages. Keep pages and playground controls behind lazy imports; the gallery's live hints load immediately and intentionally loop.
+
+Routes preload on hover, focus, and touch. Keep the current page visible until its destination is ready, then switch without a page animation. Preserve active links, scroll restoration, and main-content focus. A failed import offers a reload action.
+
+The [build script](scripts/build-docs.ts) runs client and server builds, then prerenders real HTML for each route and `404.html`. Node runs prerendering; React hydrates the resulting documents in the browser. Keep JSX transforms and package conditions in production mode, including when building from tests, to avoid hydration failures.
+
+## Validate
+
+Run `bun run verify` before submitting. [Production tests](src/docs-bundle.test.ts) check generated HTML, deferred imports, and startup/chunk budgets; [consumer tests](src/library-bundle.test.ts) measure the React library separately. Read current sizes from build output rather than maintaining a size snapshot here.
+
+For navigation or build changes, also open a direct component URL, refresh it, and exercise its controls in the production preview. HTML checks alone do not establish working hydration.
+
+## GitHub Pages
+
+Vite assets and router links use the fixed `/gestik/` base. Deploy the complete `apps/docs/dist` directory, including route indexes and `404.html`, so clean links such as `/gestik/drag-hint/` work on refresh.
+
+In **Settings → Pages**, select **GitHub Actions** as the source. Successful CI runs on `main` deploy the docs; pull requests only verify. To retry a deployment, run **CI → Run workflow** on `main`.
+
+See the [branding brief](../../docs/briefs/branding.md) for docs design conventions.

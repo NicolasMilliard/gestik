@@ -29,7 +29,7 @@ The docs consume the package's built exports, so the library must be built befor
 
 CI runs `bun install --frozen-lockfile` and `bun run verify` for pull requests and pushes to `main`. The verification job uses read-only repository permissions and requires no project secrets, so the same checks can run for fork contributions. GitHub may require a maintainer to approve a first-time contributor's workflow run. Requiring the `Verify` check before merging is a separate GitHub branch ruleset setting.
 
-After verification succeeds on `main`, CI deploys the built docs to GitHub Pages. Only the deployment job receives Pages and OIDC write permissions; pull requests never publish. The workflow can also be run manually on `main`. See the [docs hosting guide](apps/docs/README.md#github-pages) for the one-time repository setting and production preview commands. Keep public asset URLs relative to Vite's base and use hash routes so shared component links work on static hosting.
+After verification succeeds on `main`, CI deploys the built docs to GitHub Pages. Only the deployment job receives Pages and OIDC write permissions; pull requests never publish. The workflow can also be run manually on `main`. See the [docs hosting guide](apps/docs/README.md#github-pages) for the one-time repository setting and production preview commands. Keep assets and router links under the fixed `/gestik/` base. The docs build prerenders routes to directory indexes so clean links work on static hosting. Add pages through the shared component metadata to include them in prerendering.
 
 ## Baseline decisions
 

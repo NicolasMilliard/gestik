@@ -6,8 +6,8 @@ import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  // Hash routes keep the document path stable, so assets can resolve under any Pages path.
-  base: "./",
+  // Absolute asset paths also resolve from prerendered nested pages.
+  base: "/gestik/",
   plugins: [
     react(),
     babel({ presets: [reactCompilerPreset()] }),
@@ -17,5 +17,9 @@ export default defineConfig({
     alias: {
       "@": fileURLToPath(new URL("src", import.meta.url)),
     },
+  },
+  ssr: {
+    // The workspace package imports CSS; Vite must process it during prerendering.
+    noExternal: ["@gestik/react"],
   },
 });

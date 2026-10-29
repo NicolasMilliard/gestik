@@ -1,7 +1,7 @@
 import { ListIcon } from "@phosphor-icons/react/dist/csr/List";
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
+import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router";
 
 import { components } from "../lib/components";
 
@@ -25,7 +25,12 @@ export const DocsSidebar = () => {
     return () => window.removeEventListener("keydown", handleEscape);
   }, [menuOpen]);
 
-  const closeMenu = () => setMenuOpen(false);
+  const closeMenu = () => {
+    setMenuOpen(false);
+    if (menuOpen) {
+      menuButton.current?.focus({ preventScroll: true });
+    }
+  };
 
   return (
     <aside className="border-b border-zinc-100 bg-zinc-50/70 px-5 py-4 lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:border-r lg:border-b-0 lg:py-7">
@@ -75,25 +80,25 @@ export const DocsSidebar = () => {
         aria-label="Documentation"
         data-open={menuOpen}
       >
-        <NavLink
+        <Link
           className="rounded-lg px-3 py-2 text-zinc-500 hover:bg-zinc-100/70 hover:text-zinc-700 focus-visible:outline-2 focus-visible:outline-brand aria-[current=page]:bg-brand-soft aria-[current=page]:text-brand"
           to="/"
-          end
+          activeOptions={{ exact: true }}
           onClick={closeMenu}
         >
           Overview
-        </NavLink>
+        </Link>
 
         {components.map(({ name, path }) => (
-          <NavLink
+          <Link
             className="rounded-lg px-3 py-2 text-zinc-500 hover:bg-zinc-100/70 hover:text-zinc-700 focus-visible:outline-2 focus-visible:outline-brand aria-[current=page]:bg-brand-soft aria-[current=page]:text-brand"
             key={path}
             to={path}
-            end
+            activeOptions={{ exact: true }}
             onClick={closeMenu}
           >
             {name}
-          </NavLink>
+          </Link>
         ))}
       </nav>
     </aside>
