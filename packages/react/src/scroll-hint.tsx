@@ -9,6 +9,7 @@ import "@gestik/core/styles/scroll-hint.css";
 import type { ReactNode } from "react";
 
 import type { HintStyle } from "./hint-style";
+import { INERT_PROPS } from "./inert-props";
 
 const { width: SCENE_WIDTH, height: SCENE_HEIGHT } = SCROLL_HINT_DEFAULTS;
 
@@ -60,7 +61,7 @@ export const ScrollHint = ({
         className ? `gestik-scroll-hint ${className}` : "gestik-scroll-hint"
       }
       aria-hidden="true"
-      inert
+      {...INERT_PROPS}
       style={hintStyle}
     >
       <span

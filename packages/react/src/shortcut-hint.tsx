@@ -9,6 +9,7 @@ import type { CSSProperties, ReactElement } from "react";
 import "@gestik/core/styles/shortcut-hint.css";
 import type { HintStyle } from "./hint-style";
 import { CommandKey } from "./icons/command-key";
+import { INERT_PROPS } from "./inert-props";
 
 type Keycap = string | ReactElement;
 
@@ -75,7 +76,7 @@ export const ShortcutHint = ({
         className ? `gestik-shortcut-hint ${className}` : "gestik-shortcut-hint"
       }
       aria-hidden="true"
-      inert
+      {...INERT_PROPS}
       style={hintStyle}
     >
       <span

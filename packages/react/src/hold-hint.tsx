@@ -7,6 +7,7 @@ import "@gestik/core/styles/hold-hint.css";
 import type { HintStyle } from "./hint-style";
 import { IconMask } from "./icon-mask";
 import { PointingHand } from "./icons/pointing-hand";
+import { INERT_PROPS } from "./inert-props";
 
 const { width: SCENE_WIDTH, height: SCENE_HEIGHT } = HOLD_HINT_DEFAULTS;
 const ICON_SIZE = HOLD_HINT_DEFAULTS.iconSize;
@@ -72,7 +73,7 @@ export const HoldHint = ({
         className ? `gestik-hold-hint ${className}` : "gestik-hold-hint"
       }
       aria-hidden="true"
-      inert
+      {...INERT_PROPS}
       style={hintStyle}
     >
       <Fragment key={`${isDefaultIcon}-${Boolean(mask)}`}>

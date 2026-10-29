@@ -5,6 +5,7 @@ import { useId } from "react";
 import "@gestik/core/styles/swipe-hint.css";
 import type { HintStyle } from "./hint-style";
 import { PointingHand } from "./icons/pointing-hand";
+import { INERT_PROPS } from "./inert-props";
 
 const { width: SCENE_WIDTH, height: SCENE_HEIGHT } = SWIPE_HINT_DEFAULTS;
 
@@ -76,7 +77,7 @@ export const SwipeHint = ({
       }
       data-direction={direction}
       aria-hidden="true"
-      inert
+      {...INERT_PROPS}
       style={hintStyle}
     >
       <span

@@ -13,6 +13,7 @@ import type { HintStyle } from "./hint-style";
 import { IconMask } from "./icon-mask";
 import { ClosedHand } from "./icons/closed-hand";
 import { OpenHand } from "./icons/open-hand";
+import { INERT_PROPS } from "./inert-props";
 
 const { width: SCENE_WIDTH, height: SCENE_HEIGHT } = DRAG_HINT_DEFAULTS;
 const ICON_SIZE = DRAG_HINT_DEFAULTS.iconSize;
@@ -98,7 +99,7 @@ export const DragHint = ({
       }
       data-direction={direction}
       aria-hidden="true"
-      inert
+      {...INERT_PROPS}
       style={hintStyle}
     >
       <span
