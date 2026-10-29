@@ -15,4 +15,4 @@ Show keys held together as a combination. Pressing and releasing each key separa
 
 Inspect two-, three-, and four-key combinations for held overlap and simultaneous release. Check long labels, custom artwork, proportional sizing, and synchronization during pause/resume and finite completion.
 
-Implementation: [component](../../packages/react/src/shortcut-hint.tsx), [motion](../../packages/react/src/shortcut-hint.css).
+Implementation: [component](../../packages/react/src/shortcut-hint.tsx), [motion](../../packages/core/src/styles/shortcut-hint.css).

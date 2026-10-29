@@ -15,7 +15,8 @@ Open the local URL printed in the terminal. The docs use the library's built exp
 
 ## Find your way
 
-- `packages/react`: public components, CSS, artwork, and unit tests.
+- `packages/core`: shared animation CSS, SVG geometry, defaults, and pure layout.
+- `packages/react`: public React components, artwork wrappers, and unit tests.
 - `apps/docs`: documentation pages and interactive playgrounds.
 - `docs/briefs`: gesture behavior and visual decisions.
 
@@ -25,6 +26,7 @@ Create a branch and keep the change focused. Follow the existing component struc
 
 - Preserve public props, defaults, exports, and CSS variables unless changing them is the purpose of the work. Update examples and behavior tests together.
 - Keep animation styling in CSS, use `--gestik-` variables, and scale the whole scene proportionally. Keep each hint's styling independent when sharing artwork.
+- Keep framework-independent assets in core and rendering in each adapter. Build core before React with `bun run build`; see [package architecture](docs/architecture.md) for the boundary and tradeoffs.
 - Fit artwork to its icon box and keep the contact point consistent between poses.
 - Keep hints decorative, outside the accessibility tree and tab order, with reduced-motion support. The consuming application handles the actual gesture.
 

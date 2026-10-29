@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { HintStyleGuide } from "../components/hint-style-guide";
 import { SwipeHintDemo } from "../components/swipe-hint-demo";
 
 const propRows = [
@@ -32,6 +33,11 @@ const propRows = [
     "The contact point in normalized icon coordinates.",
   ],
   ["className", "—", "A class for styling the hint."],
+  [
+    "style",
+    "—",
+    "Inline styles and --gestik-* CSS variables on the outer span.",
+  ],
 ] as const;
 
 export const SwipeHintPage = () => (
@@ -81,6 +87,7 @@ export const SwipeHintPage = () => (
           </TableBody>
         </Table>
       </div>
+      <HintStyleGuide />
     </section>
 
     <section className="mt-16" aria-labelledby="swipe-hint-styling-title">

@@ -9,9 +9,25 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { HintStyleGuide } from "../components/hint-style-guide";
 import { HoldHintDemo } from "../components/hold-hint-demo";
 
 const propRows = [
+  [
+    "icon",
+    "Built-in pointing hand",
+    "Static decorative artwork in a 32px box.",
+  ],
+  [
+    "iconMask",
+    "Built-in hand silhouette",
+    "Filled path and viewBox for the cutout. Custom icons have no cutout unless supplied.",
+  ],
+  [
+    "hotspot",
+    "{ x: 116 / 256, y: 16 / 256 }",
+    "Contact point in normalized icon coordinates, shared by the artwork and its cutout.",
+  ],
   [
     "size",
     "112",
@@ -25,6 +41,11 @@ const propRows = [
   ["iterations", '"infinite"', "Total number of complete cycles, or infinite."],
   ["playing", "true", "Pause or resume at the current frame."],
   ["className", "—", "A class for styling the hint."],
+  [
+    "style",
+    "—",
+    "Inline styles and --gestik-* CSS variables on the outer span.",
+  ],
 ] as const;
 
 export const HoldHintPage = () => (
@@ -76,6 +97,7 @@ export const HoldHintPage = () => (
           </TableBody>
         </Table>
       </div>
+      <HintStyleGuide />
     </section>
 
     <section className="mt-16" aria-labelledby="hold-hint-styling-title">
@@ -93,6 +115,15 @@ export const HoldHintPage = () => (
         fixed. A silhouette cutout keeps the ring behind the transparent hand on
         any background. The 112 by 72px scene scales proportionally with{" "}
         <code>size</code>.
+      </p>
+      <p className="mt-4 max-w-2xl text-sm leading-6 text-zinc-600">
+        Replace the hand with <code>icon</code> and set <code>hotspot</code> to
+        its contact point, using coordinates from 0 to 1. Supply an
+        <code> iconMask</code> with a filled SVG <code>path</code> and
+        <code> viewBox</code> to preserve the cutout behind custom artwork.
+        Custom icons render without a cutout when no silhouette is supplied.
+        Switching between built-in and custom artwork, or enabling or disabling
+        its mask, restarts the cycle to keep all layers synchronized.
       </p>
       <div className="mt-6 flex items-center gap-5 rounded-xl border border-zinc-200 p-5">
         <HoldHint className="custom-hold-hint" size={112} playing={false} />
@@ -125,7 +156,8 @@ export const HoldHintPage = () => (
         accessible control for the same action. Under reduced motion, the hand
         stays still and the ring stays hidden. Your application handles the
         gesture and decides when to show the hint; the ring demonstrates a hold
-        and does not report live progress.
+        and does not report live progress. Custom artwork stays inside an inert,
+        hidden subtree and should be static.
       </p>
     </section>
   </article>

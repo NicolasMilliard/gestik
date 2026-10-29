@@ -13,4 +13,4 @@ Suggest vertical movement in both directions. Keep the cue simple: a moving illu
 
 Inspect the complete down-and-up movement at small and large sizes. It should suggest vertical exploration without implying a tap or drag. Check pause/resume and the resting pose after finite playback.
 
-Implementation: [component](../../packages/react/src/scroll-hint.tsx), [motion](../../packages/react/src/scroll-hint.css).
+Implementation: [component](../../packages/react/src/scroll-hint.tsx), [motion](../../packages/core/src/styles/scroll-hint.css).

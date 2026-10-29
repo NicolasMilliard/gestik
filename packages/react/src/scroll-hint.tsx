@@ -1,21 +1,27 @@
-import type { CSSProperties } from "react";
+import {
+  SCROLL_HINT_DEFAULTS,
+  SCROLL_CUE_VIEW_BOX,
+  SCROLL_CUE_SURFACE,
+  SCROLL_CUE_OUTLINE,
+} from "@gestik/core";
 
-import "./scroll-hint.css";
+import "@gestik/core/styles/scroll-hint.css";
+import type { ReactNode } from "react";
 
-const SCENE_WIDTH = 112;
-const SCENE_HEIGHT = 88;
+import type { HintStyle } from "./hint-style";
+import { INERT_PROPS } from "./inert-props";
 
-type ScrollHintStyle = CSSProperties & {
-  "--gestik-scroll-hint-duration"?: string;
-  "--gestik-scroll-hint-iterations"?: string;
-  "--gestik-scroll-hint-play-state"?: "running" | "paused";
-};
+const { width: SCENE_WIDTH, height: SCENE_HEIGHT } = SCROLL_HINT_DEFAULTS;
 
 export interface ScrollHintProps {
   /** Scene width in pixels; all artwork and spacing scale proportionally. Defaults to 112. */
   size?: number;
+  /** Decorative, static artwork filling a 32px box. Defaults to the built-in scroll cue. */
+  icon?: ReactNode;
   /** Class for styling the outer decorative span, including CSS variables. */
   className?: string;
+  /** Styles for the outer span, including --gestik-* variables. Explicit playback props take precedence. */
+  style?: HintStyle;
   /** Duration of a complete animation cycle in milliseconds. Defaults to 2400. */
   duration?: number;
   /** CSS iteration count. Defaults to "infinite"; use whole cycles to finish at rest. */
@@ -26,15 +32,18 @@ export interface ScrollHintProps {
 
 export const ScrollHint = ({
   size = SCENE_WIDTH,
+  icon,
   className,
+  style,
   duration,
   iterations,
   playing,
 }: ScrollHintProps) => {
   const scale = size / SCENE_WIDTH;
-  const style: ScrollHintStyle = {
+  const hintStyle: HintStyle = {
     height: SCENE_HEIGHT * scale,
     width: size,
+    ...style,
     ...(duration !== undefined && {
       "--gestik-scroll-hint-duration": `${duration}ms`,
     }),
@@ -52,27 +61,29 @@ export const ScrollHint = ({
         className ? `gestik-scroll-hint ${className}` : "gestik-scroll-hint"
       }
       aria-hidden="true"
-      style={style}
+      {...INERT_PROPS}
+      style={hintStyle}
     >
       <span
         className="gestik-scroll-hint__stage"
         style={{ transform: `scale(${scale})` }}
       >
-        <svg
-          className="gestik-scroll-hint__motion"
-          xmlns="http://www.w3.org/2000/svg"
-          width="32"
-          height="32"
-          fill="currentColor"
-          viewBox="0 0 256 256"
-          focusable="false"
-        >
-          <path
-            d="M200,80v96a56,56,0,0,1-56,56H112a56,56,0,0,1-56-56V80a56,56,0,0,1,56-56h32A56,56,0,0,1,200,80Z"
-            opacity="0.2"
-          />
-          <path d="M144,16H112A64.07,64.07,0,0,0,48,80v96a64.07,64.07,0,0,0,64,64h32a64.07,64.07,0,0,0,64-64V80A64.07,64.07,0,0,0,144,16Zm48,160a48.05,48.05,0,0,1-48,48H112a48.05,48.05,0,0,1-48-48V80a48.05,48.05,0,0,1,48-48h32a48.05,48.05,0,0,1,48,48ZM136,83.31v89.38l10.34-10.35a8,8,0,0,1,11.32,11.32l-24,24a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L120,172.69V83.31L109.66,93.66A8,8,0,0,1,98.34,82.34l24-24a8,8,0,0,1,11.32,0l24,24a8,8,0,0,1-11.32,11.32Z" />
-        </svg>
+        {icon === undefined ? (
+          <svg
+            className="gestik-scroll-hint__motion"
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            fill="currentColor"
+            viewBox={SCROLL_CUE_VIEW_BOX}
+            focusable="false"
+          >
+            <path d={SCROLL_CUE_SURFACE} opacity="0.2" />
+            <path d={SCROLL_CUE_OUTLINE} />
+          </svg>
+        ) : (
+          <span className="gestik-scroll-hint__motion">{icon}</span>
+        )}
       </span>
     </span>
   );

@@ -14,4 +14,4 @@ Show a square being lifted, moved, and dropped. The square, shadow, and destinat
 
 Inspect both directions and pose changes at several sizes, using outline and duotone hands over dark and patterned backgrounds. Check offset hotspots, shadows, loop resets, and multiple instances for leaks or misalignment.
 
-Implementation: [component](../../packages/react/src/drag-hint.tsx), [motion](../../packages/react/src/drag-hint.css).
+Implementation: [component](../../packages/react/src/drag-hint.tsx), [motion](../../packages/core/src/styles/drag-hint.css).

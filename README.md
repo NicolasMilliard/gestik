@@ -23,7 +23,7 @@ The hints use CSS animations, scale with their `size`, and support playback cont
 
 ## Project status
 
-Gestik is in early development. `@gestik/react` is currently a private workspace package at version `0.0.0` and has not been published to npm. The install commands in the docs are a preview; use the live playgrounds or run this repository locally to explore the components.
+Gestik is in early development. `@gestik/core` and `@gestik/react` are private workspace packages at version `0.0.0` and have not been published to npm. The install commands in the docs are a preview; use the live playgrounds or run this repository locally to explore the components.
 
 ## Usage preview
 
@@ -46,7 +46,9 @@ All hints share `size` (scene width in pixels), `duration` (a complete cycle in 
 
 The default width is 112px. `ShortcutHint` instead sizes its scene to fit the key row, starting at 112px for Command + K. Explicit sizes scale the complete scene proportionally. Drag and swipe directions describe the element's or finger's travel; changing direction starts a new cycle. Changing a shortcut's key count also restarts playback.
 
-Custom drag and swipe artwork and shortcut keycaps stay inside an inert, hidden subtree. Supply static illustrations and keep the actual interaction outside the hint. When showing a looping hint alongside other content, provide a way to pause or dismiss it, or use a finite iteration count.
+Every hint accepts custom static artwork inside an inert, hidden subtree. Swipe, hold, resize, and scroll use `icon`; drag uses an `icons` pair for its two poses; shortcut accepts custom elements in `keys`. For contact-based gestures, `hotspot` anchors the artwork. Drag's `iconMasks` and hold/resize's `iconMask` supply optional cutouts for custom artwork. Supply static illustrations and keep the actual interaction outside the hint. When showing a looping hint alongside other content, provide a way to pause or dismiss it, or use a finite iteration count.
+
+All hints also accept a typed `style` object with ordinary React CSS properties and `--gestik-*` variables. Explicit playback props take precedence over the matching style variables. Use `size` for proportional scaling; width and height in `style` only affect the outer layout box. See the [complete props reference](docs/props.md) for shared props, gesture-specific options, and defaults.
 
 Named imports include the selected hints' CSS automatically. The build preserves component modules so consumer bundlers can remove unused hints and their styles; no separate stylesheet import is needed.
 
@@ -61,14 +63,14 @@ bun install --frozen-lockfile
 bun run dev
 ```
 
-`bun run dev` builds the React package before starting the Vite docs server. Open the local URL printed in the terminal.
+`bun run dev` builds core, then React, before starting the Vite docs server. Open the local URL printed in the terminal.
 
 ```sh
 bun run fix     # Apply lint and formatting fixes
 bun run verify  # Run all CI checks locally
 ```
 
-The React library lives in `packages/react`; the Vite docs app lives in `apps/docs`. See the [hosting guide](apps/docs/README.md#github-pages) for production previews and GitHub Pages deployment.
+Shared CSS, SVG geometry, defaults, and layout live in `packages/core`; React components live in `packages/react`; the Vite docs app lives in `apps/docs`. React depends on core and includes its styles automatically. See [package architecture](docs/architecture.md) for the boundaries and future adapters, and the [hosting guide](apps/docs/README.md#github-pages) for production previews and GitHub Pages deployment.
 
 ## Contributing
 

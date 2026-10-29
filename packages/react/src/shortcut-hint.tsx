@@ -1,25 +1,25 @@
+import {
+  SHORTCUT_HINT_DEFAULTS,
+  getShortcutKeycapWidth,
+  getShortcutSceneWidth,
+  getShortcutPressStart,
+} from "@gestik/core";
 import type { CSSProperties, ReactElement } from "react";
 
-import "./shortcut-hint.css";
+import "@gestik/core/styles/shortcut-hint.css";
+import type { HintStyle } from "./hint-style";
 import { CommandKey } from "./icons/command-key";
+import { INERT_PROPS } from "./inert-props";
 
 type Keycap = string | ReactElement;
 
 export type ShortcutHintKeys = readonly [Keycap, Keycap, ...Keycap[]];
 
-const DEFAULT_KEYS: ShortcutHintKeys = ["Command", "K"];
-const SCENE_HEIGHT = 72;
+const DEFAULT_KEYS: ShortcutHintKeys = SHORTCUT_HINT_DEFAULTS.keys;
+const SCENE_HEIGHT = SHORTCUT_HINT_DEFAULTS.height;
 
 const keycapWidth = (keycap: Keycap) =>
-  typeof keycap === "string" && keycap !== "Command"
-    ? Math.max(36, keycap.length * 8 + 16)
-    : 36;
-
-type ShortcutHintStyle = CSSProperties & {
-  "--gestik-shortcut-hint-duration"?: string;
-  "--gestik-shortcut-hint-iterations"?: string;
-  "--gestik-shortcut-hint-play-state"?: "running" | "paused";
-};
+  getShortcutKeycapWidth(typeof keycap === "string" ? keycap : undefined);
 
 type KeycapStyle = CSSProperties & {
   "--gestik-shortcut-hint-press-start": string;
@@ -33,6 +33,8 @@ export interface ShortcutHintProps {
   size?: number;
   /** Class for styling the outer decorative span, including CSS variables. */
   className?: string;
+  /** Styles for the outer span, including --gestik-* variables. Explicit playback props take precedence. */
+  style?: HintStyle;
   /** Duration of a complete animation cycle in milliseconds. Defaults to 2400. */
   duration?: number;
   /** CSS iteration count. Defaults to "infinite"; use whole cycles to finish at rest. */
@@ -45,23 +47,18 @@ export const ShortcutHint = ({
   keys = DEFAULT_KEYS,
   size,
   className,
+  style,
   duration,
   iterations,
   playing,
 }: ShortcutHintProps) => {
-  if (keys.length < 2) {
-    throw new RangeError("ShortcutHint requires at least two keycaps.");
-  }
-
-  const sceneWidth =
-    24 +
-    keys.reduce((width, keycap) => width + keycapWidth(keycap), 0) +
-    (keys.length - 1) * 16;
+  const sceneWidth = getShortcutSceneWidth(keys.map(keycapWidth));
   const width = size ?? sceneWidth;
   const scale = width / sceneWidth;
-  const style: ShortcutHintStyle = {
+  const hintStyle: HintStyle = {
     height: SCENE_HEIGHT * scale,
     width,
+    ...style,
     ...(duration !== undefined && {
       "--gestik-shortcut-hint-duration": `${duration}ms`,
     }),
@@ -79,8 +76,8 @@ export const ShortcutHint = ({
         className ? `gestik-shortcut-hint ${className}` : "gestik-shortcut-hint"
       }
       aria-hidden="true"
-      inert
-      style={style}
+      {...INERT_PROPS}
+      style={hintStyle}
     >
       <span
         key={keys.length}
@@ -88,7 +85,8 @@ export const ShortcutHint = ({
         style={{ transform: `scale(${scale})`, width: sceneWidth }}
       >
         {keys.map((keycap, index) => {
-          const pressStart = 12 + (index / (keys.length - 1)) * 22;
+          const content = keycap === "Command" ? <CommandKey /> : keycap;
+          const pressStart = getShortcutPressStart(index, keys.length);
           const capStyle: KeycapStyle = {
             "--gestik-shortcut-hint-press-end": `${pressStart + 6}%`,
             "--gestik-shortcut-hint-press-start": `${pressStart}%`,
@@ -101,12 +99,10 @@ export const ShortcutHint = ({
                 <span className="gestik-shortcut-hint__separator">+</span>
               )}
               <kbd className="gestik-shortcut-hint__keycap" style={capStyle}>
-                {keycap === "Command" ? (
-                  <span className="gestik-shortcut-hint__icon">
-                    <CommandKey />
-                  </span>
+                {typeof content === "string" ? (
+                  content
                 ) : (
-                  keycap
+                  <span className="gestik-shortcut-hint__icon">{content}</span>
                 )}
               </kbd>
             </span>

@@ -10,6 +10,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import {
+  CURSOR_EXAMPLE,
+  CURSOR_HOTSPOT,
+  CURSOR_SILHOUETTE,
+} from "../lib/cursor-artwork";
+import { CursorArtwork } from "./cursor-artwork";
+
 type Iterations = 1 | 2 | "infinite";
 
 const iterationItems = [
@@ -22,6 +29,7 @@ const iterationValues = { "1": 1, "2": 2, infinite: "infinite" } as const;
 
 export const ResizeHintDemo = () => {
   const id = useId();
+  const [customIcon, setCustomIcon] = useState(false);
   const [size, setSize] = useState(112);
   const [duration, setDuration] = useState(2200);
   const [iterations, setIterations] = useState<Iterations>("infinite");
@@ -33,10 +41,14 @@ export const ResizeHintDemo = () => {
       ? 'iterations="infinite"'
       : `iterations={${iterations}}`;
 
-  const example = `import { ResizeHint } from "@gestik/react";
+  const artworkCode = customIcon
+    ? `  icon={<CursorArtwork />}\n  iconMask={cursorMask}\n  hotspot={{ x: 4 / 32, y: 2 / 32 }}\n  style={{ color: "#0e7490" }}\n`
+    : "";
+
+  const example = `import { ResizeHint } from "@gestik/react";${customIcon ? `\n\n${CURSOR_EXAMPLE}` : ""}
 
 <ResizeHint
-  size={${size}}
+${artworkCode}  size={${size}}
   duration={${duration}}
   ${iterationsCode}
   playing={${playing}}
@@ -53,6 +65,10 @@ export const ResizeHintDemo = () => {
         <div className="playground-preview flex min-h-72 flex-col items-center justify-center gap-6 px-6 py-10 sm:min-h-80">
           <ResizeHint
             key={previewKey}
+            icon={customIcon ? <CursorArtwork /> : undefined}
+            iconMask={customIcon ? CURSOR_SILHOUETTE : undefined}
+            hotspot={customIcon ? CURSOR_HOTSPOT : undefined}
+            style={customIcon ? { color: "#0e7490" } : undefined}
             size={size}
             duration={duration}
             iterations={iterations}
@@ -65,6 +81,18 @@ export const ResizeHintDemo = () => {
 
         <div className="border-t border-zinc-200 bg-zinc-50 p-5 lg:border-t-0 lg:border-l">
           <h2 className="mb-6 text-sm font-medium">Preview settings</h2>
+          <Button
+            type="button"
+            className="mb-5 w-full"
+            variant={customIcon ? "default" : "outline"}
+            aria-pressed={customIcon}
+            onClick={() => {
+              setCustomIcon((current) => !current);
+              setPreviewKey((key) => key + 1);
+            }}
+          >
+            Custom icon
+          </Button>
 
           <div className="mb-5 text-sm font-medium">
             <div className="flex items-center justify-between">

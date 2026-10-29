@@ -1,28 +1,24 @@
-import type { CSSProperties, ReactNode } from "react";
+import { SWIPE_HINT_DEFAULTS } from "@gestik/core";
+import type { ReactNode } from "react";
 import { useId } from "react";
 
-import "./swipe-hint.css";
+import "@gestik/core/styles/swipe-hint.css";
+import type { HintStyle } from "./hint-style";
 import { PointingHand } from "./icons/pointing-hand";
+import { INERT_PROPS } from "./inert-props";
 
-const SCENE_WIDTH = 112;
-const SCENE_HEIGHT = 72;
+const { width: SCENE_WIDTH, height: SCENE_HEIGHT } = SWIPE_HINT_DEFAULTS;
 
 const DEFAULT_ICON = (
   <PointingHand surface="var(--gestik-swipe-hint-surface, currentColor)" />
 );
 // The fingertip in the icon's 256-unit viewBox.
-const DEFAULT_HOTSPOT = { x: 116 / 256, y: 16 / 256 };
+const DEFAULT_HOTSPOT = SWIPE_HINT_DEFAULTS.hotspot;
 
 export interface SwipeHintHotspot {
   x: number;
   y: number;
 }
-
-type SwipeHintStyle = CSSProperties & {
-  "--gestik-swipe-hint-duration"?: string;
-  "--gestik-swipe-hint-iterations"?: string;
-  "--gestik-swipe-hint-play-state"?: "running" | "paused";
-};
 
 export interface SwipeHintProps {
   /** Direction of finger travel. Defaults to "right"; changing it restarts the cycle. */
@@ -31,6 +27,8 @@ export interface SwipeHintProps {
   size?: number;
   /** Class for styling the outer decorative span, including CSS variables. */
   className?: string;
+  /** Styles for the outer span, including --gestik-* variables. Explicit playback props take precedence. */
+  style?: HintStyle;
   /** Decorative, static artwork filling a 32px box. */
   icon?: ReactNode;
   /** Contact point in the icon box, from 0 to 1 on each axis. */
@@ -44,9 +42,10 @@ export interface SwipeHintProps {
 }
 
 export const SwipeHint = ({
-  direction = "right",
+  direction = SWIPE_HINT_DEFAULTS.direction,
   size = SCENE_WIDTH,
   className,
+  style,
   icon = DEFAULT_ICON,
   hotspot = DEFAULT_HOTSPOT,
   duration,
@@ -56,9 +55,10 @@ export const SwipeHint = ({
   const trailId = useId();
   const scale = size / SCENE_WIDTH;
 
-  const style: SwipeHintStyle = {
+  const hintStyle: HintStyle = {
     height: SCENE_HEIGHT * scale,
     width: size,
+    ...style,
     ...(duration !== undefined && {
       "--gestik-swipe-hint-duration": `${duration}ms`,
     }),
@@ -77,8 +77,8 @@ export const SwipeHint = ({
       }
       data-direction={direction}
       aria-hidden="true"
-      inert
-      style={style}
+      {...INERT_PROPS}
+      style={hintStyle}
     >
       <span
         key={direction}

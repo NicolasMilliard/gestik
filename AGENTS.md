@@ -4,7 +4,8 @@ Gestik provides animations that show the movement a person makes to navigate or 
 
 ## Repository map
 
-- `packages/react`: public React components, CSS, icons, and Vitest tests.
+- `packages/core`: framework-independent CSS, SVG geometry, defaults, and layout.
+- `packages/react`: public React components, React artwork wrappers, and Vitest tests.
 - `apps/docs`: Vite documentation and interactive component examples.
 - `docs/briefs`: component behavior briefs and local visual decisions for review.
 - `oxlint.config.ts` and `oxfmt.config.ts`: shared Ultracite presets and explained project overrides. Follow these configs rather than duplicating their rules here.
@@ -18,11 +19,12 @@ Use Bun, at the version in `package.json`, and keep `bun.lock` in sync.
 - `bun run fix`: apply lint and formatting fixes; inspect the resulting diff.
 - `bun run verify`: run the same lint, format, build, type, and test checks as CI.
 
-The docs resolve `@gestik/react` through its built exports. Run `bun run build` before checking or building the docs in a fresh checkout. See `CONTRIBUTING.md` for individual commands and validation expectations.
+The docs resolve `@gestik/react` through its built exports; React depends on `@gestik/core`. Run `bun run build` (core, then React) before checking or building the docs in a fresh checkout. See `CONTRIBUTING.md` for individual commands and validation expectations.
 
 ## Implementation
 
 - Keep the library independent of the docs app and its UI dependencies.
+- Keep core free of frameworks and DOM access. Adapters own rendering and instance IDs; CSS owns playback defaults so omitted props remain overridable. See `docs/architecture.md` for package boundaries.
 - Adopt Ultracite's lint and formatting defaults. Update code to follow the presets instead of adding overrides to preserve an old style. Add a scoped override only for a concrete compatibility or project requirement, and explain why in the config.
 - Preserve public props, defaults, exports, and CSS variables unless the task calls for an API change. Update examples and documentation when behavior changes.
 - Follow the existing component's structure before adding a new abstraction or dependency. Explain a new dependency's purpose in the change description.
@@ -30,6 +32,7 @@ The docs resolve `@gestik/react` through its built exports. Run `bun run build` 
 - Start from the human movement the hint must communicate. Keep visual detail minimal; do not add device variants or miniature interface scenes by default. Challenge proposed motion when it suggests a different action or makes direction ambiguous, and explain the tradeoff.
 - Let the gesture communicate movement. Avoid arrows by default; add a directional graphic only when it resolves a clear ambiguity.
 - Keep decorative hints out of the accessibility tree and out of the tab order. Preserve reduced-motion support and explain accompanying instructions in docs.
+- Keep matching customization concepts consistent across hints: `style` for root styling, `icon` for one illustration, paired `icons` for poses, and `keys` for keycap legends. Newly mounted artwork and mask animation layers must start on the same cycle.
 - Use unique IDs across component demos and connect slider labels explicitly with `htmlFor`. Keep `output` values outside the label so they do not become part of the slider's accessible name; a shared wrapping label can also name the output instead of the input.
 
 ## Validation and review

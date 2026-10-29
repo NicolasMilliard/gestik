@@ -16,4 +16,4 @@ Communicate horizontal finger travel. The trail records the path without an arro
 
 Check both directions, several sizes, and custom hotspots. Inspect fingertip alignment, the trailing gap, early erasure, and the hidden return. Nothing should flash before contact or survive after completion; pause/resume must keep every layer aligned.
 
-Implementation: [component](../../packages/react/src/swipe-hint.tsx), [motion](../../packages/react/src/swipe-hint.css).
+Implementation: [component](../../packages/react/src/swipe-hint.tsx), [motion](../../packages/core/src/styles/swipe-hint.css).
