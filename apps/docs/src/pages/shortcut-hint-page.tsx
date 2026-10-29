@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { HintStyleGuide } from "../components/hint-style-guide";
 import { ShortcutHintDemo } from "../components/shortcut-hint-demo";
 
 const propRows = [
@@ -30,6 +31,11 @@ const propRows = [
   ["iterations", '"infinite"', "Total number of complete cycles, or infinite."],
   ["playing", "true", "Pause or resume at the current frame."],
   ["className", "—", "A class for styling the hint."],
+  [
+    "style",
+    "—",
+    "Inline styles and --gestik-* CSS variables on the outer span.",
+  ],
 ] as const;
 
 export const ShortcutHintPage = () => (
@@ -80,13 +86,16 @@ export const ShortcutHintPage = () => (
           </TableBody>
         </Table>
       </div>
+      <HintStyleGuide />
       <p className="mt-4 text-sm leading-6 text-zinc-600">
         <code>keys</code> determines the keycap count. TypeScript requires at
         least two entries; fewer entries throw a <code>RangeError</code> at
         runtime. The label <code>Command</code> uses the built-in Command
         illustration. Other strings appear as text; pass a decorative React
-        element for a custom symbol. Custom artwork should be static and fit its
-        keycap. Changing the number of keys restarts the cycle.
+        element for a custom symbol. Custom artwork is placed in the same 20px
+        icon box as the built-in Command symbol and should fill that box. It
+        stays static, inert, and hidden from assistive technology. Changing the
+        number of keys restarts the cycle.
       </p>
     </section>
 

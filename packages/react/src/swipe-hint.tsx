@@ -1,8 +1,9 @@
 import { SWIPE_HINT_DEFAULTS } from "@gestik/core";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useId } from "react";
 
 import "@gestik/core/styles/swipe-hint.css";
+import type { HintStyle } from "./hint-style";
 import { PointingHand } from "./icons/pointing-hand";
 
 const { width: SCENE_WIDTH, height: SCENE_HEIGHT } = SWIPE_HINT_DEFAULTS;
@@ -18,12 +19,6 @@ export interface SwipeHintHotspot {
   y: number;
 }
 
-type SwipeHintStyle = CSSProperties & {
-  "--gestik-swipe-hint-duration"?: string;
-  "--gestik-swipe-hint-iterations"?: string;
-  "--gestik-swipe-hint-play-state"?: "running" | "paused";
-};
-
 export interface SwipeHintProps {
   /** Direction of finger travel. Defaults to "right"; changing it restarts the cycle. */
   direction?: "right" | "left";
@@ -31,6 +26,8 @@ export interface SwipeHintProps {
   size?: number;
   /** Class for styling the outer decorative span, including CSS variables. */
   className?: string;
+  /** Styles for the outer span, including --gestik-* variables. Explicit playback props take precedence. */
+  style?: HintStyle;
   /** Decorative, static artwork filling a 32px box. */
   icon?: ReactNode;
   /** Contact point in the icon box, from 0 to 1 on each axis. */
@@ -47,6 +44,7 @@ export const SwipeHint = ({
   direction = SWIPE_HINT_DEFAULTS.direction,
   size = SCENE_WIDTH,
   className,
+  style,
   icon = DEFAULT_ICON,
   hotspot = DEFAULT_HOTSPOT,
   duration,
@@ -56,9 +54,10 @@ export const SwipeHint = ({
   const trailId = useId();
   const scale = size / SCENE_WIDTH;
 
-  const style: SwipeHintStyle = {
+  const hintStyle: HintStyle = {
     height: SCENE_HEIGHT * scale,
     width: size,
+    ...style,
     ...(duration !== undefined && {
       "--gestik-swipe-hint-duration": `${duration}ms`,
     }),
@@ -78,7 +77,7 @@ export const SwipeHint = ({
       data-direction={direction}
       aria-hidden="true"
       inert
-      style={style}
+      style={hintStyle}
     >
       <span
         key={direction}

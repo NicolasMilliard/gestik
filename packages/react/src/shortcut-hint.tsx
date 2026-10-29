@@ -7,6 +7,7 @@ import {
 import type { CSSProperties, ReactElement } from "react";
 
 import "@gestik/core/styles/shortcut-hint.css";
+import type { HintStyle } from "./hint-style";
 import { CommandKey } from "./icons/command-key";
 
 type Keycap = string | ReactElement;
@@ -18,12 +19,6 @@ const SCENE_HEIGHT = SHORTCUT_HINT_DEFAULTS.height;
 
 const keycapWidth = (keycap: Keycap) =>
   getShortcutKeycapWidth(typeof keycap === "string" ? keycap : undefined);
-
-type ShortcutHintStyle = CSSProperties & {
-  "--gestik-shortcut-hint-duration"?: string;
-  "--gestik-shortcut-hint-iterations"?: string;
-  "--gestik-shortcut-hint-play-state"?: "running" | "paused";
-};
 
 type KeycapStyle = CSSProperties & {
   "--gestik-shortcut-hint-press-start": string;
@@ -37,6 +32,8 @@ export interface ShortcutHintProps {
   size?: number;
   /** Class for styling the outer decorative span, including CSS variables. */
   className?: string;
+  /** Styles for the outer span, including --gestik-* variables. Explicit playback props take precedence. */
+  style?: HintStyle;
   /** Duration of a complete animation cycle in milliseconds. Defaults to 2400. */
   duration?: number;
   /** CSS iteration count. Defaults to "infinite"; use whole cycles to finish at rest. */
@@ -49,6 +46,7 @@ export const ShortcutHint = ({
   keys = DEFAULT_KEYS,
   size,
   className,
+  style,
   duration,
   iterations,
   playing,
@@ -56,9 +54,10 @@ export const ShortcutHint = ({
   const sceneWidth = getShortcutSceneWidth(keys.map(keycapWidth));
   const width = size ?? sceneWidth;
   const scale = width / sceneWidth;
-  const style: ShortcutHintStyle = {
+  const hintStyle: HintStyle = {
     height: SCENE_HEIGHT * scale,
     width,
+    ...style,
     ...(duration !== undefined && {
       "--gestik-shortcut-hint-duration": `${duration}ms`,
     }),
@@ -77,7 +76,7 @@ export const ShortcutHint = ({
       }
       aria-hidden="true"
       inert
-      style={style}
+      style={hintStyle}
     >
       <span
         key={keys.length}
@@ -85,6 +84,7 @@ export const ShortcutHint = ({
         style={{ transform: `scale(${scale})`, width: sceneWidth }}
       >
         {keys.map((keycap, index) => {
+          const content = keycap === "Command" ? <CommandKey /> : keycap;
           const pressStart = getShortcutPressStart(index, keys.length);
           const capStyle: KeycapStyle = {
             "--gestik-shortcut-hint-press-end": `${pressStart + 6}%`,
@@ -98,12 +98,10 @@ export const ShortcutHint = ({
                 <span className="gestik-shortcut-hint__separator">+</span>
               )}
               <kbd className="gestik-shortcut-hint__keycap" style={capStyle}>
-                {keycap === "Command" ? (
-                  <span className="gestik-shortcut-hint__icon">
-                    <CommandKey />
-                  </span>
+                {typeof content === "string" ? (
+                  content
                 ) : (
-                  keycap
+                  <span className="gestik-shortcut-hint__icon">{content}</span>
                 )}
               </kbd>
             </span>

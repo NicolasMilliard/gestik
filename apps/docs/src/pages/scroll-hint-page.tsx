@@ -9,14 +9,25 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { HintStyleGuide } from "../components/hint-style-guide";
 import { ScrollHintDemo } from "../components/scroll-hint-demo";
 
 const propRows = [
+  [
+    "icon",
+    "Built-in scroll cue",
+    "Static decorative artwork in a 32px box; the whole box moves vertically.",
+  ],
   ["size", "112", "Scene width in pixels; artwork and movement scale with it."],
   ["duration", "2400", "A complete down-and-up cycle in milliseconds."],
   ["iterations", '"infinite"', "Total number of complete cycles, or infinite."],
   ["playing", "true", "Pause or resume at the current frame."],
   ["className", "—", "A class for styling the hint."],
+  [
+    "style",
+    "—",
+    "Inline styles and --gestik-* CSS variables on the outer span.",
+  ],
 ] as const;
 
 export const ScrollHintPage = () => (
@@ -66,6 +77,7 @@ export const ScrollHintPage = () => (
           </TableBody>
         </Table>
       </div>
+      <HintStyleGuide />
     </section>
 
     <section className="mt-16" aria-labelledby="scroll-hint-styling-title">
@@ -80,7 +92,9 @@ export const ScrollHintPage = () => (
         <code> --gestik-scroll-hint-color </code> to give the hint its own
         color. At the default size, the 32px artwork travels 24px inside a 112
         by 88px scene. Changing <code>size</code> scales the whole scene
-        proportionally.
+        proportionally. Pass <code>icon</code> to replace the scroll cue with
+        static artwork that fills the same 32px box. No hotspot or silhouette is
+        needed because the cue has no contact point or background cutout.
       </p>
       <div className="mt-6 flex items-center gap-5 rounded-xl border border-zinc-200 p-5">
         <ScrollHint className="custom-scroll-hint" size={84} playing={false} />
@@ -116,7 +130,8 @@ export const ScrollHintPage = () => (
         loop suggests vertical movement in both directions; accompanying text
         should explain what the user can explore. Under reduced motion, the cue
         stays still. Your application handles the interaction and decides when
-        to show the animation.
+        to show the animation. Custom artwork stays inside an inert, hidden
+        subtree and should be static.
       </p>
     </section>
   </article>

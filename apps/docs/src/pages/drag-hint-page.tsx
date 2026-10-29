@@ -11,6 +11,7 @@ import {
 
 import { DragHintDemo } from "../components/drag-hint-demo";
 import { DragHintMaskDemo } from "../components/drag-hint-mask-demo";
+import { HintStyleGuide } from "../components/hint-style-guide";
 
 const propRows = [
   ["direction", '"right"', "Drag left or right."],
@@ -30,6 +31,11 @@ const propRows = [
     "Interaction point in normalized icon coordinates.",
   ],
   ["className", "—", "A class for styling the hint."],
+  [
+    "style",
+    "—",
+    "Inline styles and --gestik-* CSS variables on the outer span.",
+  ],
 ] as const;
 
 export const DragHintPage = () => (
@@ -77,6 +83,7 @@ export const DragHintPage = () => (
           </TableBody>
         </Table>
       </div>
+      <HintStyleGuide />
     </section>
 
     <section className="mt-16" aria-labelledby="styling-title">

@@ -9,9 +9,25 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { HintStyleGuide } from "../components/hint-style-guide";
 import { ResizeHintDemo } from "../components/resize-hint-demo";
 
 const propRows = [
+  [
+    "icon",
+    "Built-in pointing hand",
+    "Static decorative artwork in a 32px box.",
+  ],
+  [
+    "iconMask",
+    "Built-in hand silhouette",
+    "Filled path and viewBox for the cutout. Custom icons have no cutout unless supplied.",
+  ],
+  [
+    "hotspot",
+    "{ x: 116 / 256, y: 16 / 256 }",
+    "Contact point in normalized icon coordinates, shared by the artwork and its cutout.",
+  ],
   [
     "size",
     "112",
@@ -25,6 +41,11 @@ const propRows = [
   ["iterations", '"infinite"', "Total number of complete cycles, or infinite."],
   ["playing", "true", "Pause or resume at the current frame."],
   ["className", "—", "A class for styling the hint."],
+  [
+    "style",
+    "—",
+    "Inline styles and --gestik-* CSS variables on the outer span.",
+  ],
 ] as const;
 
 export const ResizeHintPage = () => (
@@ -76,6 +97,7 @@ export const ResizeHintPage = () => (
           </TableBody>
         </Table>
       </div>
+      <HintStyleGuide />
     </section>
 
     <section className="mt-16" aria-labelledby="resize-hint-styling-title">
@@ -92,6 +114,15 @@ export const ResizeHintPage = () => (
         outline. The 112 by 88px scene scales proportionally with
         <code> size</code>. A silhouette cutout keeps the outline behind the
         transparent hand on any background.
+      </p>
+      <p className="mt-4 max-w-2xl text-sm leading-6 text-zinc-600">
+        Replace the hand with <code>icon</code> and set <code>hotspot</code> to
+        its contact point, using coordinates from 0 to 1. Supply an
+        <code> iconMask</code> with a filled SVG <code>path</code> and
+        <code> viewBox</code> to preserve the cutout behind custom artwork.
+        Custom icons render without a cutout when no silhouette is supplied.
+        Switching between built-in and custom artwork, or enabling or disabling
+        its mask, restarts the cycle to keep all layers synchronized.
       </p>
       <div className="mt-6 flex items-center gap-5 rounded-xl border border-zinc-200 p-5">
         <ResizeHint className="custom-resize-hint" playing={false} />
@@ -126,7 +157,8 @@ export const ResizeHintPage = () => (
         visible instructions, such as “Drag the corner outward to resize,” and
         an accessible control for changing the size. Under reduced motion, the
         initial frame and hand stay still. Your application handles resizing and
-        decides when to show the hint.
+        decides when to show the hint. Custom artwork stays inside an inert,
+        hidden subtree and should be static.
       </p>
     </section>
   </article>

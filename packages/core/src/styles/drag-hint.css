@@ -120,6 +120,12 @@
   display: block;
 }
 
+.gestik-drag-hint__icon > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .gestik-drag-hint__icon--idle,
 .gestik-drag-hint__mask--idle {
   opacity: 1;

@@ -32,6 +32,7 @@ The docs resolve `@gestik/react` through its built exports; React depends on `@g
 - Start from the human movement the hint must communicate. Keep visual detail minimal; do not add device variants or miniature interface scenes by default. Challenge proposed motion when it suggests a different action or makes direction ambiguous, and explain the tradeoff.
 - Let the gesture communicate movement. Avoid arrows by default; add a directional graphic only when it resolves a clear ambiguity.
 - Keep decorative hints out of the accessibility tree and out of the tab order. Preserve reduced-motion support and explain accompanying instructions in docs.
+- Keep matching customization concepts consistent across hints: `style` for root styling, `icon` for one illustration, paired `icons` for poses, and `keys` for keycap legends. Newly mounted artwork and mask animation layers must start on the same cycle.
 - Use unique IDs across component demos and connect slider labels explicitly with `htmlFor`. Keep `output` values outside the label so they do not become part of the slider's accessible name; a shared wrapping label can also name the output instead of the input.
 
 ## Validation and review

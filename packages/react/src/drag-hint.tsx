@@ -4,11 +4,12 @@ import {
   OPEN_HAND_SILHOUETTE,
 } from "@gestik/core";
 import type { IconSilhouette } from "@gestik/core";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import "@gestik/core/styles/drag-hint.css";
 import { useId } from "react";
 
+import type { HintStyle } from "./hint-style";
 import { IconMask } from "./icon-mask";
 import { ClosedHand } from "./icons/closed-hand";
 import { OpenHand } from "./icons/open-hand";
@@ -29,12 +30,6 @@ export interface DragHintHotspot {
   y: number;
 }
 
-type DragHintStyle = CSSProperties & {
-  "--gestik-drag-hint-duration"?: string;
-  "--gestik-drag-hint-iterations"?: string;
-  "--gestik-drag-hint-play-state"?: "running" | "paused";
-};
-
 export interface DragHintProps {
   /** Direction of element travel. Defaults to "right"; changing it restarts the cycle. */
   direction?: "right" | "left";
@@ -42,6 +37,8 @@ export interface DragHintProps {
   size?: number;
   /** Class for styling the outer decorative span, including CSS variables. */
   className?: string;
+  /** Styles for the outer span, including --gestik-* variables. Explicit playback props take precedence. */
+  style?: HintStyle;
   /** Decorative, static artwork filling a 24px box in each pose. */
   icons?: {
     idle: ReactNode;
@@ -66,6 +63,7 @@ export const DragHint = ({
   direction = DRAG_HINT_DEFAULTS.direction,
   size = SCENE_WIDTH,
   className,
+  style,
   icons = DEFAULT_ICONS,
   iconMasks,
   hotspot = DEFAULT_HOTSPOT,
@@ -78,9 +76,10 @@ export const DragHint = ({
   const masks =
     iconMasks ?? (icons === DEFAULT_ICONS ? DEFAULT_ICON_MASKS : undefined);
 
-  const style: DragHintStyle = {
+  const hintStyle: HintStyle = {
     height: SCENE_HEIGHT * scale,
     width: size,
+    ...style,
     ...(duration !== undefined && {
       "--gestik-drag-hint-duration": `${duration}ms`,
     }),
@@ -100,7 +99,7 @@ export const DragHint = ({
       data-direction={direction}
       aria-hidden="true"
       inert
-      style={style}
+      style={hintStyle}
     >
       <span
         key={direction}

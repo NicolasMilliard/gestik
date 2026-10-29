@@ -22,6 +22,31 @@
   transform-origin: 0 0;
 }
 
+.gestik-resize-hint__icon-origin {
+  position: absolute;
+  top: 34.5px;
+  left: 54.5px;
+}
+
+.gestik-resize-hint__icon-origin .gestik-resize-hint__travel,
+.gestik-resize-hint__icon-origin .gestik-resize-hint__press {
+  display: block;
+  width: 0;
+  height: 0;
+}
+
+.gestik-resize-hint__icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+
+.gestik-resize-hint__icon > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .gestik-resize-hint__frame {
   width: 32px;
   height: 24px;

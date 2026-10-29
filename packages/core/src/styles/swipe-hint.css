@@ -83,6 +83,12 @@
     ease-in-out var(--gestik-swipe-hint-iterations) both;
 }
 
+.gestik-swipe-hint__icon > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 @keyframes gestik-swipe-hint-travel {
   0%,
   8% {

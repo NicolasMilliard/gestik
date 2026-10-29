@@ -1,5 +1,5 @@
 import { ScrollHint } from "@gestik/react";
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +9,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import { CURSOR_EXAMPLE } from "../lib/cursor-artwork";
+import { CursorArtwork } from "./cursor-artwork";
 
 type Iterations = 1 | 2 | "infinite";
 
@@ -21,6 +24,8 @@ const iterationItems = [
 const iterationValues = { "1": 1, "2": 2, infinite: "infinite" } as const;
 
 export const ScrollHintDemo = () => {
+  const id = useId();
+  const [customIcon, setCustomIcon] = useState(false);
   const [size, setSize] = useState(112);
   const [duration, setDuration] = useState(2400);
   const [iterations, setIterations] = useState<Iterations>("infinite");
@@ -32,10 +37,14 @@ export const ScrollHintDemo = () => {
       ? 'iterations="infinite"'
       : `iterations={${iterations}}`;
 
-  const example = `import { ScrollHint } from "@gestik/react";
+  const artworkCode = customIcon
+    ? `  icon={<CursorArtwork />}\n  style={{ color: "#0e7490" }}\n`
+    : "";
+
+  const example = `import { ScrollHint } from "@gestik/react";${customIcon ? `\n\n${CURSOR_EXAMPLE}` : ""}
 
 <ScrollHint
-  size={${size}}
+${artworkCode}  size={${size}}
   duration={${duration}}
   ${iterationsCode}
   playing={${playing}}
@@ -52,6 +61,8 @@ export const ScrollHintDemo = () => {
         <div className="playground-preview flex min-h-72 flex-col items-center justify-center gap-6 px-6 py-10 sm:min-h-80">
           <ScrollHint
             key={previewKey}
+            icon={customIcon ? <CursorArtwork /> : undefined}
+            style={customIcon ? { color: "#0e7490" } : undefined}
             size={size}
             duration={duration}
             iterations={iterations}
@@ -64,17 +75,31 @@ export const ScrollHintDemo = () => {
 
         <div className="border-t border-zinc-200 bg-zinc-50 p-5 lg:border-t-0 lg:border-l">
           <h2 className="mb-6 text-sm font-medium">Preview settings</h2>
-
-          <label
-            className="mb-5 block text-sm font-medium"
-            htmlFor="scroll-hint-size"
+          <Button
+            type="button"
+            className="mb-5 w-full"
+            variant={customIcon ? "default" : "outline"}
+            aria-pressed={customIcon}
+            onClick={() => {
+              setCustomIcon((current) => !current);
+              setPreviewKey((key) => key + 1);
+            }}
           >
-            <span className="flex items-center justify-between">
-              <span>Size</span>
-              <output className="font-normal text-zinc-500">{size}px</output>
-            </span>
+            Custom icon
+          </Button>
+
+          <div className="mb-5 text-sm font-medium">
+            <div className="flex items-center justify-between">
+              <label htmlFor={`${id}-size`}>Size</label>
+              <output
+                htmlFor={`${id}-size`}
+                className="font-normal text-zinc-500"
+              >
+                {size}px
+              </output>
+            </div>
             <input
-              id="scroll-hint-size"
+              id={`${id}-size`}
               className="mt-3 w-full accent-brand"
               type="range"
               min="80"
@@ -83,20 +108,20 @@ export const ScrollHintDemo = () => {
               value={size}
               onChange={(event) => setSize(Number(event.target.value))}
             />
-          </label>
+          </div>
 
-          <label
-            className="mb-5 block text-sm font-medium"
-            htmlFor="scroll-hint-duration"
-          >
-            <span className="flex items-center justify-between">
-              <span>Duration</span>
-              <output className="font-normal text-zinc-500">
+          <div className="mb-5 text-sm font-medium">
+            <div className="flex items-center justify-between">
+              <label htmlFor={`${id}-duration`}>Duration</label>
+              <output
+                htmlFor={`${id}-duration`}
+                className="font-normal text-zinc-500"
+              >
                 {duration}ms
               </output>
-            </span>
+            </div>
             <input
-              id="scroll-hint-duration"
+              id={`${id}-duration`}
               className="mt-3 w-full accent-brand"
               type="range"
               min="800"
@@ -105,11 +130,11 @@ export const ScrollHintDemo = () => {
               value={duration}
               onChange={(event) => setDuration(Number(event.target.value))}
             />
-          </label>
+          </div>
 
           <div>
             <span
-              id="scroll-hint-iterations-label"
+              id={`${id}-iterations-label`}
               className="block text-sm font-medium"
             >
               Iterations
@@ -126,7 +151,7 @@ export const ScrollHintDemo = () => {
               }}
             >
               <SelectTrigger
-                aria-labelledby="scroll-hint-iterations-label"
+                aria-labelledby={`${id}-iterations-label`}
                 className="mt-2 w-full"
               >
                 <SelectValue />

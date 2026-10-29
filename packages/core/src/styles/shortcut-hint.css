@@ -70,9 +70,10 @@
   height: 20px;
 }
 
-.gestik-shortcut-hint__keycap > svg {
-  width: 20px;
-  height: 20px;
+.gestik-shortcut-hint__icon > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 @keyframes gestik-shortcut-hint-press {

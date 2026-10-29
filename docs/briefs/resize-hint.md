@@ -9,10 +9,10 @@ Show a lower-right corner being pulled outward to enlarge an element. Keep the u
 - Overlap press and travel. Finishing the press first makes the movement read as a click followed by a separate resize.
 - Pause at the larger size longer than the initial rest, then fade and reset while hidden. A visible return would demonstrate shrinking. Keep this rhythm local to ResizeHint.
 - Synchronize the hand's silhouette cutout with its motion. Finite playback and reduced motion show the initial resting frame and hand.
-- Keep the API focused on the built-in gesture until a concrete use establishes another direction, axis, or artwork requirement.
+- Support custom artwork with `icon`, `hotspot`, and an optional `iconMask`, matching HoldHint. Keep the established direction and axis focused on pulling the lower-right corner outward.
 
 ## Visual checks
 
 Inspect fingertip contact, the fixed corner, growth, release, and hidden reset at small and large sizes. Check outline visibility on dark and patterned backgrounds and synchronization while pausing and resuming.
 
-Implementation: [component](../../packages/react/src/resize-hint.tsx), [motion](../../packages/react/src/resize-hint.css).
+Implementation: [component](../../packages/react/src/resize-hint.tsx), [motion](../../packages/core/src/styles/resize-hint.css).

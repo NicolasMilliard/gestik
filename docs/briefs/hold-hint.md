@@ -14,4 +14,4 @@ Communicate a sustained touch press: compress the hand around a fixed fingertip,
 
 Check that the press reads as a hold, the fingertip never drifts, and the ring remains behind the hand. Inspect completion, release, and reset on patterned backgrounds and at several sizes; check that pause/resume keeps the visible and masking layers synchronized.
 
-Implementation: [component](../../packages/react/src/hold-hint.tsx), [motion](../../packages/react/src/hold-hint.css).
+Implementation: [component](../../packages/react/src/hold-hint.tsx), [motion](../../packages/core/src/styles/hold-hint.css).

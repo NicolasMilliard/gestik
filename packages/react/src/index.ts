@@ -16,4 +16,5 @@ export {
   type SwipeHintHotspot,
   type SwipeHintProps,
 } from "./swipe-hint.js";
-export type { IconSilhouette } from "@gestik/core";
+export type { HintHotspot, IconSilhouette } from "@gestik/core";
+export type { HintStyle } from "./hint-style.js";
