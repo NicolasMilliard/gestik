@@ -41,6 +41,8 @@ After verification succeeds on `main`, CI deploys the built docs to GitHub Pages
 - When replacing an icon, fit its SVG to the component's icon box and derive the hotspot from its viewBox. For multi-pose hints, use a shared contact point so switching poses does not shift the wrist. Check the contact point through scaling and animation in the browser; fixed SVG dimensions can silently overflow the anchor.
 - Shared artwork must receive component-specific styling explicitly. For example, SwipeHint's surface variable must color its own hand without inheriting DragHint's surface override. Check computed styles in the browser when reviewing CSS variable examples.
 
+The docs test suite also bundles each public hint through the built package with Vite. These checks keep React external, verify that the hint retains its CSS and reduced-motion rules, reject unrelated hint code and styles, and cap each minified JavaScript-plus-CSS bundle at 4 KiB gzipped. Build the library before running these tests. Review actual consumer output when changing the package build; the size of the distributed barrel alone does not measure tree shaking.
+
 ## Evolving the rules
 
 Feedback should reduce repeated corrections. Record the cause, the scope of the lesson, and how a future change can be checked. Prefer a lint rule or behavioral test for a deterministic requirement, and concise guidance for a judgment call. Explain an exception next to its configuration instead of silently disabling a rule. Keep product-specific timing and visual decisions local to their component unless evidence supports a shared convention.

@@ -48,6 +48,8 @@ The default width is 112px. `ShortcutHint` instead sizes its scene to fit the ke
 
 Custom drag and swipe artwork and shortcut keycaps stay inside an inert, hidden subtree. Supply static illustrations and keep the actual interaction outside the hint. When showing a looping hint alongside other content, provide a way to pause or dismiss it, or use a finite iteration count.
 
+Named imports include the selected hints' CSS automatically. The build preserves component modules so consumer bundlers can remove unused hints and their styles; no separate stylesheet import is needed.
+
 ## Development
 
 Use the Bun version recorded in `package.json` and Node.js 22.18 or newer.
