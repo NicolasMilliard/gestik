@@ -1,15 +1,20 @@
+import {
+  DRAG_HINT_DEFAULTS,
+  CLOSED_HAND_SILHOUETTE,
+  OPEN_HAND_SILHOUETTE,
+} from "@gestik/core";
+import type { IconSilhouette } from "@gestik/core";
 import type { CSSProperties, ReactNode } from "react";
+
+import "@gestik/core/styles/drag-hint.css";
 import { useId } from "react";
 
-import "./drag-hint.css";
-import type { IconSilhouette } from "./icon-mask";
 import { IconMask } from "./icon-mask";
-import { CLOSED_HAND_SILHOUETTE, ClosedHand } from "./icons/closed-hand";
-import { OPEN_HAND_SILHOUETTE, OpenHand } from "./icons/open-hand";
+import { ClosedHand } from "./icons/closed-hand";
+import { OpenHand } from "./icons/open-hand";
 
-const SCENE_WIDTH = 112;
-const SCENE_HEIGHT = 72;
-const ICON_SIZE = 24;
+const { width: SCENE_WIDTH, height: SCENE_HEIGHT } = DRAG_HINT_DEFAULTS;
+const ICON_SIZE = DRAG_HINT_DEFAULTS.iconSize;
 
 const DEFAULT_ICONS = { grabbing: <ClosedHand />, idle: <OpenHand /> };
 const DEFAULT_ICON_MASKS = {
@@ -17,7 +22,7 @@ const DEFAULT_ICON_MASKS = {
   idle: OPEN_HAND_SILHOUETTE,
 };
 // A shared top-center hotspot places both poses across the square's lower edge.
-const DEFAULT_HOTSPOT = { x: 0.5, y: 0 };
+const DEFAULT_HOTSPOT = DRAG_HINT_DEFAULTS.hotspot;
 
 export interface DragHintHotspot {
   x: number;
@@ -58,7 +63,7 @@ export interface DragHintProps {
 }
 
 export const DragHint = ({
-  direction = "right",
+  direction = DRAG_HINT_DEFAULTS.direction,
   size = SCENE_WIDTH,
   className,
   icons = DEFAULT_ICONS,

@@ -23,7 +23,7 @@ The hints use CSS animations, scale with their `size`, and support playback cont
 
 ## Project status
 
-Gestik is in early development. `@gestik/react` is currently a private workspace package at version `0.0.0` and has not been published to npm. The install commands in the docs are a preview; use the live playgrounds or run this repository locally to explore the components.
+Gestik is in early development. `@gestik/core` and `@gestik/react` are private workspace packages at version `0.0.0` and have not been published to npm. The install commands in the docs are a preview; use the live playgrounds or run this repository locally to explore the components.
 
 ## Usage preview
 
@@ -61,14 +61,14 @@ bun install --frozen-lockfile
 bun run dev
 ```
 
-`bun run dev` builds the React package before starting the Vite docs server. Open the local URL printed in the terminal.
+`bun run dev` builds core, then React, before starting the Vite docs server. Open the local URL printed in the terminal.
 
 ```sh
 bun run fix     # Apply lint and formatting fixes
 bun run verify  # Run all CI checks locally
 ```
 
-The React library lives in `packages/react`; the Vite docs app lives in `apps/docs`. See the [hosting guide](apps/docs/README.md#github-pages) for production previews and GitHub Pages deployment.
+Shared CSS, SVG geometry, defaults, and layout live in `packages/core`; React components live in `packages/react`; the Vite docs app lives in `apps/docs`. React depends on core and includes its styles automatically. See [package architecture](docs/architecture.md) for the boundaries and future adapters, and the [hosting guide](apps/docs/README.md#github-pages) for production previews and GitHub Pages deployment.
 
 ## Contributing
 

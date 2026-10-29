@@ -1,17 +1,17 @@
+import { RESIZE_HINT_DEFAULTS, POINTING_HAND_SILHOUETTE } from "@gestik/core";
 import type { CSSProperties } from "react";
 import { useId } from "react";
 
-import "./resize-hint.css";
+import "@gestik/core/styles/resize-hint.css";
 import { IconMask } from "./icon-mask";
-import { POINTING_HAND_SILHOUETTE, PointingHand } from "./icons/pointing-hand";
+import { PointingHand } from "./icons/pointing-hand";
 
-const SCENE_WIDTH = 112;
-const SCENE_HEIGHT = 88;
-const ICON_SIZE = 32;
+const { width: SCENE_WIDTH, height: SCENE_HEIGHT } = RESIZE_HINT_DEFAULTS;
+const ICON_SIZE = RESIZE_HINT_DEFAULTS.iconSize;
 // Anchor the fingertip and cutout on the rounded edge, slightly inside the
 // frame's geometric corner now that there is no separate handle.
-const ICON_X = -(116 / 256) * ICON_SIZE;
-const ICON_Y = -(16 / 256) * ICON_SIZE;
+const ICON_X = -RESIZE_HINT_DEFAULTS.hotspot.x * ICON_SIZE;
+const ICON_Y = -RESIZE_HINT_DEFAULTS.hotspot.y * ICON_SIZE;
 
 type ResizeHintStyle = CSSProperties & {
   "--gestik-resize-hint-duration"?: string;

@@ -9,7 +9,7 @@
   "type": "module",
   "scripts": {
     "dev": "bun run build && bun --filter @gestik/docs dev",
-    "build": "bun --filter @gestik/react build",
+    "build": "bun --filter @gestik/core build && bun --filter @gestik/react build",
     "build:docs": "bun --filter @gestik/docs build",
     "test": "bun --filter '*' test",
     "typecheck": "tsc --noEmit && bun --filter '*' typecheck",

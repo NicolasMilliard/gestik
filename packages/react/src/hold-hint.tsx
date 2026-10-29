@@ -1,16 +1,16 @@
+import { HOLD_HINT_DEFAULTS, POINTING_HAND_SILHOUETTE } from "@gestik/core";
 import type { CSSProperties } from "react";
 import { useId } from "react";
 
-import "./hold-hint.css";
+import "@gestik/core/styles/hold-hint.css";
 import { IconMask } from "./icon-mask";
-import { POINTING_HAND_SILHOUETTE, PointingHand } from "./icons/pointing-hand";
+import { PointingHand } from "./icons/pointing-hand";
 
-const SCENE_WIDTH = 112;
-const SCENE_HEIGHT = 72;
-const ICON_SIZE = 32;
+const { width: SCENE_WIDTH, height: SCENE_HEIGHT } = HOLD_HINT_DEFAULTS;
+const ICON_SIZE = HOLD_HINT_DEFAULTS.iconSize;
 // Keep the hand and its cutout anchored at the icon's fingertip (116, 16).
-const ICON_X = -(116 / 256) * ICON_SIZE;
-const ICON_Y = -(16 / 256) * ICON_SIZE;
+const ICON_X = -HOLD_HINT_DEFAULTS.hotspot.x * ICON_SIZE;
+const ICON_Y = -HOLD_HINT_DEFAULTS.hotspot.y * ICON_SIZE;
 
 type HoldHintStyle = CSSProperties & {
   "--gestik-hold-hint-duration"?: string;

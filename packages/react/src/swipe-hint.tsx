@@ -1,17 +1,17 @@
+import { SWIPE_HINT_DEFAULTS } from "@gestik/core";
 import type { CSSProperties, ReactNode } from "react";
 import { useId } from "react";
 
-import "./swipe-hint.css";
+import "@gestik/core/styles/swipe-hint.css";
 import { PointingHand } from "./icons/pointing-hand";
 
-const SCENE_WIDTH = 112;
-const SCENE_HEIGHT = 72;
+const { width: SCENE_WIDTH, height: SCENE_HEIGHT } = SWIPE_HINT_DEFAULTS;
 
 const DEFAULT_ICON = (
   <PointingHand surface="var(--gestik-swipe-hint-surface, currentColor)" />
 );
 // The fingertip in the icon's 256-unit viewBox.
-const DEFAULT_HOTSPOT = { x: 116 / 256, y: 16 / 256 };
+const DEFAULT_HOTSPOT = SWIPE_HINT_DEFAULTS.hotspot;
 
 export interface SwipeHintHotspot {
   x: number;
@@ -44,7 +44,7 @@ export interface SwipeHintProps {
 }
 
 export const SwipeHint = ({
-  direction = "right",
+  direction = SWIPE_HINT_DEFAULTS.direction,
   size = SCENE_WIDTH,
   className,
   icon = DEFAULT_ICON,

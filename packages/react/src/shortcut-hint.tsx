@@ -1,19 +1,23 @@
+import {
+  SHORTCUT_HINT_DEFAULTS,
+  getShortcutKeycapWidth,
+  getShortcutSceneWidth,
+  getShortcutPressStart,
+} from "@gestik/core";
 import type { CSSProperties, ReactElement } from "react";
 
-import "./shortcut-hint.css";
+import "@gestik/core/styles/shortcut-hint.css";
 import { CommandKey } from "./icons/command-key";
 
 type Keycap = string | ReactElement;
 
 export type ShortcutHintKeys = readonly [Keycap, Keycap, ...Keycap[]];
 
-const DEFAULT_KEYS: ShortcutHintKeys = ["Command", "K"];
-const SCENE_HEIGHT = 72;
+const DEFAULT_KEYS: ShortcutHintKeys = SHORTCUT_HINT_DEFAULTS.keys;
+const SCENE_HEIGHT = SHORTCUT_HINT_DEFAULTS.height;
 
 const keycapWidth = (keycap: Keycap) =>
-  typeof keycap === "string" && keycap !== "Command"
-    ? Math.max(36, keycap.length * 8 + 16)
-    : 36;
+  getShortcutKeycapWidth(typeof keycap === "string" ? keycap : undefined);
 
 type ShortcutHintStyle = CSSProperties & {
   "--gestik-shortcut-hint-duration"?: string;
@@ -49,14 +53,7 @@ export const ShortcutHint = ({
   iterations,
   playing,
 }: ShortcutHintProps) => {
-  if (keys.length < 2) {
-    throw new RangeError("ShortcutHint requires at least two keycaps.");
-  }
-
-  const sceneWidth =
-    24 +
-    keys.reduce((width, keycap) => width + keycapWidth(keycap), 0) +
-    (keys.length - 1) * 16;
+  const sceneWidth = getShortcutSceneWidth(keys.map(keycapWidth));
   const width = size ?? sceneWidth;
   const scale = width / sceneWidth;
   const style: ShortcutHintStyle = {
@@ -88,7 +85,7 @@ export const ShortcutHint = ({
         style={{ transform: `scale(${scale})`, width: sceneWidth }}
       >
         {keys.map((keycap, index) => {
-          const pressStart = 12 + (index / (keys.length - 1)) * 22;
+          const pressStart = getShortcutPressStart(index, keys.length);
           const capStyle: KeycapStyle = {
             "--gestik-shortcut-hint-press-end": `${pressStart + 6}%`,
             "--gestik-shortcut-hint-press-start": `${pressStart}%`,

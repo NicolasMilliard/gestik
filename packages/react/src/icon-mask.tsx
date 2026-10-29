@@ -1,11 +1,5 @@
 import type { ReactNode } from "react";
 
-/** A filled SVG silhouette, independent of an icon's color or opacity. */
-export interface IconSilhouette {
-  path: string;
-  viewBox: string;
-}
-
 interface IconMaskProps {
   id: string;
   width: number;

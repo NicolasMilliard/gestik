@@ -1,0 +1,32 @@
+{
+  "name": "@gestik/core",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    },
+    "./styles/drag-hint.css": "./dist/styles/drag-hint.css",
+    "./styles/hold-hint.css": "./dist/styles/hold-hint.css",
+    "./styles/resize-hint.css": "./dist/styles/resize-hint.css",
+    "./styles/scroll-hint.css": "./dist/styles/scroll-hint.css",
+    "./styles/shortcut-hint.css": "./dist/styles/shortcut-hint.css",
+    "./styles/swipe-hint.css": "./dist/styles/swipe-hint.css"
+  },
+  "scripts": {
+    "build": "tsdown --dts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  }
+}
