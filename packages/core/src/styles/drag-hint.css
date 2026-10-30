@@ -62,31 +62,21 @@
 
 .gestik-drag-hint__icon-anchor {
   color: var(--gestik-drag-hint-icon-color, inherit);
-  position: absolute;
-  top: 16px;
-  left: 16px;
+}
+
+.gestik-drag-hint__custom-icon {
   display: block;
   width: 24px;
   height: 24px;
 }
 
-.gestik-drag-hint__drag-group {
-  position: absolute;
-  top: var(--_gestik-start-y);
-  left: var(--_gestik-start-x);
-  width: 32px;
-  height: 32px;
-}
-
 .gestik-drag-hint__drag-group,
-.gestik-drag-hint__background-travel,
 .gestik-drag-hint__mask-travel {
   animation: gestik-drag-hint-travel var(--gestik-drag-hint-duration) linear
     var(--gestik-drag-hint-iterations) both;
 }
 
-.gestik-drag-hint__drag-group,
-.gestik-drag-hint__background-travel {
+.gestik-drag-hint__drag-group {
   animation-name: gestik-drag-hint-travel, gestik-drag-hint-visibility;
 }
 
@@ -96,27 +86,14 @@
     ease-in-out var(--gestik-drag-hint-iterations) both;
 }
 
-.gestik-drag-hint__lift-group {
-  position: relative;
-  display: block;
-  width: 32px;
-  height: 32px;
-}
-
 .gestik-drag-hint__lift-group,
-.gestik-drag-hint__background-lift,
 .gestik-drag-hint__mask-lift {
   animation: gestik-drag-hint-lift var(--gestik-drag-hint-duration) ease-in-out
     var(--gestik-drag-hint-iterations) both;
 }
 
-.gestik-drag-hint__icon {
-  position: absolute;
-  inset: 0;
-  display: block;
-}
-
-.gestik-drag-hint__icon > svg {
+.gestik-drag-hint__icon > svg,
+.gestik-drag-hint__custom-icon > svg {
   display: block;
   width: 100%;
   height: 100%;
@@ -239,8 +216,6 @@
 }
 
 .gestik-drag-hint__drag-group,
-.gestik-drag-hint__background-travel,
-.gestik-drag-hint__background-lift,
 .gestik-drag-hint__shadow,
 .gestik-drag-hint__lift-group,
 .gestik-drag-hint__icon--idle,
@@ -254,8 +229,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .gestik-drag-hint__drag-group,
-  .gestik-drag-hint__background-travel,
-  .gestik-drag-hint__background-lift,
   .gestik-drag-hint__shadow,
   .gestik-drag-hint__lift-group,
   .gestik-drag-hint__icon--idle,

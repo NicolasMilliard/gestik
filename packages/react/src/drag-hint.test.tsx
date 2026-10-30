@@ -28,12 +28,15 @@ describe(DragHint, () => {
 
   it("positions both built-in poses and cutouts at the square's lower edge", () => {
     const { container } = render(<DragHint />);
-    const anchor = container.querySelector<HTMLElement>(
+    const anchor = container.querySelector<SVGElement>(
       ".gestik-drag-hint__icon-anchor"
     );
     const icons = anchor?.querySelectorAll("svg");
 
-    expect(anchor?.style.transform).toBe("translate(-50%, 0%)");
+    expect([
+      anchor?.getAttribute("x"),
+      anchor?.getAttribute("y"),
+    ]).toStrictEqual(["4", "16"]);
     expect(icons).toHaveLength(2);
     for (const icon of icons ?? []) {
       expect(
@@ -48,6 +51,8 @@ describe(DragHint, () => {
         mask.getAttribute("y"),
       ])
     ).toStrictEqual([
+      ["4", "16"],
+      ["4", "16"],
       ["4", "16"],
       ["4", "16"],
     ]);
@@ -83,17 +88,21 @@ describe(DragHint, () => {
         ?.contains(screen.getByTestId("grabbing-pose"))
     ).toBeTruthy();
 
-    const anchor = container.querySelector<HTMLElement>(
+    const anchor = container.querySelector<SVGElement>(
       ".gestik-drag-hint__icon-anchor"
     );
-    expect(anchor?.style.transform).toBe("translate(-25%, -75%)");
+    expect([
+      anchor?.getAttribute("x"),
+      anchor?.getAttribute("y"),
+      screen.getByTestId("idle-pose").namespaceURI,
+    ]).toStrictEqual(["10", "-2", "http://www.w3.org/1999/xhtml"]);
     expect([
       container.querySelector("mask"),
       screen.getByTestId("idle-pose").closest("[inert]"),
     ]).toStrictEqual([null, container.firstElementChild]);
   });
 
-  it("keeps each instance's background connected to its own mask", () => {
+  it("keeps each instance's destination and square connected to their own masks", () => {
     const { container, rerender } = render(
       <>
         <DragHint />
@@ -101,30 +110,29 @@ describe(DragHint, () => {
       </>
     );
     const hints = container.querySelectorAll(".gestik-drag-hint");
-    const maskIds = [...hints].map((hint) => {
-      const mask = hint.querySelector("mask");
-      const background = hint.querySelector<SVGElement>(
-        ".gestik-drag-hint__masked-scene"
-      );
+    const maskIds = [...container.querySelectorAll("mask")].map(
+      (mask) => mask.id
+    );
 
-      expect(mask).not.toBeNull();
-      // Native SVG masking avoids WebKit's CSS mask repaint path on HTML.
-      expect([
-        background?.namespaceURI,
-        background?.getAttribute("mask"),
-      ]).toStrictEqual(["http://www.w3.org/2000/svg", `url(#${mask?.id})`]);
-      expect(
-        background?.querySelectorAll(
-          ".gestik-drag-hint__square, .gestik-drag-hint__destination, .gestik-drag-hint__shadow"
-        )
-      ).toHaveLength(3);
-      expect(
-        background?.querySelector(".gestik-drag-hint__icon-anchor")
-      ).toBeNull();
-      return mask?.id;
-    });
+    for (const hint of hints) {
+      for (const selector of [
+        ".gestik-drag-hint__masked-scene",
+        ".gestik-drag-hint__square-scene",
+      ]) {
+        const scene = hint.querySelector(selector);
+        const maskId = scene?.getAttribute("mask")?.slice(5, -1);
 
-    expect(new Set(maskIds).size).toBe(2);
+        // Keep masking native to SVG; HTML CSS masks can leave stale WebKit cutouts.
+        expect(scene?.namespaceURI).toBe("http://www.w3.org/2000/svg");
+        expect(
+          [...hint.querySelectorAll("mask")].some((mask) => mask.id === maskId)
+        ).toBeTruthy();
+        expect(
+          scene?.querySelector(".gestik-drag-hint__icon-anchor")
+        ).toBeNull();
+      }
+    }
+    expect(new Set(maskIds).size).toBe(4);
 
     rerender(
       <>
@@ -132,10 +140,61 @@ describe(DragHint, () => {
         <DragHint />
       </>
     );
-
     expect(
       [...container.querySelectorAll("mask")].map((mask) => mask.id)
     ).toStrictEqual(maskIds);
+  });
+
+  it.each([undefined, { grabbing: <svg />, idle: <svg /> }])(
+    "keeps the square, shadow, and artwork attached throughout travel and lift",
+    (icons) => {
+      const { container } = render(<DragHint icons={icons} />);
+      const square = container.querySelector(".gestik-drag-hint__square");
+      const shadow = container.querySelector(".gestik-drag-hint__shadow");
+      const artwork = container.querySelector(".gestik-drag-hint__icon-anchor");
+      const lift = square?.closest(".gestik-drag-hint__lift-group");
+
+      expect(lift).not.toBeNull();
+      expect(artwork?.closest(".gestik-drag-hint__lift-group")).toBe(lift);
+      expect(shadow?.closest(".gestik-drag-hint__lift-group")).toBe(lift);
+      expect(lift?.closest(".gestik-drag-hint__drag-group")?.namespaceURI).toBe(
+        "http://www.w3.org/2000/svg"
+      );
+      // The shadow excludes the same outline as the square, including its stroke.
+      for (const attribute of [
+        "x",
+        "y",
+        "width",
+        "height",
+        "rx",
+        "stroke-width",
+      ]) {
+        expect(shadow?.getAttribute(attribute)).toBe(
+          square?.getAttribute(attribute)
+        );
+      }
+    }
+  );
+
+  it("reserves transparent space around the masked shadow for WebKit", () => {
+    const { container } = render(<DragHint />);
+    const bounds = container.querySelector(
+      ".gestik-drag-hint__square-scene .gestik-drag-hint__shadow-bounds"
+    );
+    const filter = container.querySelector("filter");
+    const mask = container.querySelector('mask[id$="-square"]');
+
+    expect(bounds?.getAttribute("fill")).toBe("transparent");
+    expect(filter?.getAttribute("filterUnits")).toBe("userSpaceOnUse");
+    for (const attribute of ["x", "y", "width", "height"]) {
+      expect([
+        bounds?.getAttribute(attribute),
+        mask?.getAttribute(attribute),
+      ]).toStrictEqual([
+        filter?.getAttribute(attribute),
+        filter?.getAttribute(attribute),
+      ]);
+    }
   });
 
   it("positions custom silhouettes using the icon box and hotspot", () => {
