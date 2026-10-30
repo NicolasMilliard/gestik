@@ -31,18 +31,20 @@
   transform-origin: 0 0;
 }
 
-.gestik-drag-hint__destination {
-  position: absolute;
-  top: var(--_gestik-start-y);
-  left: var(--_gestik-target-x);
-  display: block;
-}
-
 .gestik-drag-hint__background {
   position: absolute;
   inset: 0;
+  display: block;
+  width: 112px;
+  height: 72px;
+  overflow: visible;
 }
 
+.gestik-drag-hint__destination {
+  transform: translate(var(--_gestik-target-x), var(--_gestik-start-y));
+}
+
+.gestik-drag-hint__square-origin,
 .gestik-drag-hint__mask-origin {
   transform: translate(var(--_gestik-start-x), var(--_gestik-start-y));
 }
@@ -54,10 +56,6 @@
 }
 
 .gestik-drag-hint__square {
-  display: block;
-}
-
-.gestik-drag-hint__square rect {
   fill: var(--gestik-drag-hint-square-fill, none);
   stroke: var(--gestik-drag-hint-square-stroke, currentColor);
 }
@@ -81,22 +79,19 @@
 }
 
 .gestik-drag-hint__drag-group,
+.gestik-drag-hint__background-travel,
 .gestik-drag-hint__mask-travel {
   animation: gestik-drag-hint-travel var(--gestik-drag-hint-duration) linear
     var(--gestik-drag-hint-iterations) both;
 }
 
-.gestik-drag-hint__drag-group {
+.gestik-drag-hint__drag-group,
+.gestik-drag-hint__background-travel {
   animation-name: gestik-drag-hint-travel, gestik-drag-hint-visibility;
 }
 
-:where(.gestik-drag-hint__background) .gestik-drag-hint__drag-group::before {
-  position: absolute;
-  inset: 2px;
-  border-radius: 6px;
-  box-shadow: 0 5px 8px rgb(0 0 0 / 0.2);
+.gestik-drag-hint__shadow {
   opacity: 0;
-  content: "";
   animation: gestik-drag-hint-shadow var(--gestik-drag-hint-duration)
     ease-in-out var(--gestik-drag-hint-iterations) both;
 }
@@ -109,6 +104,7 @@
 }
 
 .gestik-drag-hint__lift-group,
+.gestik-drag-hint__background-lift,
 .gestik-drag-hint__mask-lift {
   animation: gestik-drag-hint-lift var(--gestik-drag-hint-duration) ease-in-out
     var(--gestik-drag-hint-iterations) both;
@@ -243,7 +239,9 @@
 }
 
 .gestik-drag-hint__drag-group,
-.gestik-drag-hint__drag-group::before,
+.gestik-drag-hint__background-travel,
+.gestik-drag-hint__background-lift,
+.gestik-drag-hint__shadow,
 .gestik-drag-hint__lift-group,
 .gestik-drag-hint__icon--idle,
 .gestik-drag-hint__icon--grabbing,
@@ -256,7 +254,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .gestik-drag-hint__drag-group,
-  .gestik-drag-hint__drag-group::before,
+  .gestik-drag-hint__background-travel,
+  .gestik-drag-hint__background-lift,
+  .gestik-drag-hint__shadow,
   .gestik-drag-hint__lift-group,
   .gestik-drag-hint__icon--idle,
   .gestik-drag-hint__icon--grabbing,

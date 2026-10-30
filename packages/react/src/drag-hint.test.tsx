@@ -103,20 +103,21 @@ describe(DragHint, () => {
     const hints = container.querySelectorAll(".gestik-drag-hint");
     const maskIds = [...hints].map((hint) => {
       const mask = hint.querySelector("mask");
-      const background = hint.querySelector<HTMLElement>(
-        ".gestik-drag-hint__background"
+      const background = hint.querySelector<SVGElement>(
+        ".gestik-drag-hint__masked-scene"
       );
 
       expect(mask).not.toBeNull();
-      expect(background?.style.mask.replaceAll('"', "")).toBe(
-        `url(#${mask?.id})`
-      );
+      // Native SVG masking avoids WebKit's CSS mask repaint path on HTML.
+      expect([
+        background?.namespaceURI,
+        background?.getAttribute("mask"),
+      ]).toStrictEqual(["http://www.w3.org/2000/svg", `url(#${mask?.id})`]);
       expect(
-        background?.querySelector(".gestik-drag-hint__square")
-      ).not.toBeNull();
-      expect(
-        background?.querySelector(".gestik-drag-hint__destination")
-      ).not.toBeNull();
+        background?.querySelectorAll(
+          ".gestik-drag-hint__square, .gestik-drag-hint__destination, .gestik-drag-hint__shadow"
+        )
+      ).toHaveLength(3);
       expect(
         background?.querySelector(".gestik-drag-hint__icon-anchor")
       ).toBeNull();
@@ -176,9 +177,33 @@ describe(DragHint, () => {
 
     expect(container.querySelector("mask")).toBeNull();
     expect(
-      container.querySelector<HTMLElement>(".gestik-drag-hint__background")
-        ?.style.mask
-    ).toBe("");
+      container
+        .querySelector(".gestik-drag-hint__masked-scene")
+        ?.getAttribute("mask")
+    ).toBeNull();
+  });
+
+  it("restarts the scene when custom artwork or its cutout is mounted", () => {
+    const icons = { grabbing: <svg />, idle: <svg /> };
+    const { container, rerender } = render(<DragHint />);
+    const original = container.querySelector(".gestik-drag-hint__stage");
+
+    rerender(<DragHint icons={icons} />);
+    const custom = container.querySelector(".gestik-drag-hint__stage");
+    expect(custom).not.toBe(original);
+
+    rerender(
+      <DragHint
+        icons={icons}
+        iconMasks={{
+          grabbing: { path: "M0 0h24v24H0Z", viewBox: "0 0 24 24" },
+          idle: { path: "M0 0h24v24H0Z", viewBox: "0 0 24 24" },
+        }}
+      />
+    );
+    expect(container.querySelector(".gestik-drag-hint__stage")).not.toBe(
+      custom
+    );
   });
 
   it("applies playback settings and can resume", () => {
