@@ -49,7 +49,7 @@ export const DragHintMaskDemo = () => {
       <h2 className="text-xl font-medium" id="drag-hint-icons-title">
         Filled, outline, and duotone icons
       </h2>
-      <p className="mt-3 text-sm leading-6 text-zinc-600">
+      <p className="mt-3 leading-6 text-zinc-600">
         The same silhouette works with all three styles. The square,
         destination, and shadow are cut away behind the hand, revealing the
         actual background through transparent or translucent icons.
@@ -73,7 +73,7 @@ export const DragHintMaskDemo = () => {
                 playing={playing}
               />
             </div>
-            <p className="border-t border-zinc-200 p-3 text-center text-sm">
+            <p className="border-t border-zinc-200 p-3 text-center">
               {variant}
             </p>
           </div>
@@ -93,14 +93,14 @@ export const DragHintMaskDemo = () => {
           Replay icon examples
         </Button>
       </div>
-      <p className="mt-6 text-sm leading-6 text-zinc-600">
+      <p className="mt-6 leading-6 text-zinc-600">
         Built-in hands include their masks. For custom icons, pass an
         <code> iconMasks </code> pair: each silhouette contains a filled SVG
         <code> path </code> and the same <code>viewBox</code> as its icon.
         Include the entire area to hide, including an outline icon&apos;s hollow
         interior. Custom icons without silhouettes render without masking.
       </p>
-      <pre className="mt-3 overflow-x-auto rounded-xl border border-zinc-200 bg-zinc-50 p-5 text-xs leading-6 sm:text-sm">
+      <pre className="mt-3 overflow-x-auto rounded-xl border border-zinc-200 bg-zinc-50 p-5 leading-6">
         <code>{`<DragHint
   icons={{ idle: <OpenHand />, grabbing: <ClosedHand /> }}
   iconMasks={{

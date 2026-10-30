@@ -7,6 +7,7 @@ import { DragHintDemo } from "@/playgrounds/drag-hint-demo";
 import { HoldHintDemo } from "@/playgrounds/hold-hint-demo";
 import { ResizeHintDemo } from "@/playgrounds/resize-hint-demo";
 import { ScrollHintDemo } from "@/playgrounds/scroll-hint-demo";
+import { ShortcutHintDemo } from "@/playgrounds/shortcut-hint-demo";
 import { SwipeHintDemo } from "@/playgrounds/swipe-hint-demo";
 
 describe("Gesture preview controls", () => {
@@ -62,24 +63,26 @@ describe("Gesture preview controls", () => {
     }
   );
 
-  it.each([HoldHintDemo, ScrollHintDemo])(
-    "keeps duplicate previews' labels and IDs distinct (%s)",
-    (Demo) => {
-      const { container } = render(
-        <>
-          <Demo />
-          <Demo />
-        </>
-      );
-      const ids = [...container.querySelectorAll("[id]")].map(({ id }) => id);
+  it.each([
+    DragHintDemo,
+    HoldHintDemo,
+    ResizeHintDemo,
+    ScrollHintDemo,
+    ShortcutHintDemo,
+    SwipeHintDemo,
+  ])("keeps duplicate previews' labels and IDs distinct (%s)", (Demo) => {
+    const { container } = render(
+      <>
+        <Demo />
+        <Demo />
+      </>
+    );
+    const ids = [...container.querySelectorAll("[id]")].map(({ id }) => id);
 
-      expect(new Set(ids).size).toBe(ids.length);
-      expect(screen.getAllByRole("slider", { name: "Size" })).toHaveLength(2);
-      expect(screen.getAllByRole("slider", { name: "Duration" })).toHaveLength(
-        2
-      );
-    }
-  );
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(screen.getAllByRole("slider", { name: "Size" })).toHaveLength(2);
+    expect(screen.getAllByRole("slider", { name: "Duration" })).toHaveLength(2);
+  });
 
   it("keeps labels unambiguous when the gesture previews share a page", () => {
     const { container } = render(

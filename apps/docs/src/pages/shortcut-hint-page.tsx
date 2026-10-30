@@ -42,7 +42,7 @@ export const ShortcutHintPage = () => (
     <title>ShortcutHint — Gestik</title>
     <header className="mb-8">
       <h1 className="text-3xl font-normal tracking-tight">ShortcutHint</h1>
-      <p className="mt-3 text-sm leading-6 text-zinc-500">
+      <p className="mt-3 leading-6 text-zinc-500">
         Show how to hold keys together to perform a keyboard shortcut.
       </p>
     </header>
@@ -56,7 +56,7 @@ export const ShortcutHintPage = () => (
       >
         Props
       </h2>
-      <p className="mt-3 text-sm leading-6 text-zinc-600">
+      <p className="mt-3 leading-6 text-zinc-600">
         Keys press from left to right and stay held until the whole combination
         is down. They release together, then rest before repeating. The
         animation demonstrates a combination held together, rather than a
@@ -64,7 +64,7 @@ export const ShortcutHintPage = () => (
         replay a completed finite animation.
       </p>
       <div className="mt-6 overflow-hidden rounded-xl border border-zinc-200">
-        <Table className="min-w-160 text-sm">
+        <Table className="min-w-160">
           <TableHeader className="bg-zinc-50">
             <TableRow>
               <TableHead scope="col">Prop</TableHead>
@@ -75,8 +75,8 @@ export const ShortcutHintPage = () => (
           <TableBody>
             {propRows.map(([name, defaultValue, purpose]) => (
               <TableRow key={name}>
-                <TableCell className="font-mono text-xs">{name}</TableCell>
-                <TableCell className="font-mono text-xs text-zinc-600">
+                <TableCell className="font-mono">{name}</TableCell>
+                <TableCell className="font-mono text-zinc-600">
                   {defaultValue}
                 </TableCell>
                 <TableCell className="text-zinc-600">{purpose}</TableCell>
@@ -86,7 +86,7 @@ export const ShortcutHintPage = () => (
         </Table>
       </div>
       <HintStyleGuide />
-      <p className="mt-4 text-sm leading-6 text-zinc-600">
+      <p className="mt-4 leading-6 text-zinc-600">
         <code>keys</code> determines the keycap count. TypeScript requires at
         least two entries; fewer entries throw a <code>RangeError</code> at
         runtime. The label <code>Command</code> uses the built-in Command
@@ -105,7 +105,7 @@ export const ShortcutHintPage = () => (
       >
         Styling
       </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
+      <p className="mt-3 max-w-2xl leading-6 text-zinc-600">
         Keycaps inherit the surrounding color. Override{" "}
         <code>--gestik-shortcut-hint-color</code> for the outlines, key legends,
         and key depth, and <code>--gestik-shortcut-hint-surface</code> for the
@@ -119,15 +119,15 @@ export const ShortcutHintPage = () => (
           className="custom-shortcut-hint"
           playing={false}
         />
-        <span className="text-sm text-zinc-600">
+        <span className="text-zinc-600">
           A three-key combination, paused at rest.
         </span>
       </div>
       <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 text-xs font-medium text-zinc-500">
+        <div className="border-b border-zinc-200 px-5 py-3 font-medium text-zinc-500">
           React + CSS
         </div>
-        <pre className="overflow-x-auto p-5 text-xs leading-6 sm:text-sm">
+        <pre className="overflow-x-auto p-5 leading-6">
           <code>{`<ShortcutHint
   keys={["Ctrl", "Shift", "K"]}
   className="custom-shortcut-hint"
@@ -152,7 +152,7 @@ export const ShortcutHintPage = () => (
       >
         Accessibility
       </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
+      <p className="mt-3 max-w-2xl leading-6 text-zinc-600">
         ShortcutHint is decorative, stays out of the tab order, and ignores
         pointer events. Pair it with visible instructions such as “Press Command
         + K to open search” and an accessible control for the same action. Under

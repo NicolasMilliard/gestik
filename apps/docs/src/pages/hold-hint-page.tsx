@@ -52,7 +52,7 @@ export const HoldHintPage = () => (
     <title>HoldHint — Gestik</title>
     <header className="mb-8">
       <h1 className="text-3xl font-normal tracking-tight">HoldHint</h1>
-      <p className="mt-3 text-sm leading-6 text-zinc-500">
+      <p className="mt-3 leading-6 text-zinc-500">
         Show how to press and keep a finger in place.
       </p>
     </header>
@@ -66,7 +66,7 @@ export const HoldHintPage = () => (
       >
         Props
       </h2>
-      <p className="mt-3 text-sm leading-6 text-zinc-600">
+      <p className="mt-3 leading-6 text-zinc-600">
         The hand presses once and stays still while the ring fills clockwise. It
         releases after the ring completes, then rests before repeating. The ring
         takes half of the full cycle to fill: 1500ms at the default duration.
@@ -75,7 +75,7 @@ export const HoldHintPage = () => (
         finite animation.
       </p>
       <div className="mt-6 overflow-hidden rounded-xl border border-zinc-200">
-        <Table className="min-w-160 text-sm">
+        <Table className="min-w-160">
           <TableHeader className="bg-zinc-50">
             <TableRow>
               <TableHead scope="col">Prop</TableHead>
@@ -86,8 +86,8 @@ export const HoldHintPage = () => (
           <TableBody>
             {propRows.map(([name, defaultValue, purpose]) => (
               <TableRow key={name}>
-                <TableCell className="font-mono text-xs">{name}</TableCell>
-                <TableCell className="font-mono text-xs text-zinc-600">
+                <TableCell className="font-mono">{name}</TableCell>
+                <TableCell className="font-mono text-zinc-600">
                   {defaultValue}
                 </TableCell>
                 <TableCell className="text-zinc-600">{purpose}</TableCell>
@@ -106,35 +106,35 @@ export const HoldHintPage = () => (
       >
         Styling
       </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
-        The pointing hand and ring inherit <code>currentColor</code>. Use
-        <code> --gestik-hold-hint-color </code> to color both, or
-        <code> --gestik-hold-hint-ring-color </code> to color only the ring. The
+      <p className="mt-3 max-w-2xl leading-6 text-zinc-600">
+        The pointing hand and ring inherit <code>currentColor</code>. Use{" "}
+        <code>--gestik-hold-hint-color</code> to color both, or{" "}
+        <code>--gestik-hold-hint-ring-color</code> to color only the ring. The
         32px hand compresses around its fingertip, keeping the contact point
         fixed. A silhouette cutout keeps the ring behind the transparent hand on
         any background. The 112 by 72px scene scales proportionally with{" "}
         <code>size</code>.
       </p>
-      <p className="mt-4 max-w-2xl text-sm leading-6 text-zinc-600">
+      <p className="mt-4 max-w-2xl leading-6 text-zinc-600">
         Replace the hand with <code>icon</code> and set <code>hotspot</code> to
-        its contact point, using coordinates from 0 to 1. Supply an
-        <code> iconMask</code> with a filled SVG <code>path</code> and
-        <code> viewBox</code> to preserve the cutout behind custom artwork.
+        its contact point, using coordinates from 0 to 1. Supply an{" "}
+        <code>iconMask</code> with a filled SVG <code>path</code> and{" "}
+        <code>viewBox</code> to preserve the cutout behind custom artwork.
         Custom icons render without a cutout when no silhouette is supplied.
         Switching between built-in and custom artwork, or enabling or disabling
         its mask, restarts the cycle to keep all layers synchronized.
       </p>
       <div className="mt-6 flex items-center gap-5 rounded-xl border border-zinc-200 p-5">
         <HoldHint className="custom-hold-hint" size={112} playing={false} />
-        <span className="text-sm text-zinc-600">
+        <span className="text-zinc-600">
           The resting hand, paused before contact.
         </span>
       </div>
       <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 text-xs font-medium text-zinc-500">
+        <div className="border-b border-zinc-200 px-5 py-3 font-medium text-zinc-500">
           CSS
         </div>
-        <pre className="overflow-x-auto p-5 text-xs leading-6 sm:text-sm">
+        <pre className="overflow-x-auto p-5 leading-6">
           <code>{`.custom-hold-hint {
   --gestik-hold-hint-color: #0e7490;
 }`}</code>
@@ -149,7 +149,7 @@ export const HoldHintPage = () => (
       >
         Accessibility
       </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
+      <p className="mt-3 max-w-2xl leading-6 text-zinc-600">
         HoldHint is decorative and ignores pointer events. Pair it with visible
         instructions, such as “Press and hold to reveal more options,” and an
         accessible control for the same action. Under reduced motion, the hand

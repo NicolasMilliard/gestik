@@ -1,5 +1,5 @@
 import { SwipeHint } from "@gestik/react";
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import { PreviewSlider } from "./preview-slider";
 
 type Direction = "left" | "right";
 type Iterations = 1 | 2 | "infinite";
@@ -27,6 +29,7 @@ const iterationItems = [
 const iterationValues = { "1": 1, "2": 2, infinite: "infinite" } as const;
 
 export const SwipeHintDemo = () => {
+  const id = useId();
   const [direction, setDirection] = useState<Direction>("right");
   const [size, setSize] = useState(112);
   const [duration, setDuration] = useState(2200);
@@ -56,7 +59,7 @@ export const SwipeHintDemo = () => {
 
   return (
     <section aria-label="Interactive SwipeHint preview">
-      <div className="grid overflow-hidden rounded-2xl border border-zinc-200 lg:grid-cols-[minmax(0,1fr)_260px]">
+      <div className="grid min-w-0 overflow-hidden rounded-2xl border border-zinc-200 lg:grid-cols-[minmax(0,1fr)_272px]">
         <div className="playground-preview flex min-h-72 flex-col items-center justify-center gap-6 px-6 py-10 sm:min-h-80">
           <SwipeHint
             key={previewKey}
@@ -66,17 +69,14 @@ export const SwipeHintDemo = () => {
             iterations={iterations}
             playing={playing}
           />
-          <p className="text-sm text-zinc-600">Swipe to the {direction}.</p>
+          <p className="text-zinc-600">Swipe to the {direction}.</p>
         </div>
 
         <div className="border-t border-zinc-200 bg-zinc-50 p-5 lg:border-t-0 lg:border-l">
-          <h2 className="mb-6 text-sm font-medium">Preview settings</h2>
+          <h2 className="mb-6 font-medium">Preview settings</h2>
 
           <div className="mb-5">
-            <span
-              id="swipe-hint-direction-label"
-              className="block text-sm font-medium"
-            >
+            <span id={`${id}-direction-label`} className="block font-medium">
               Direction
             </span>
             <Select
@@ -89,7 +89,7 @@ export const SwipeHintDemo = () => {
               }}
             >
               <SelectTrigger
-                aria-labelledby="swipe-hint-direction-label"
+                aria-labelledby={`${id}-direction-label`}
                 className="mt-2 w-full"
               >
                 <SelectValue />
@@ -101,55 +101,28 @@ export const SwipeHintDemo = () => {
             </Select>
           </div>
 
-          <div className="mb-5 text-sm font-medium">
-            <div className="flex items-center justify-between">
-              <label htmlFor="swipe-hint-size">Size</label>
-              <output
-                htmlFor="swipe-hint-size"
-                className="font-normal text-zinc-500"
-              >
-                {size}px
-              </output>
-            </div>
-            <input
-              id="swipe-hint-size"
-              className="mt-3 w-full accent-brand"
-              type="range"
-              min="80"
-              max="180"
-              step="4"
-              value={size}
-              onChange={(event) => setSize(Number(event.target.value))}
-            />
-          </div>
+          <PreviewSlider
+            label="Size"
+            value={size}
+            min={80}
+            max={180}
+            step={4}
+            unit="px"
+            onValueChange={(value) => setSize(value)}
+          />
 
-          <div className="mb-5 text-sm font-medium">
-            <div className="flex items-center justify-between">
-              <label htmlFor="swipe-hint-duration">Duration</label>
-              <output
-                htmlFor="swipe-hint-duration"
-                className="font-normal text-zinc-500"
-              >
-                {duration}ms
-              </output>
-            </div>
-            <input
-              id="swipe-hint-duration"
-              className="mt-3 w-full accent-brand"
-              type="range"
-              min="800"
-              max="4000"
-              step="200"
-              value={duration}
-              onChange={(event) => setDuration(Number(event.target.value))}
-            />
-          </div>
+          <PreviewSlider
+            label="Duration"
+            value={duration}
+            min={800}
+            max={4000}
+            step={200}
+            unit="ms"
+            onValueChange={(value) => setDuration(value)}
+          />
 
           <div>
-            <span
-              id="swipe-hint-iterations-label"
-              className="block text-sm font-medium"
-            >
+            <span id={`${id}-iterations-label`} className="block font-medium">
               Iterations
             </span>
             <Select
@@ -164,7 +137,7 @@ export const SwipeHintDemo = () => {
               }}
             >
               <SelectTrigger
-                aria-labelledby="swipe-hint-iterations-label"
+                aria-labelledby={`${id}-iterations-label`}
                 className="mt-2 w-full"
               >
                 <SelectValue />
@@ -199,10 +172,10 @@ export const SwipeHintDemo = () => {
       </div>
 
       <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 text-xs font-medium text-zinc-500">
+        <div className="border-b border-zinc-200 px-5 py-3 font-medium text-zinc-500">
           React
         </div>
-        <pre className="overflow-x-auto p-5 text-xs leading-6 sm:text-sm">
+        <pre className="overflow-x-auto p-5 leading-6">
           <code>{example}</code>
         </pre>
       </div>

@@ -42,7 +42,7 @@ export const DragHintPage = () => (
     <title>DragHint — Gestik</title>
     <header className="mb-8">
       <h1 className="text-3xl font-normal tracking-tight">DragHint</h1>
-      <p className="mt-3 text-sm leading-6 text-zinc-500">
+      <p className="mt-3 leading-6 text-zinc-500">
         Show how to drag an element from one position to another.
       </p>
     </header>
@@ -55,13 +55,13 @@ export const DragHintPage = () => (
       <h2 className="text-xl font-medium tracking-tight" id="props-title">
         Props
       </h2>
-      <p className="mt-3 text-sm leading-6 text-zinc-600">
+      <p className="mt-3 leading-6 text-zinc-600">
         Start with the defaults, then adjust the motion and illustrations to fit
         your interface.
       </p>
 
       <div className="mt-6 overflow-hidden rounded-xl border border-zinc-200">
-        <Table className="min-w-160 text-sm">
+        <Table className="min-w-160">
           <TableHeader className="bg-zinc-50">
             <TableRow>
               <TableHead scope="col">Prop</TableHead>
@@ -72,8 +72,8 @@ export const DragHintPage = () => (
           <TableBody>
             {propRows.map(([name, defaultValue, purpose]) => (
               <TableRow key={name}>
-                <TableCell className="font-mono text-xs">{name}</TableCell>
-                <TableCell className="font-mono text-xs text-zinc-600">
+                <TableCell className="font-mono">{name}</TableCell>
+                <TableCell className="font-mono text-zinc-600">
                   {defaultValue}
                 </TableCell>
                 <TableCell className="text-zinc-600">{purpose}</TableCell>
@@ -89,7 +89,7 @@ export const DragHintPage = () => (
       <h2 className="text-xl font-medium tracking-tight" id="styling-title">
         Styling
       </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
+      <p className="mt-3 max-w-2xl leading-6 text-zinc-600">
         Use <code>className</code> and CSS variables to color the square,
         destination, and icons independently. Custom icons fill a 24 by 24 pixel
         box before scaling. Set <code>hotspot</code> to the same contact point
@@ -101,17 +101,17 @@ export const DragHintPage = () => (
 
       <div className="mt-6 flex flex-col items-center gap-5 rounded-xl border border-zinc-200 p-5 sm:flex-row">
         <DragHint className="custom-drag-hint shrink-0" size={112} />
-        <span className="text-center text-sm text-zinc-600 sm:text-left">
+        <span className="text-center text-zinc-600 sm:text-left">
           Drag the teal square to the violet destination. The amber hand shows
           the gesture.
         </span>
       </div>
 
       <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 text-xs font-medium text-zinc-500">
+        <div className="border-b border-zinc-200 px-5 py-3 font-medium text-zinc-500">
           CSS
         </div>
-        <pre className="overflow-x-auto p-5 text-xs leading-6 sm:text-sm">
+        <pre className="overflow-x-auto p-5 leading-6">
           <code>{`.custom-drag-hint {
   --gestik-drag-hint-square-stroke: #0f766e;
   --gestik-drag-hint-target-stroke: #7c3aed;
@@ -131,7 +131,7 @@ export const DragHintPage = () => (
       >
         Accessibility
       </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
+      <p className="mt-3 max-w-2xl leading-6 text-zinc-600">
         DragHint is decorative and ignores pointer events. Pair it with visible
         instructions and an accessible control for the same action. Custom
         artwork stays inside an inert, hidden subtree and should be static.

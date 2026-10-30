@@ -16,6 +16,8 @@ import {
   CURSOR_SILHOUETTE,
 } from "@/playgrounds/artwork/cursor-geometry";
 
+import { PreviewSlider } from "./preview-slider";
+
 type Iterations = 1 | 2 | "infinite";
 
 const iterationItems = [
@@ -60,7 +62,7 @@ ${artworkCode}  size={${size}}
 
   return (
     <section aria-label="Interactive HoldHint preview">
-      <div className="grid overflow-hidden rounded-2xl border border-zinc-200 lg:grid-cols-[minmax(0,1fr)_260px]">
+      <div className="grid min-w-0 overflow-hidden rounded-2xl border border-zinc-200 lg:grid-cols-[minmax(0,1fr)_272px]">
         <div className="playground-preview flex min-h-72 flex-col items-center justify-center gap-6 px-6 py-10 sm:min-h-80">
           <HoldHint
             key={previewKey}
@@ -73,13 +75,13 @@ ${artworkCode}  size={${size}}
             iterations={iterations}
             playing={playing}
           />
-          <p className="text-center text-sm text-zinc-600">
+          <p className="text-center text-zinc-600">
             Press and hold to reveal more options.
           </p>
         </div>
 
         <div className="border-t border-zinc-200 bg-zinc-50 p-5 lg:border-t-0 lg:border-l">
-          <h2 className="mb-6 text-sm font-medium">Preview settings</h2>
+          <h2 className="mb-6 font-medium">Preview settings</h2>
           <Button
             type="button"
             className="mb-5 w-full"
@@ -93,55 +95,28 @@ ${artworkCode}  size={${size}}
             Custom icon
           </Button>
 
-          <div className="mb-5 text-sm font-medium">
-            <div className="flex items-center justify-between">
-              <label htmlFor={`${id}-size`}>Size</label>
-              <output
-                htmlFor={`${id}-size`}
-                className="font-normal text-zinc-500"
-              >
-                {size}px
-              </output>
-            </div>
-            <input
-              id={`${id}-size`}
-              className="mt-3 w-full accent-brand"
-              type="range"
-              min="80"
-              max="180"
-              step="4"
-              value={size}
-              onChange={(event) => setSize(Number(event.target.value))}
-            />
-          </div>
+          <PreviewSlider
+            label="Size"
+            value={size}
+            min={80}
+            max={180}
+            step={4}
+            unit="px"
+            onValueChange={(value) => setSize(value)}
+          />
 
-          <div className="mb-5 text-sm font-medium">
-            <div className="flex items-center justify-between">
-              <label htmlFor={`${id}-duration`}>Duration</label>
-              <output
-                htmlFor={`${id}-duration`}
-                className="font-normal text-zinc-500"
-              >
-                {duration}ms
-              </output>
-            </div>
-            <input
-              id={`${id}-duration`}
-              className="mt-3 w-full accent-brand"
-              type="range"
-              min="1200"
-              max="5000"
-              step="200"
-              value={duration}
-              onChange={(event) => setDuration(Number(event.target.value))}
-            />
-          </div>
+          <PreviewSlider
+            label="Duration"
+            value={duration}
+            min={1200}
+            max={5000}
+            step={200}
+            unit="ms"
+            onValueChange={(value) => setDuration(value)}
+          />
 
           <div>
-            <span
-              id={`${id}-iterations-label`}
-              className="block text-sm font-medium"
-            >
+            <span id={`${id}-iterations-label`} className="block font-medium">
               Iterations
             </span>
             <Select
@@ -191,10 +166,10 @@ ${artworkCode}  size={${size}}
       </div>
 
       <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 text-xs font-medium text-zinc-500">
+        <div className="border-b border-zinc-200 px-5 py-3 font-medium text-zinc-500">
           React
         </div>
-        <pre className="overflow-x-auto p-5 text-xs leading-6 sm:text-sm">
+        <pre className="overflow-x-auto p-5 leading-6">
           <code>{example}</code>
         </pre>
       </div>

@@ -1,6 +1,6 @@
 import { ShortcutHint } from "@gestik/react";
 import type { ShortcutHintKeys } from "@gestik/react";
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -10,6 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import { PreviewSlider } from "./preview-slider";
 
 type Iterations = 1 | 2 | "infinite";
 
@@ -28,6 +30,7 @@ const shortcuts: Record<2 | 3 | 4, ShortcutHintKeys> = {
 const previewSizes = { 2: 112, 3: 184, 4: 240 };
 
 export const ShortcutHintDemo = () => {
+  const id = useId();
   const [keyCount, setKeyCount] = useState<2 | 3 | 4>(2);
   const [size, setSize] = useState(112);
   const [duration, setDuration] = useState(2400);
@@ -58,7 +61,7 @@ export const ShortcutHintDemo = () => {
 
   return (
     <section aria-label="Interactive ShortcutHint preview">
-      <div className="grid overflow-hidden rounded-2xl border border-zinc-200 lg:grid-cols-[minmax(0,1fr)_260px]">
+      <div className="grid min-w-0 overflow-hidden rounded-2xl border border-zinc-200 lg:grid-cols-[minmax(0,1fr)_272px]">
         <div className="playground-preview flex min-h-72 flex-col items-center justify-center gap-6 px-6 py-10 sm:min-h-80">
           <ShortcutHint
             key={previewKey}
@@ -68,91 +71,52 @@ export const ShortcutHintDemo = () => {
             iterations={iterations}
             playing={playing}
           />
-          <p className="text-center text-sm text-zinc-600">{instruction}</p>
+          <p className="text-center text-zinc-600">{instruction}</p>
         </div>
 
         <div className="border-t border-zinc-200 bg-zinc-50 p-5 lg:border-t-0 lg:border-l">
-          <h2 className="mb-6 text-sm font-medium">Preview settings</h2>
+          <h2 className="mb-6 font-medium">Preview settings</h2>
 
-          <div className="mb-5 text-sm font-medium">
-            <div className="flex items-center justify-between">
-              <label htmlFor="shortcut-hint-key-count">Keycaps</label>
-              <output
-                htmlFor="shortcut-hint-key-count"
-                className="font-normal text-zinc-500"
-              >
-                {keyCount}
-              </output>
-            </div>
-            <input
-              id="shortcut-hint-key-count"
-              className="mt-3 w-full accent-brand"
-              type="range"
-              min="2"
-              max="4"
-              step="1"
-              value={keyCount}
-              onChange={(event) => {
-                const count = Number(event.target.value);
-                if (count !== 2 && count !== 3 && count !== 4) {
-                  return;
-                }
-                setKeyCount(count);
-                setSize(previewSizes[count]);
-                setPreviewKey((key) => key + 1);
-              }}
-            />
-          </div>
+          <PreviewSlider
+            label="Keycaps"
+            value={keyCount}
+            min={2}
+            max={4}
+            step={1}
+            unit=""
+            onValueChange={(value) => {
+              const count = value;
+              if (count !== 2 && count !== 3 && count !== 4) {
+                return;
+              }
+              setKeyCount(count);
+              setSize(previewSizes[count]);
+              setPreviewKey((key) => key + 1);
+            }}
+          />
 
-          <div className="mb-5 text-sm font-medium">
-            <div className="flex items-center justify-between">
-              <label htmlFor="shortcut-hint-size">Size</label>
-              <output
-                htmlFor="shortcut-hint-size"
-                className="font-normal text-zinc-500"
-              >
-                {size}px
-              </output>
-            </div>
-            <input
-              id="shortcut-hint-size"
-              className="mt-3 w-full accent-brand"
-              type="range"
-              min="80"
-              max="280"
-              step="4"
-              value={size}
-              onChange={(event) => setSize(Number(event.target.value))}
-            />
-          </div>
+          <PreviewSlider
+            label="Size"
+            value={size}
+            min={80}
+            max={280}
+            step={4}
+            unit="px"
+            onValueChange={(value) => setSize(value)}
+          />
 
-          <div className="mb-5 text-sm font-medium">
-            <div className="flex items-center justify-between">
-              <label htmlFor="shortcut-hint-duration">Duration</label>
-              <output
-                htmlFor="shortcut-hint-duration"
-                className="font-normal text-zinc-500"
-              >
-                {duration}ms
-              </output>
-            </div>
-            <input
-              id="shortcut-hint-duration"
-              className="mt-3 w-full accent-brand"
-              type="range"
-              min="1200"
-              max="5000"
-              step="200"
-              value={duration}
-              onChange={(event) => setDuration(Number(event.target.value))}
-            />
-          </div>
+          <PreviewSlider
+            label="Duration"
+            value={duration}
+            min={1200}
+            max={5000}
+            step={200}
+            unit="ms"
+            onValueChange={(value) => setDuration(value)}
+          />
 
           <div>
-            <span
-              id="shortcut-hint-iterations-label"
-              className="block text-sm font-medium"
-            >
+            <span id={`${id}-iterations-label`} className="block font-medium">
               Iterations
             </span>
             <Select
@@ -167,7 +131,7 @@ export const ShortcutHintDemo = () => {
               }}
             >
               <SelectTrigger
-                aria-labelledby="shortcut-hint-iterations-label"
+                aria-labelledby={`${id}-iterations-label`}
                 className="mt-2 w-full"
               >
                 <SelectValue />
@@ -202,10 +166,10 @@ export const ShortcutHintDemo = () => {
       </div>
 
       <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 text-xs font-medium text-zinc-500">
+        <div className="border-b border-zinc-200 px-5 py-3 font-medium text-zinc-500">
           React
         </div>
-        <pre className="overflow-x-auto p-5 text-xs leading-6 sm:text-sm">
+        <pre className="overflow-x-auto p-5 leading-6">
           <code>{example}</code>
         </pre>
       </div>

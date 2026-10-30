@@ -19,7 +19,7 @@ export const HomePage = () => (
               to={path}
             >
               <Preview size={112} />
-              <h2 className="absolute inset-x-0 bottom-4 text-center text-sm font-normal text-zinc-500 group-hover:text-brand">
+              <h2 className="absolute inset-x-0 bottom-4 text-center font-normal text-zinc-500 group-hover:text-brand">
                 {name}
               </h2>
             </Link>

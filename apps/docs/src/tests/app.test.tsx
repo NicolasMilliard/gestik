@@ -95,7 +95,7 @@ describe("Docs navigation", () => {
     );
     expect(button.getAttribute("aria-pressed")).toBe("true");
     expect(screen.getAllByRole("button", { pressed: true })).toHaveLength(1);
-    expect(screen.getByText(/package is not published yet/u)).toBeDefined();
+    expect(screen.queryByText(/package is not published yet/u)).toBeNull();
   });
 
   it("opens and closes the mobile navigation with its button", async () => {

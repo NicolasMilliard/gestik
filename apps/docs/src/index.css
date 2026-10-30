@@ -287,9 +287,13 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-base text-foreground;
   }
   html {
     @apply font-sans;
+  }
+  :where(code:not(pre code)) {
+    @apply rounded-md bg-zinc-100 box-decoration-clone px-1.5 py-0.5 text-zinc-800;
+    overflow-wrap: anywhere;
   }
 }

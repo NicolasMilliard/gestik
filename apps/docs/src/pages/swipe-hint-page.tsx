@@ -44,7 +44,7 @@ export const SwipeHintPage = () => (
     <title>SwipeHint — Gestik</title>
     <header className="mb-8">
       <h1 className="text-3xl font-normal tracking-tight">SwipeHint</h1>
-      <p className="mt-3 text-sm leading-6 text-zinc-500">
+      <p className="mt-3 leading-6 text-zinc-500">
         Show how to swipe through a carousel or between cards.
       </p>
     </header>
@@ -58,14 +58,14 @@ export const SwipeHintPage = () => (
       >
         Props
       </h2>
-      <p className="mt-3 text-sm leading-6 text-zinc-600">
+      <p className="mt-3 leading-6 text-zinc-600">
         Direction describes the finger&apos;s movement. Playback controls work
         the same way as DragHint: changing direction starts a new cycle, and
         changing the React <code>key</code> replays a completed animation.
       </p>
 
       <div className="mt-6 overflow-hidden rounded-xl border border-zinc-200">
-        <Table className="min-w-160 text-sm">
+        <Table className="min-w-160">
           <TableHeader className="bg-zinc-50">
             <TableRow>
               <TableHead scope="col">Prop</TableHead>
@@ -76,8 +76,8 @@ export const SwipeHintPage = () => (
           <TableBody>
             {propRows.map(([name, defaultValue, purpose]) => (
               <TableRow key={name}>
-                <TableCell className="font-mono text-xs">{name}</TableCell>
-                <TableCell className="font-mono text-xs text-zinc-600">
+                <TableCell className="font-mono">{name}</TableCell>
+                <TableCell className="font-mono text-zinc-600">
                   {defaultValue}
                 </TableCell>
                 <TableCell className="text-zinc-600">{purpose}</TableCell>
@@ -96,15 +96,15 @@ export const SwipeHintPage = () => (
       >
         Styling
       </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
+      <p className="mt-3 max-w-2xl leading-6 text-zinc-600">
         Use CSS variables to color the hand, its surface, and trail. The trail
         matches the icon&apos;s full color and follows the fingertip with a
         small gap. Its oldest part starts fading early during the swipe, with a
         soft edge that follows the moving finger. It uses a 2px stroke with
-        rounded ends and scales with the scene. Override
-        <code> --gestik-swipe-hint-trail-color </code> to give it a separate
-        color. The built-in hand has a duotone fill at 20% opacity; use
-        <code> --gestik-swipe-hint-surface </code> to change its color. A custom{" "}
+        rounded ends and scales with the scene. Override{" "}
+        <code>--gestik-swipe-hint-trail-color</code> to give it a separate
+        color. The built-in hand has a duotone fill at 20% opacity; use{" "}
+        <code>--gestik-swipe-hint-surface</code> to change its color. A custom{" "}
         <code>icon</code> fills a 32 by 32 pixel box before scaling. Set{" "}
         <code>hotspot</code> to its fingertip: coordinates run from 0 to 1
         across that box. The hand compresses around this point as the swipe
@@ -113,16 +113,16 @@ export const SwipeHintPage = () => (
 
       <div className="mt-6 flex items-center gap-5 rounded-xl border border-zinc-200 p-5">
         <SwipeHint className="custom-swipe-hint" size={84} playing={false} />
-        <span className="text-sm text-zinc-600">
+        <span className="text-zinc-600">
           Custom colors, paused at the starting pose.
         </span>
       </div>
 
       <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 text-xs font-medium text-zinc-500">
+        <div className="border-b border-zinc-200 px-5 py-3 font-medium text-zinc-500">
           CSS
         </div>
-        <pre className="overflow-x-auto p-5 text-xs leading-6 sm:text-sm">
+        <pre className="overflow-x-auto p-5 leading-6">
           <code>{`.custom-swipe-hint {
   --gestik-swipe-hint-icon-color: #0e7490;
   --gestik-swipe-hint-surface: #ecfeff;
@@ -138,7 +138,7 @@ export const SwipeHintPage = () => (
       >
         Accessibility
       </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
+      <p className="mt-3 max-w-2xl leading-6 text-zinc-600">
         SwipeHint is decorative and ignores pointer events. Pair it with visible
         instructions and accessible controls for the actual interaction. Under
         reduced motion, the hand stays still, with no press, trail, or travel;

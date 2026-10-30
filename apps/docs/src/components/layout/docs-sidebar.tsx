@@ -75,7 +75,7 @@ export const DocsSidebar = () => {
       </div>
 
       <nav
-        className="mt-4 hidden flex-col gap-1 text-sm data-[open=true]:flex lg:mt-10 lg:flex"
+        className="mt-4 hidden flex-col gap-1 data-[open=true]:flex lg:mt-10 lg:flex"
         id="docs-navigation"
         aria-label="Documentation"
         data-open={menuOpen}
