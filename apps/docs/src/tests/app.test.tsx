@@ -215,15 +215,20 @@ describe("Docs navigation", () => {
     const example = screen.getByRole("region", { name: "Example" });
 
     expect(
-      example.querySelector<HTMLElement>(".gestik-drag-hint__icon-anchor")
-        ?.style.transform
-    ).toBe("translate(-50%, -50%)");
+      ["x", "y"].map((attribute) =>
+        example
+          .querySelector(".gestik-drag-hint__icon-anchor")
+          ?.getAttribute(attribute)
+      )
+    ).toStrictEqual(["4", "4"]);
     expect(
       [...example.querySelectorAll("mask svg")].map((mask) => [
         mask.getAttribute("x"),
         mask.getAttribute("y"),
       ])
     ).toStrictEqual([
+      ["4", "4"],
+      ["4", "4"],
       ["4", "4"],
       ["4", "4"],
     ]);
