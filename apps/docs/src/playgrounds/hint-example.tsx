@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { useState } from "react";
 
-import { CodeBlock } from "@/components/content/code-block";
+import { CodeTabs } from "@/components/content/code-tabs";
 import { Button } from "@/components/ui/button";
 
 export const HintExample = ({
@@ -50,8 +50,7 @@ export const HintExample = ({
           </Button>
         </div>
       </div>
-      <CodeBlock code={code} />
-      <CodeBlock code={css} language="css" />
+      <CodeTabs code={code} css={css} />
     </div>
   );
 };

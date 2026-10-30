@@ -21,11 +21,13 @@ describe(HintExample, () => {
     );
     const hint = container.querySelector<HTMLElement>(".gestik-drag-hint");
     fireEvent.click(screen.getByRole("button", { name: "Pause" }));
+    fireEvent.click(screen.getByRole("tab", { name: "CSS" }));
 
     expect(hint?.style.getPropertyValue("--gestik-drag-hint-play-state")).toBe(
       "paused"
     );
     fireEvent.click(screen.getByRole("button", { name: "Resume" }));
+    fireEvent.click(screen.getByRole("tab", { name: "React" }));
     expect(container.querySelector(".gestik-drag-hint")).toBe(hint);
     expect(hint?.style.getPropertyValue("--gestik-drag-hint-play-state")).toBe(
       "running"
