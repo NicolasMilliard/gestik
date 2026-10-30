@@ -37,6 +37,9 @@ const renderAt = async (path: string) => {
 describe("Docs navigation", () => {
   beforeEach(() => {
     vi.spyOn(window, "scrollTo").mockImplementation(vi.fn());
+    vi.stubGlobal("matchMedia", () =>
+      Object.assign(new EventTarget(), { matches: false })
+    );
   });
 
   afterEach(() => {
@@ -44,6 +47,7 @@ describe("Docs navigation", () => {
     activeRouter?.history.destroy();
     activeRouter = undefined;
     vi.restoreAllMocks();
+    vi.unstubAllGlobals();
     window.history.replaceState(null, "", "/");
   });
 
@@ -70,13 +74,12 @@ describe("Docs navigation", () => {
 
     expect(toggle.getAttribute("aria-expanded")).toBe("false");
     fireEvent.click(toggle);
-    expect(
-      screen
-        .getByRole("button", { name: "Close navigation" })
-        .getAttribute("aria-expanded")
-    ).toBe("true");
+    await expect(
+      screen.findByRole("dialog", { name: "Documentation menu" })
+    ).resolves.toBeDefined();
+    expect(toggle.getAttribute("aria-expanded")).toBe("true");
 
-    fireEvent.click(toggle);
+    fireEvent.click(screen.getByRole("button", { name: "Close navigation" }));
     expect(
       screen
         .getByRole("button", { name: "Open navigation" })
@@ -88,14 +91,17 @@ describe("Docs navigation", () => {
     await renderAt("/");
     const toggle = screen.getByRole("button", { name: "Open navigation" });
     fireEvent.click(toggle);
+    await screen.findByRole("dialog", { name: "Documentation menu" });
     within(screen.getByRole("navigation", { name: "Documentation" }))
       .getByRole("link", { name: "Overview" })
       .focus();
 
-    fireEvent.keyDown(window, { key: "Escape" });
+    fireEvent.keyDown(document.activeElement ?? document.body, {
+      key: "Escape",
+    });
 
     expect(toggle.getAttribute("aria-expanded")).toBe("false");
-    expect(document.activeElement).toBe(toggle);
+    await waitFor(() => expect(document.activeElement).toBe(toggle));
   });
 
   it.each([
@@ -110,6 +116,7 @@ describe("Docs navigation", () => {
     await renderAt("/");
     const toggle = screen.getByRole("button", { name: "Open navigation" });
     fireEvent.click(toggle);
+    await screen.findByRole("dialog", { name: "Documentation menu" });
 
     fireEvent.click(
       within(
@@ -125,6 +132,21 @@ describe("Docs navigation", () => {
     );
     expect(window.location.hash).toBe("");
     expect(toggle.getAttribute("aria-expanded")).toBe("false");
+  });
+
+  it("focuses the destination content after navigating from the mobile menu", async () => {
+    await renderAt("/");
+    fireEvent.click(screen.getByRole("button", { name: "Open navigation" }));
+    const menu = await screen.findByRole("dialog", {
+      name: "Documentation menu",
+    });
+
+    fireEvent.click(within(menu).getByRole("link", { name: "SwipeHint" }));
+
+    await screen.findByRole("heading", { level: 1, name: "SwipeHint" });
+    await waitFor(() =>
+      expect(document.activeElement).toBe(screen.getByRole("main"))
+    );
   });
 
   it.each([

@@ -21,7 +21,7 @@ describe("Docs production bundles", () => {
     await rm(outDir, { force: true, recursive: true });
   });
 
-  it("defers component pages and playground controls without oversized chunks", () => {
+  it("defers mobile navigation, component pages, and playground controls without oversized chunks", () => {
     if (Array.isArray(result) || !("output" in result)) {
       throw new Error("Expected a single docs build.");
     }
@@ -42,7 +42,7 @@ describe("Docs production bundles", () => {
 
     expect(
       initialModules.filter((id) =>
-        /\/src\/(?:pages\/[\w-]+-hint-page|playgrounds\/.+|components\/(?:ui\/select|content\/.+))\.tsx?$/u.test(
+        /\/src\/(?:pages\/[\w-]+-hint-page|playgrounds\/.+|components\/(?:layout\/docs-mobile-menu|ui\/select|content\/.+))\.tsx?$/u.test(
           id
         )
       )
