@@ -7,23 +7,39 @@ import { createSvgSilhouette, snapshotSvg } from "./svg-silhouette";
 const useClientLayoutEffect =
   typeof window === "undefined" ? useEffect : useLayoutEffect;
 
-/** Shared by hints' artwork wrappers; callers own placement and animation. */
+/** The stage ref keeps readiness atomic when artwork updates without its parent. */
 export const useSvgSilhouettes = <Pose extends string>(
   sources: Record<Pose, RefObject<Element | null>>,
-  enabled: boolean
-) => {
-  const [result, setResult] = useState<{
-    silhouettes: Partial<Record<Pose, IconSilhouette | null>>;
-    ready: boolean;
-  }>({ ready: !enabled, silhouettes: {} });
+  enabled: boolean,
+  stageRef: RefObject<HTMLElement | SVGElement | null>
+): {
+  ready: boolean;
+  silhouettes: Partial<Record<Pose, IconSilhouette | null>>;
+} => {
+  const [result, setResult] = useState<
+    | [
+        signature: string,
+        silhouettes: Partial<Record<Pose, IconSilhouette | null>>,
+      ]
+    | null
+  >(null);
+  const [completedSignature, silhouettes] = result ?? [];
   const request = useRef("");
 
   useClientLayoutEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) {
+      return;
+    }
+    // Reveal only after React has committed the matching mask geometry.
+    stage.dataset.ready = String(
+      !enabled || completedSignature === request.current
+    );
     if (!enabled) {
       request.current = "";
       return;
     }
-    const update = () => {
+    const update = async () => {
       const snapshots = (Object.keys(sources) as Pose[]).map(
         (pose) => [pose, snapshotSvg(sources[pose].current)] as const
       );
@@ -32,28 +48,24 @@ export const useSvgSilhouettes = <Pose extends string>(
         return;
       }
       request.current = signature;
-      setResult({ ready: false, silhouettes: {} });
-      // An unsupported pose or a blocked canvas falls back to unmasked artwork.
-      const generate = async () => {
-        const entries = await Promise.all(
-          snapshots.map(async ([pose, snapshot]) => [
-            pose,
-            snapshot
-              ? await createSvgSilhouette(snapshot).catch(() => null)
-              : null,
-          ])
-        );
-        if (request.current === signature) {
-          setResult({
-            ready: true,
-            silhouettes: Object.fromEntries(entries),
-          });
-        }
-      };
-      // Every rasterization rejection is handled per pose above.
-      void generate();
+      // Observer updates can paint before React commits their pending state.
+      stage.dataset.ready = "false";
+      // Cancel all timelines before even a cached decode can finish.
+      void stage.clientHeight;
+      setResult(null);
+      const entries = await Promise.all(
+        snapshots.map(async ([pose, snapshot]) => [
+          pose,
+          snapshot
+            ? await createSvgSilhouette(snapshot).catch(() => null)
+            : null,
+        ])
+      );
+      if (request.current === signature) {
+        setResult([signature, Object.fromEntries(entries)]);
+      }
     };
-    update();
+    void update();
     const observer = new MutationObserver(update);
     for (const ref of Object.values<RefObject<Element | null>>(sources)) {
       if (ref.current) {
@@ -67,5 +79,8 @@ export const useSvgSilhouettes = <Pose extends string>(
     return () => observer.disconnect();
   });
 
-  return { ...result, ready: !enabled || result.ready };
+  return {
+    ready: !enabled || result !== null,
+    silhouettes: silhouettes ?? {},
+  };
 };

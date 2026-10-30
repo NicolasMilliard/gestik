@@ -12,7 +12,6 @@ import { CursorArtwork } from "@/playgrounds/artwork/cursor-artwork";
 import {
   CURSOR_EXAMPLE,
   CURSOR_HOTSPOT,
-  CURSOR_SILHOUETTE,
 } from "@/playgrounds/artwork/cursor-geometry";
 import { HintExample } from "@/playgrounds/hint-example";
 import { ResizeHintDemo } from "@/playgrounds/resize-hint-demo";
@@ -21,15 +20,7 @@ const propRows = [
   [
     "icon",
     "Built-in pointing hand",
-    "Static decorative artwork in a 32px box.",
-  ],
-  [
-    "iconMask",
-    "Built-in hand silhouette",
-    <>
-      Filled <code>path</code> and <code>viewBox</code> for the cutout. Custom
-      icons have no cutout unless supplied.
-    </>,
+    "Static inline SVG artwork with an automatic cutout in a 32px box.",
   ],
   [
     "hotspot",
@@ -118,7 +109,6 @@ ${CURSOR_EXAMPLE}
   className="custom-resize-hint"
   size={168}
   icon={<CursorArtwork />}
-  iconMask={cursorMask}
   hotspot={{ x: 4 / 32, y: 2 / 32 }}
 />`}
         css={`
@@ -133,12 +123,27 @@ ${CURSOR_EXAMPLE}
             className="custom-resize-hint"
             size={168}
             icon={<CursorArtwork />}
-            iconMask={CURSOR_SILHOUETTE}
             hotspot={CURSOR_HOTSPOT}
             playing={playing}
           />
         )}
       </HintExample>
+    </section>
+
+    <section className="mt-16" aria-labelledby="resize-hint-artwork-title">
+      <h2
+        className="text-xl font-medium tracking-tight"
+        id="resize-hint-artwork-title"
+      >
+        Custom artwork
+      </h2>
+      <p className="mt-3 max-w-2xl leading-6 text-zinc-600">
+        Use a static inline SVG with a viewBox. Cutouts fill enclosed holes and
+        stay opaque; artwork changes restart playback. Custom hints reserve
+        space until browser generation finishes. Generation requires canvas and
+        CSP permission for data: images; unsupported artwork renders without
+        cutouts. Built-in hands appear immediately, even without JavaScript.
+      </p>
     </section>
 
     <section

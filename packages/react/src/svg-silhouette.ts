@@ -4,26 +4,16 @@ const RESOLUTION = 256;
 const SUPPORTED_ELEMENTS =
   /^(?:svg|g|path|rect|circle|ellipse|line|polyline|polygon|title|desc)$/u;
 const GEOMETRY_STYLES =
-  "fill-rule stroke-width stroke-linecap stroke-linejoin stroke-miterlimit stroke-dasharray stroke-dashoffset transform transform-origin transform-box".split(
+  "fill stroke fill-rule stroke-width stroke-linecap stroke-linejoin stroke-miterlimit stroke-dasharray stroke-dashoffset transform transform-origin transform-box".split(
     " "
   );
 
-const opaquePaint = (paint: string, opacity: string) =>
-  paint === "none" ||
-  paint === "transparent" ||
-  opacity === "0" ||
-  /^rgba\(.*,\s*0\)$/u.test(paint)
-    ? "none"
-    : "black";
-
 /** Snapshot self-contained geometry; SVG image decoding does not execute scripts. */
 export const snapshotSvg = (wrapper: Element | null): string | null => {
-  const svg = wrapper?.querySelector("svg");
+  const svgs = wrapper?.querySelectorAll("svg");
+  const svg = svgs?.length === 1 ? svgs[0] : null;
   // SVG's own parser handles malformed geometry; only self-contained viewports qualify.
-  if (
-    !svg?.getAttribute("viewBox") ||
-    wrapper?.querySelectorAll("svg").length !== 1
-  ) {
+  if (!svg?.getAttribute("viewBox")) {
     return null;
   }
   const sources = [svg, ...svg.querySelectorAll("*")];
@@ -49,25 +39,25 @@ export const snapshotSvg = (wrapper: Element | null): string | null => {
     ) {
       return null;
     }
-    // Resolve inherited/CSS paints before detaching; opacity must not weaken a cutout.
+    // Preserve resolved paint alpha; the filled raster becomes an opaque SVG path.
     target.removeAttribute("style");
     for (const property of GEOMETRY_STYLES) {
-      const value = style.getPropertyValue(property);
-      if (value) {
-        target.style.setProperty(property, value);
-      }
+      target.style.setProperty(property, style.getPropertyValue(property));
     }
-    target.style.fill = opaquePaint(style.fill, style.fillOpacity);
-    target.style.stroke = opaquePaint(style.stroke, style.strokeOpacity);
-    for (const property of ["opacity", "fill-opacity", "stroke-opacity"]) {
-      target.style.setProperty(property, "1");
+    for (const opacity of ["fill-opacity", "stroke-opacity"]) {
+      target.style.setProperty(
+        opacity,
+        style.getPropertyValue(opacity) === "0" ? "0" : "1"
+      );
     }
+    target.style.opacity = "1";
     target.style.display =
       style.display === "none" || style.opacity === "0" ? "none" : "inline";
     target.style.visibility = style.visibility;
   }
-  clone.setAttribute("width", String(RESOLUTION));
-  clone.setAttribute("height", String(RESOLUTION));
+  for (const dimension of ["width", "height"]) {
+    clone.setAttribute(dimension, String(RESOLUTION));
+  }
   return new XMLSerializer().serializeToString(clone);
 };
 

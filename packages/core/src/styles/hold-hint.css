@@ -19,19 +19,17 @@
   display: block;
   width: 112px;
   height: 72px;
+  overflow: visible;
   transform-origin: 0 0;
 }
 
-.gestik-hold-hint__icon-origin {
-  position: absolute;
-  top: 26px;
-  left: 56px;
+/* Keep custom artwork and new cutouts on the same first frame. */
+.gestik-hold-hint__stage[data-ready="false"] {
+  opacity: 0;
 }
 
-.gestik-hold-hint__icon-origin .gestik-hold-hint__press {
-  display: block;
-  width: 0;
-  height: 0;
+.gestik-hold-hint__stage[data-ready="false"] * {
+  animation: none;
 }
 
 .gestik-hold-hint__icon {
