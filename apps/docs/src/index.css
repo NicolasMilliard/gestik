@@ -11,6 +11,7 @@
   font-weight: 100 800;
   font-display: swap;
   src: url("/fonts/paper-mono-variable.woff2") format("woff2");
+  size-adjust: 90%;
 }
 
 .playground-preview {
