@@ -59,7 +59,7 @@ export const DocsSidebar = () => {
           aria-controls="docs-navigation"
           onClick={() => setMenuOpen((open) => !open)}
         >
-          <span className="icon-button__icons size-[22px]" aria-hidden="true">
+          <span className="icon-button__icons size-5.5" aria-hidden="true">
             <ListIcon
               className="icon-button__default"
               size={22}
