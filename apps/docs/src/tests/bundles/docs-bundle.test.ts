@@ -5,7 +5,7 @@ import path from "node:path";
 import { JSDOM } from "jsdom";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
-import { buildDocs } from "../scripts/build-docs";
+import { buildDocs } from "../../../scripts/build-docs";
 
 const gestures = ["drag", "hold", "resize", "scroll", "shortcut", "swipe"];
 
@@ -42,7 +42,7 @@ describe("Docs production bundles", () => {
 
     expect(
       initialModules.filter((id) =>
-        /\/src\/(?:pages\/[\w-]+-hint-page|components\/[\w-]+-hint-demo|components\/ui\/select)\.tsx$/u.test(
+        /\/src\/(?:pages\/[\w-]+-hint-page|playgrounds\/.+|components\/(?:ui\/select|content\/.+))\.tsx?$/u.test(
           id
         )
       )
@@ -102,6 +102,43 @@ describe("Docs production bundles", () => {
       dom.window.close();
     }
   );
+
+  it("prerenders both example sources with only React visible initially", async () => {
+    const html = await readFile(
+      path.join(outDir, "drag-hint", "index.html"),
+      "utf-8"
+    );
+    const dom = new JSDOM(html);
+    const example = dom.window.document.querySelector(
+      'section[aria-labelledby="example-title"]'
+    );
+    const tabs = example?.querySelectorAll('[role="tab"]') ?? [];
+    const panels = example?.querySelectorAll('[role="tabpanel"]') ?? [];
+
+    expect(
+      [...tabs].map((tab) => [
+        tab.textContent,
+        tab.getAttribute("aria-selected"),
+      ])
+    ).toStrictEqual([
+      ["React", "true"],
+      ["CSS", "false"],
+    ]);
+    expect(
+      [...panels].map((panel) => panel.hasAttribute("hidden"))
+    ).toStrictEqual([false, true]);
+    expect(panels[0]?.textContent).toContain("import { DragHint }");
+    expect(panels[1]?.textContent).toContain("--gestik-drag-hint-square-fill");
+    expect(
+      [...tabs].map((tab) => [tab.id, tab.getAttribute("aria-controls")])
+    ).toStrictEqual(
+      [...panels].map((panel) => [
+        panel.getAttribute("aria-labelledby"),
+        panel.id,
+      ])
+    );
+    dom.window.close();
+  });
 
   it("provides a real not-found document for static hosting", async () => {
     const html = await readFile(path.join(outDir, "404.html"), "utf-8");

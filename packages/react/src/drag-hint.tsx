@@ -103,7 +103,7 @@ export const DragHint = ({
       style={hintStyle}
     >
       <span
-        key={direction}
+        key={`${direction}-${icons === DEFAULT_ICONS}-${Boolean(masks)}`}
         className="gestik-drag-hint__stage"
         style={{ transform: `scale(${scale})` }}
       >
@@ -132,51 +132,71 @@ export const DragHint = ({
           </IconMask>
         )}
 
-        <span
+        <svg
           className="gestik-drag-hint__background"
-          style={masks ? { mask: `url(#${maskId})` } : undefined}
+          viewBox="0 0 112 72"
+          width={SCENE_WIDTH}
+          height={SCENE_HEIGHT}
+          fill="none"
+          focusable="false"
         >
-          <svg
-            className="gestik-drag-hint__destination"
-            viewBox="0 0 32 32"
-            width="32"
-            height="32"
-            fill="none"
-            focusable="false"
+          <defs>
+            <filter
+              id={`${maskId}-shadow`}
+              x="-50%"
+              y="-50%"
+              width="200%"
+              height="200%"
+            >
+              <feGaussianBlur stdDeviation="4" />
+              <feOffset dy="5" />
+              <feComposite in2="SourceGraphic" operator="out" />
+            </filter>
+          </defs>
+          <g
+            className="gestik-drag-hint__masked-scene"
+            mask={masks ? `url(#${maskId})` : undefined}
           >
-            <rect
-              x="1"
-              y="1"
-              width="30"
-              height="30"
-              rx="7"
-              strokeWidth="2"
-              strokeDasharray="4 4"
-            />
-          </svg>
-
-          <span className="gestik-drag-hint__drag-group">
-            <span className="gestik-drag-hint__lift-group">
-              <svg
-                className="gestik-drag-hint__square"
-                viewBox="0 0 32 32"
-                width="32"
-                height="32"
-                fill="none"
-                focusable="false"
-              >
-                <rect
-                  x="1"
-                  y="1"
-                  width="30"
-                  height="30"
-                  rx="7"
-                  strokeWidth="2"
-                />
-              </svg>
-            </span>
-          </span>
-        </span>
+            <g className="gestik-drag-hint__destination">
+              <rect
+                x="1"
+                y="1"
+                width="30"
+                height="30"
+                rx="7"
+                strokeWidth="2"
+                strokeDasharray="4 4"
+              />
+            </g>
+            <g className="gestik-drag-hint__square-origin">
+              <g className="gestik-drag-hint__background-travel">
+                <g opacity="0.2">
+                  <rect
+                    className="gestik-drag-hint__shadow"
+                    x="2"
+                    y="2"
+                    width="28"
+                    height="28"
+                    rx="6"
+                    fill="black"
+                    filter={`url(#${maskId}-shadow)`}
+                  />
+                </g>
+                <g className="gestik-drag-hint__background-lift">
+                  <rect
+                    className="gestik-drag-hint__square"
+                    x="1"
+                    y="1"
+                    width="30"
+                    height="30"
+                    rx="7"
+                    strokeWidth="2"
+                  />
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
 
         <span className="gestik-drag-hint__drag-group">
           <span className="gestik-drag-hint__lift-group">

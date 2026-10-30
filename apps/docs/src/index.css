@@ -11,6 +11,7 @@
   font-weight: 100 800;
   font-display: swap;
   src: url("/fonts/paper-mono-variable.woff2") format("woff2");
+  size-adjust: 90%;
 }
 
 .playground-preview {
@@ -118,53 +119,36 @@
   }
 }
 
-.custom-hold-hint {
-  --gestik-hold-hint-color: #0e7490;
+.custom-drag-hint {
+  --gestik-drag-hint-square-stroke: #0f766e;
+  --gestik-drag-hint-square-fill: #ccfbf1;
+  --gestik-drag-hint-target-stroke: #7c3aed;
+  --gestik-drag-hint-target-stroke-opacity: 0.65;
+  --gestik-drag-hint-icon-color: #b45309;
 }
 
-.custom-scroll-hint {
-  --gestik-scroll-hint-color: #0e7490;
+.custom-hold-hint {
+  --gestik-hold-hint-color: #4338ca;
+  --gestik-hold-hint-ring-color: #e11d48;
 }
 
 .custom-resize-hint {
-  --gestik-resize-hint-color: #0e7490;
+  --gestik-resize-hint-color: #7c3aed;
+  --gestik-resize-hint-frame-color: #0f766e;
 }
 
-.custom-shortcut-hint {
-  --gestik-shortcut-hint-color: #0e7490;
-  --gestik-shortcut-hint-surface: #ecfeff;
+.custom-scroll-hint {
+  --gestik-scroll-hint-color: #0369a1;
 }
 
 .custom-swipe-hint {
-  --gestik-swipe-hint-icon-color: #0e7490;
-  --gestik-swipe-hint-surface: #ecfeff;
+  --gestik-swipe-hint-icon-color: #7c3aed;
+  --gestik-swipe-hint-trail-color: #e11d48;
 }
 
-.custom-drag-hint {
-  --gestik-drag-hint-square-stroke: #0f766e;
-  --gestik-drag-hint-target-stroke: #7c3aed;
-  --gestik-drag-hint-target-stroke-opacity: 0.65;
-  --gestik-drag-hint-square-fill: #ccfbf1;
-  --gestik-drag-hint-icon-color: #b45309;
-  --gestik-drag-hint-surface: #f59e0b;
-}
-
-.drag-mask-example {
-  background-color: #fafafa;
-  background-image: repeating-conic-gradient(
-    #e4e4e7 0% 25%,
-    transparent 0% 50%
-  );
-  background-size: 16px 16px;
-}
-
-.drag-mask-example__hint {
-  --gestik-drag-hint-square-fill: color-mix(
-    in srgb,
-    var(--color-brand) 30%,
-    white
-  );
-  color: var(--color-brand);
+.custom-shortcut-hint {
+  --gestik-shortcut-hint-color: #047857;
+  --gestik-shortcut-hint-surface: #ecfdf5;
 }
 
 @theme inline {
@@ -287,9 +271,13 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-base text-foreground;
   }
   html {
     @apply font-sans;
+  }
+  :where(code:not(pre code)) {
+    @apply rounded-md bg-zinc-100 box-decoration-clone px-1.5 py-0.5 text-zinc-800;
+    overflow-wrap: anywhere;
   }
 }

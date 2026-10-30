@@ -5,7 +5,8 @@ import {
 } from "@tanstack/react-router/ssr/server";
 import { StrictMode } from "react";
 
-import { components } from "./lib/components";
+import { components } from "@/lib/component-registry";
+
 import { createDocsRouter } from "./router";
 
 export const paths = ["/", ...components.map(({ path }) => path)];

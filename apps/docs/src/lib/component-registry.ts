@@ -12,7 +12,7 @@ export const components = (
   [
     {
       Page: lazyRouteComponent(
-        () => import("../pages/drag-hint-page"),
+        () => import("@/pages/drag-hint-page"),
         "DragHintPage"
       ),
       Preview: DragHint,
@@ -21,7 +21,7 @@ export const components = (
     },
     {
       Page: lazyRouteComponent(
-        () => import("../pages/hold-hint-page"),
+        () => import("@/pages/hold-hint-page"),
         "HoldHintPage"
       ),
       Preview: HoldHint,
@@ -30,7 +30,7 @@ export const components = (
     },
     {
       Page: lazyRouteComponent(
-        () => import("../pages/resize-hint-page"),
+        () => import("@/pages/resize-hint-page"),
         "ResizeHintPage"
       ),
       Preview: ResizeHint,
@@ -39,7 +39,7 @@ export const components = (
     },
     {
       Page: lazyRouteComponent(
-        () => import("../pages/scroll-hint-page"),
+        () => import("@/pages/scroll-hint-page"),
         "ScrollHintPage"
       ),
       Preview: ScrollHint,
@@ -48,7 +48,7 @@ export const components = (
     },
     {
       Page: lazyRouteComponent(
-        () => import("../pages/shortcut-hint-page"),
+        () => import("@/pages/shortcut-hint-page"),
         "ShortcutHintPage"
       ),
       Preview: ShortcutHint,
@@ -57,7 +57,7 @@ export const components = (
     },
     {
       Page: lazyRouteComponent(
-        () => import("../pages/swipe-hint-page"),
+        () => import("@/pages/swipe-hint-page"),
         "SwipeHintPage"
       ),
       Preview: SwipeHint,

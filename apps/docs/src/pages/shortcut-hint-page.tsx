@@ -1,4 +1,6 @@
 import { ShortcutHint } from "@gestik/react";
+import { CommandIcon } from "@phosphor-icons/react/dist/csr/Command";
+import { OptionIcon } from "@phosphor-icons/react/dist/csr/Option";
 
 import {
   Table,
@@ -8,9 +10,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { HintStyleGuide } from "../components/hint-style-guide";
-import { ShortcutHintDemo } from "../components/shortcut-hint-demo";
+import { HintExample } from "@/playgrounds/hint-example";
+import { ShortcutHintDemo } from "@/playgrounds/shortcut-hint-demo";
 
 const propRows = [
   [
@@ -34,7 +35,9 @@ const propRows = [
   [
     "style",
     "—",
-    "Inline styles and --gestik-* CSS variables on the outer span.",
+    <>
+      Inline styles and <code>--gestik-*</code> CSS variables on the outer span.
+    </>,
   ],
 ] as const;
 
@@ -43,7 +46,7 @@ export const ShortcutHintPage = () => (
     <title>ShortcutHint — Gestik</title>
     <header className="mb-8">
       <h1 className="text-3xl font-normal tracking-tight">ShortcutHint</h1>
-      <p className="mt-3 text-sm leading-6 text-zinc-500">
+      <p className="mt-3 leading-6 text-zinc-500">
         Show how to hold keys together to perform a keyboard shortcut.
       </p>
     </header>
@@ -57,15 +60,8 @@ export const ShortcutHintPage = () => (
       >
         Props
       </h2>
-      <p className="mt-3 text-sm leading-6 text-zinc-600">
-        Keys press from left to right and stay held until the whole combination
-        is down. They release together, then rest before repeating. The
-        animation demonstrates a combination held together, rather than a
-        sequence of separate keystrokes. Change the React <code>key</code> to
-        replay a completed finite animation.
-      </p>
       <div className="mt-6 overflow-hidden rounded-xl border border-zinc-200">
-        <Table className="min-w-160 text-sm">
+        <Table className="min-w-160">
           <TableHeader className="bg-zinc-50">
             <TableRow>
               <TableHead scope="col">Prop</TableHead>
@@ -76,8 +72,8 @@ export const ShortcutHintPage = () => (
           <TableBody>
             {propRows.map(([name, defaultValue, purpose]) => (
               <TableRow key={name}>
-                <TableCell className="font-mono text-xs">{name}</TableCell>
-                <TableCell className="font-mono text-xs text-zinc-600">
+                <TableCell className="font-mono">{name}</TableCell>
+                <TableCell className="font-mono text-zinc-600">
                   {defaultValue}
                 </TableCell>
                 <TableCell className="text-zinc-600">{purpose}</TableCell>
@@ -86,61 +82,47 @@ export const ShortcutHintPage = () => (
           </TableBody>
         </Table>
       </div>
-      <HintStyleGuide />
-      <p className="mt-4 text-sm leading-6 text-zinc-600">
-        <code>keys</code> determines the keycap count. TypeScript requires at
-        least two entries; fewer entries throw a <code>RangeError</code> at
-        runtime. The label <code>Command</code> uses the built-in Command
-        illustration. Other strings appear as text; pass a decorative React
-        element for a custom symbol. Custom artwork is placed in the same 20px
-        icon box as the built-in Command symbol and should fill that box. It
-        stays static, inert, and hidden from assistive technology. Changing the
-        number of keys restarts the cycle.
-      </p>
     </section>
 
-    <section className="mt-16" aria-labelledby="shortcut-hint-styling-title">
+    <section className="mt-16" aria-labelledby="shortcut-hint-example-title">
       <h2
         className="text-xl font-medium tracking-tight"
-        id="shortcut-hint-styling-title"
+        id="shortcut-hint-example-title"
       >
-        Styling
+        Example
       </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
-        Keycaps inherit the surrounding color. Override{" "}
-        <code>--gestik-shortcut-hint-color</code> for the outlines, key legends,
-        and key depth, and <code>--gestik-shortcut-hint-surface</code> for the
-        key faces. Without <code>size</code>, longer combinations reserve more
-        width while retaining the same keycap height. Setting <code>size</code>{" "}
-        scales the whole row to that width.
-      </p>
-      <div className="mt-6 flex flex-wrap items-center gap-5 rounded-xl border border-zinc-200 p-5">
-        <ShortcutHint
-          keys={["Ctrl", "Shift", "K"]}
-          className="custom-shortcut-hint"
-          playing={false}
-        />
-        <span className="text-sm text-zinc-600">
-          A three-key combination, paused at rest.
-        </span>
-      </div>
-      <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 text-xs font-medium text-zinc-500">
-          React + CSS
-        </div>
-        <pre className="overflow-x-auto p-5 text-xs leading-6 sm:text-sm">
-          <code>{`<ShortcutHint
-  keys={["Ctrl", "Shift", "K"]}
-  className="custom-shortcut-hint"
-  playing={false}
-/>
+      <HintExample
+        description="Press Command + Option + K to open the command menu. Custom symbols share the mint keycaps with a text legend."
+        code={`import { ShortcutHint } from "@gestik/react";
+import { CommandIcon, OptionIcon } from "@phosphor-icons/react";
 
-.custom-shortcut-hint {
-  --gestik-shortcut-hint-color: #0e7490;
-  --gestik-shortcut-hint-surface: #ecfeff;
-}`}</code>
-        </pre>
-      </div>
+<ShortcutHint
+  className="custom-shortcut-hint"
+  keys={[
+    <CommandIcon key="command" weight="bold" />,
+    <OptionIcon key="option" weight="bold" />,
+    "K",
+  ]}
+/>`}
+        css={`
+          .custom-shortcut-hint {
+            --gestik-shortcut-hint-color: #047857;
+            --gestik-shortcut-hint-surface: #ecfdf5;
+          }
+        `}
+      >
+        {(playing) => (
+          <ShortcutHint
+            className="custom-shortcut-hint"
+            keys={[
+              <CommandIcon key="command" weight="bold" />,
+              <OptionIcon key="option" weight="bold" />,
+              "K",
+            ]}
+            playing={playing}
+          />
+        )}
+      </HintExample>
     </section>
 
     <section
@@ -153,7 +135,7 @@ export const ShortcutHintPage = () => (
       >
         Accessibility
       </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
+      <p className="mt-3 max-w-2xl leading-6 text-zinc-600">
         ShortcutHint is decorative, stays out of the tab order, and ignores
         pointer events. Pair it with visible instructions such as “Press Command
         + K to open search” and an accessible control for the same action. Under

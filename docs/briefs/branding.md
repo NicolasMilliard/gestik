@@ -10,4 +10,4 @@ Keep the interface quiet so the gesture animations carry the page. These choices
 - Keep icon-button hit areas stable while visual layers compress or swap. The copy action uses an 18px icon in a 44px target and shows its check for two seconds. Disable motion under reduced motion.
 - Preserve visible keyboard focus and active-link styling. Navigation replaces ready content without page transitions.
 
-Implementation: [theme and feedback](../../apps/docs/src/index.css), [sidebar](../../apps/docs/src/components/docs-sidebar.tsx), [copy control](../../apps/docs/src/components/install-command.tsx).
+Implementation: [theme and feedback](../../apps/docs/src/index.css), [sidebar](../../apps/docs/src/components/layout/docs-sidebar.tsx), [copy control](../../apps/docs/src/components/home/install-command.tsx).

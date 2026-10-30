@@ -47,7 +47,7 @@ export const InstallCommand = () => {
       <fieldset className="mb-2 flex gap-1" aria-label="Package manager">
         {packageManagers.map((name) => (
           <button
-            className="rounded-md px-3 py-1.5 text-xs text-zinc-500 hover:text-zinc-800 focus-visible:outline-2 focus-visible:outline-brand aria-pressed:bg-brand-soft aria-pressed:text-brand"
+            className="rounded-md px-3 py-1.5 text-zinc-500 hover:text-zinc-800 focus-visible:outline-2 focus-visible:outline-brand aria-pressed:bg-brand-soft aria-pressed:text-brand"
             key={name}
             type="button"
             aria-pressed={manager === name}
@@ -62,7 +62,7 @@ export const InstallCommand = () => {
       </fieldset>
       <div className="flex items-center rounded-xl border border-zinc-100 bg-zinc-50/70 pr-1">
         <pre
-          className="min-w-0 flex-1 overflow-x-auto px-3 py-3.5 text-xs font-extralight text-zinc-600 sm:px-4 sm:text-sm"
+          className="min-w-0 flex-1 overflow-x-auto px-3 py-3.5 font-extralight text-zinc-600 sm:px-4"
           aria-live="polite"
         >
           <span className="mr-3 text-zinc-400 select-none" aria-hidden="true">
@@ -83,7 +83,7 @@ export const InstallCommand = () => {
           }
           onClick={copyCommand}
         >
-          <span className="icon-button__icons size-[18px]" aria-hidden="true">
+          <span className="icon-button__icons size-4.5" aria-hidden="true">
             <CopyIcon
               className="icon-button__default"
               size={18}
@@ -98,18 +98,13 @@ export const InstallCommand = () => {
         </button>
       </div>
       <output
-        className={
-          status === "error" ? "mt-2 block text-xs text-zinc-600" : "sr-only"
-        }
+        className={status === "error" ? "mt-2 block text-zinc-600" : "sr-only"}
         aria-live="polite"
       >
         {status === "copied" && "Install command copied."}
         {status === "error" &&
           "Could not copy. Select and copy the command manually."}
       </output>
-      <p className="mt-3 text-xs leading-5 text-zinc-500">
-        Install commands are a preview. The package is not published yet.
-      </p>
     </div>
   );
 };
