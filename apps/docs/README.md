@@ -42,6 +42,8 @@ The [build script](scripts/build-docs.ts) runs client and server builds, then pr
 
 Run `bun run verify` before submitting. [Production tests](src/tests/bundles/docs-bundle.test.ts) check generated HTML, deferred imports, and startup/chunk budgets; [consumer tests](src/tests/bundles/library-bundle.test.ts) measure the React library separately. Read current sizes from build output rather than maintaining a size snapshot here.
 
+Keep tests focused on interactions, accessibility, routing, and build behavior. Avoid assertions on documentation prose, gallery inventories, or fixed example snippets.
+
 For navigation or build changes, also open a direct component URL, refresh it, and exercise its controls in the production preview. HTML checks alone do not establish working hydration.
 
 ## GitHub Pages

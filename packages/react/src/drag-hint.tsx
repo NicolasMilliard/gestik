@@ -3,16 +3,16 @@ import {
   CLOSED_HAND_SILHOUETTE,
   OPEN_HAND_SILHOUETTE,
 } from "@gestik/core";
-import type { IconSilhouette } from "@gestik/core";
 import type { ReactNode } from "react";
 
 import "@gestik/core/styles/drag-hint.css";
-import { useId } from "react";
+import { useId, useRef } from "react";
 
 import type { HintStyle } from "./hint-style";
 import { ClosedHand } from "./icons/closed-hand";
 import { OpenHand } from "./icons/open-hand";
 import { INERT_PROPS } from "./inert-props";
+import { useSvgSilhouettes } from "./use-svg-silhouettes";
 
 const { width: SCENE_WIDTH, height: SCENE_HEIGHT } = DRAG_HINT_DEFAULTS;
 const ICON_SIZE = DRAG_HINT_DEFAULTS.iconSize;
@@ -39,15 +39,10 @@ export interface DragHintProps {
   className?: string;
   /** Styles for the outer span, including --gestik-* variables. Explicit playback props take precedence. */
   style?: HintStyle;
-  /** Decorative, static artwork filling a 24px box in each pose. */
+  /** Static inline SVG artwork filling a 24px box in each pose; cutouts are generated automatically. */
   icons?: {
     idle: ReactNode;
     grabbing: ReactNode;
-  };
-  /** Filled SVG silhouettes for custom poses. Custom icons otherwise render without cutouts. */
-  iconMasks?: {
-    idle: IconSilhouette;
-    grabbing: IconSilhouette;
   };
   /** Contact point in the icon box, from 0 to 1 on each axis. */
   hotspot?: DragHintHotspot;
@@ -65,7 +60,6 @@ export const DragHint = ({
   className,
   style,
   icons = DEFAULT_ICONS,
-  iconMasks,
   hotspot = DEFAULT_HOTSPOT,
   duration,
   iterations,
@@ -73,12 +67,18 @@ export const DragHint = ({
 }: DragHintProps) => {
   const maskId = useId();
   const scale = size / SCENE_WIDTH;
+  const artworkRefs = {
+    grabbing: useRef<SVGGElement>(null),
+    idle: useRef<SVGGElement>(null),
+  };
+  const generated = useSvgSilhouettes(artworkRefs, icons !== DEFAULT_ICONS);
   const masks =
-    iconMasks ?? (icons === DEFAULT_ICONS ? DEFAULT_ICON_MASKS : undefined);
+    icons === DEFAULT_ICONS ? DEFAULT_ICON_MASKS : generated.silhouettes;
+  const hasMasks = masks.idle || masks.grabbing;
 
-  const silhouettes =
-    masks &&
-    (["idle", "grabbing"] as const).map((pose) => (
+  const silhouettes = (["idle", "grabbing"] as const).map((pose) => {
+    const silhouette = masks[pose];
+    return silhouette ? (
       <svg
         key={pose}
         className={`gestik-drag-hint__mask--${pose}`}
@@ -86,12 +86,13 @@ export const DragHint = ({
         y={16 - hotspot.y * ICON_SIZE}
         width={ICON_SIZE}
         height={ICON_SIZE}
-        viewBox={masks[pose].viewBox}
+        viewBox={silhouette.viewBox}
         focusable="false"
       >
-        <path d={masks[pose].path} />
+        <path d={silhouette.path} />
       </svg>
-    ));
+    ) : null;
+  });
 
   const hintStyle: HintStyle = {
     height: SCENE_HEIGHT * scale,
@@ -119,7 +120,8 @@ export const DragHint = ({
       style={hintStyle}
     >
       <span
-        key={`${direction}-${icons === DEFAULT_ICONS}-${Boolean(masks)}`}
+        key={`${direction}-${icons === DEFAULT_ICONS}`}
+        data-ready={generated.ready}
         className="gestik-drag-hint__stage"
         style={{ transform: `scale(${scale})` }}
       >
@@ -132,7 +134,7 @@ export const DragHint = ({
           focusable="false"
         >
           <defs>
-            {masks && (
+            {hasMasks && (
               <>
                 <mask
                   id={maskId}
@@ -186,7 +188,7 @@ export const DragHint = ({
           </defs>
           <g
             className="gestik-drag-hint__masked-scene"
-            mask={masks ? `url(#${maskId})` : undefined}
+            mask={hasMasks ? `url(#${maskId})` : undefined}
           >
             <g className="gestik-drag-hint__destination">
               <rect
@@ -205,7 +207,7 @@ export const DragHint = ({
               <g className="gestik-drag-hint__lift-group">
                 <g
                   className="gestik-drag-hint__square-scene"
-                  mask={masks ? `url(#${maskId}-square)` : undefined}
+                  mask={hasMasks ? `url(#${maskId}-square)` : undefined}
                 >
                   {/* WebKit clips filtered pixels to the masked group's geometry bounds. */}
                   <rect
@@ -252,6 +254,7 @@ export const DragHint = ({
                   {(["idle", "grabbing"] as const).map((pose) => (
                     <g
                       key={pose}
+                      ref={artworkRefs[pose]}
                       className={`gestik-drag-hint__icon gestik-drag-hint__icon--${pose}`}
                     >
                       {icons === DEFAULT_ICONS ? (

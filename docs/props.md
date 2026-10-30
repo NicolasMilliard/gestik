@@ -35,7 +35,7 @@ Each row lists the additional props alongside the six common props above.
 
 | Hint | Additional props | Default duration | Default scene | Why these options |
 | --- | --- | --- | --- | --- |
-| `DragHint` | `direction`, `icons`, `iconMasks`, `hotspot` | `2800` | `112 × 72` | Dragging changes between idle and grabbing poses, so artwork and cutouts come as matching pairs. |
+| `DragHint` | `direction`, `icons`, `hotspot` | `2800` | `112 × 72` | Dragging changes between idle and grabbing poses. Static inline SVG poses get automatic opaque cutouts. |
 | `SwipeHint` | `direction`, `icon`, `hotspot` | `2200` | `112 × 72` | One illustration travels horizontally around a contact point. Its trail leaves a gap behind that point, so it does not need an icon cutout. |
 | `HoldHint` | `icon`, `iconMask`, `hotspot` | `3000` | `112 × 72` | One illustration presses around a fixed contact point. A silhouette can hide the filling ring behind translucent or outlined artwork. |
 | `ResizeHint` | `icon`, `iconMask`, `hotspot` | `2200` | `112 × 88` | One illustration presses and follows the growing lower-right corner. A silhouette can hide the frame behind the illustration. |
@@ -49,7 +49,7 @@ Each row lists the additional props alongside the six common props above.
 - `icon` accepts a `ReactNode`. Swipe, hold, resize, and scroll use a 32px box. Their direct SVG children fill the box; other artwork should provide its own width and height of `100%`. Passing `null` hides the icon.
 - Drag's `icons` is `{ idle: ReactNode; grabbing: ReactNode }`, with a 24px box for each pose. Both poses share one contact point.
 - `hotspot` is `{ x: number; y: number }`, normalized from 0 to 1 across the icon box. Drag defaults to `{ x: 0.5, y: 0 }`. Swipe, hold, and resize default to the pointing hand's fingertip, `{ x: 116 / 256, y: 16 / 256 }`. Set it to the equivalent contact point in custom artwork.
-- `iconMask` is an `IconSilhouette`: `{ path: string; viewBox: string }`. Drag's `iconMasks` provides one silhouette for each pose. Include the entire filled area to hide behind the artwork, including hollow outline interiors. Built-in artwork gets its matching cutout automatically. Custom artwork only gets a cutout when one is explicitly supplied; it never uses the hand's mask.
+- `iconMask` is an `IconSilhouette`: `{ path: string; viewBox: string }`. Include the entire filled area to hide behind the artwork, including hollow outline interiors. Built-in artwork gets its matching cutout automatically. Hold and resize custom artwork only gets a cutout when one is explicitly supplied; it never uses the hand's mask. Drag generates cutouts from static inline SVG geometry, including enclosed outline interiors; it does not expose a mask prop.
 - Hold and resize restart when switching between built-in and custom artwork, or enabling or disabling the cutout. This keeps newly mounted animation layers on the same cycle. Updating a custom icon within the same mode retains playback.
 - `keys` is a readonly tuple with at least two entries. Each entry is a string or `ReactElement`. It defaults to `["Command", "K"]`; `"Command"` renders the built-in symbol. Custom elements fill a 20px icon box. Other strings render as labels and determine keycap width. Fewer than two keys throw a `RangeError`; changing the count restarts playback.
 

@@ -10,10 +10,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  DRAG_HAND_MASKS,
-  DRAG_HAND_MASKS_EXAMPLE,
-} from "@/playgrounds/artwork/drag-geometry";
 import { DragHintDemo } from "@/playgrounds/drag-hint-demo";
 import { HintExample } from "@/playgrounds/hint-example";
 
@@ -23,11 +19,10 @@ const propRows = [
   ["duration", "2800", "Duration of one cycle in milliseconds."],
   ["iterations", '"infinite"', "Total number of cycles, or infinite."],
   ["playing", "true", "Pause or resume at the current frame."],
-  ["icons", "Built-in hands", "Custom idle and grabbing illustrations."],
   [
-    "iconMasks",
-    "Built-in hand silhouettes",
-    "Filled paths and viewBoxes for the idle and grabbing cutouts. Supply these with custom icons to enable masking.",
+    "icons",
+    "Built-in hands",
+    "Static inline SVG poses with automatic cutouts.",
   ],
   [
     "hotspot",
@@ -93,13 +88,10 @@ export const DragHintPage = () => (
         code={`import { DragHint } from "@gestik/react";
 import { HandIcon, HandGrabbingIcon } from "@phosphor-icons/react";
 
-${DRAG_HAND_MASKS_EXAMPLE}
-
 <DragHint
   className="custom-drag-hint"
   size={168}
   hotspot={{ x: 0.5, y: 0.5 }}
-  iconMasks={handMasks}
   icons={{
     idle: <HandIcon weight="regular" />,
     grabbing: <HandGrabbingIcon weight="regular" />,
@@ -120,7 +112,6 @@ ${DRAG_HAND_MASKS_EXAMPLE}
             className="custom-drag-hint"
             size={168}
             hotspot={{ x: 0.5, y: 0.5 }}
-            iconMasks={DRAG_HAND_MASKS}
             icons={{
               grabbing: <HandGrabbingIcon weight="regular" />,
               idle: <HandIcon weight="regular" />,
@@ -129,6 +120,24 @@ ${DRAG_HAND_MASKS_EXAMPLE}
           />
         )}
       </HintExample>
+    </section>
+
+    <section className="mt-16" aria-labelledby="artwork-title">
+      <h2 className="text-xl font-medium tracking-tight" id="artwork-title">
+        Custom artwork
+      </h2>
+      <p className="mt-3 max-w-2xl leading-6 text-zinc-600">
+        Use one static inline SVG with a viewBox per pose. Paths, basic shapes,
+        groups, transforms, and CSS fills and strokes are supported. Cutouts
+        fill enclosed holes and stay opaque; artwork changes rebuild them and
+        restart playback.
+      </p>
+      <p className="mt-3 max-w-2xl leading-6 text-zinc-600">
+        Custom hints reserve space until their cutouts are ready in the browser.
+        Generation requires canvas and CSP permission for data: images.
+        Unsupported artwork or unavailable canvas renders without cutouts.
+        Built-in hands appear immediately, even without JavaScript.
+      </p>
     </section>
 
     <section className="mt-16" aria-labelledby="accessibility-title">
