@@ -2,7 +2,6 @@ import { ShortcutHint } from "@gestik/react";
 import { CommandIcon } from "@phosphor-icons/react/dist/csr/Command";
 import { OptionIcon } from "@phosphor-icons/react/dist/csr/Option";
 
-import { HintStyleGuide } from "@/components/content/hint-style-guide";
 import {
   Table,
   TableBody,
@@ -36,7 +35,9 @@ const propRows = [
   [
     "style",
     "—",
-    "Inline styles and --gestik-* CSS variables on the outer span.",
+    <>
+      Inline styles and <code>--gestik-*</code> CSS variables on the outer span.
+    </>,
   ],
 ] as const;
 
@@ -59,13 +60,6 @@ export const ShortcutHintPage = () => (
       >
         Props
       </h2>
-      <p className="mt-3 leading-6 text-zinc-600">
-        Keys press from left to right and stay held until the whole combination
-        is down. They release together, then rest before repeating. The
-        animation demonstrates a combination held together, rather than a
-        sequence of separate keystrokes. Change the React <code>key</code> to
-        replay a completed finite animation.
-      </p>
       <div className="mt-6 overflow-hidden rounded-xl border border-zinc-200">
         <Table className="min-w-160">
           <TableHeader className="bg-zinc-50">
@@ -88,39 +82,15 @@ export const ShortcutHintPage = () => (
           </TableBody>
         </Table>
       </div>
-      <HintStyleGuide />
-      <p className="mt-4 leading-6 text-zinc-600">
-        <code>keys</code> determines the keycap count. TypeScript requires at
-        least two entries; fewer entries throw a <code>RangeError</code> at
-        runtime. The label <code>Command</code> uses the built-in Command
-        illustration. Other strings appear as text; pass a decorative React
-        element for a custom symbol. Custom artwork is placed in the same 20px
-        icon box as the built-in Command symbol and should fill that box. It
-        stays static, inert, and hidden from assistive technology. Changing the
-        number of keys restarts the cycle.
-      </p>
     </section>
 
-    <section className="mt-16" aria-labelledby="shortcut-hint-styling-title">
+    <section className="mt-16" aria-labelledby="shortcut-hint-example-title">
       <h2
         className="text-xl font-medium tracking-tight"
-        id="shortcut-hint-styling-title"
+        id="shortcut-hint-example-title"
       >
-        Styling
+        Example
       </h2>
-      <p className="mt-3 max-w-2xl leading-6 text-zinc-600">
-        Keycaps inherit the surrounding color. Override{" "}
-        <code>--gestik-shortcut-hint-color</code> for the outlines, key legends,
-        and key depth, and <code>--gestik-shortcut-hint-surface</code> for the
-        key faces. Without <code>size</code>, longer combinations reserve more
-        width while retaining the same keycap height. Setting <code>size</code>{" "}
-        scales the whole row to that width.
-      </p>
-      <p className="mt-4 max-w-2xl leading-7 text-zinc-600">
-        Mix custom Phosphor symbols with text legends in the same combination.
-        Each element fills the keycap&apos;s icon box; the key faces use a
-        separate surface color.
-      </p>
       <HintExample
         description="Press Command + Option + K to open the command menu. Custom symbols share the mint keycaps with a text legend."
         code={`import { ShortcutHint } from "@gestik/react";

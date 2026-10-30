@@ -1,7 +1,6 @@
 import { HoldHint } from "@gestik/react";
 import { HandPointingIcon } from "@phosphor-icons/react/dist/csr/HandPointing";
 
-import { HintStyleGuide } from "@/components/content/hint-style-guide";
 import {
   Table,
   TableBody,
@@ -22,7 +21,10 @@ const propRows = [
   [
     "iconMask",
     "Built-in hand silhouette",
-    "Filled path and viewBox for the cutout. Custom icons have no cutout unless supplied.",
+    <>
+      Filled <code>path</code> and <code>viewBox</code> for the cutout. Custom
+      icons have no cutout unless supplied.
+    </>,
   ],
   [
     "hotspot",
@@ -45,7 +47,9 @@ const propRows = [
   [
     "style",
     "—",
-    "Inline styles and --gestik-* CSS variables on the outer span.",
+    <>
+      Inline styles and <code>--gestik-*</code> CSS variables on the outer span.
+    </>,
   ],
 ] as const;
 
@@ -68,14 +72,6 @@ export const HoldHintPage = () => (
       >
         Props
       </h2>
-      <p className="mt-3 leading-6 text-zinc-600">
-        The hand presses once and stays still while the ring fills clockwise. It
-        releases after the ring completes, then rests before repeating. The ring
-        takes half of the full cycle to fill: 1500ms at the default duration.
-        This is illustrative timing; your application decides how long a real
-        press must last. Change the React <code>key</code> to replay a completed
-        finite animation.
-      </p>
       <div className="mt-6 overflow-hidden rounded-xl border border-zinc-200">
         <Table className="min-w-160">
           <TableHeader className="bg-zinc-50">
@@ -98,38 +94,15 @@ export const HoldHintPage = () => (
           </TableBody>
         </Table>
       </div>
-      <HintStyleGuide />
     </section>
 
-    <section className="mt-16" aria-labelledby="hold-hint-styling-title">
+    <section className="mt-16" aria-labelledby="hold-hint-example-title">
       <h2
         className="text-xl font-medium tracking-tight"
-        id="hold-hint-styling-title"
+        id="hold-hint-example-title"
       >
-        Styling
+        Example
       </h2>
-      <p className="mt-3 max-w-2xl leading-6 text-zinc-600">
-        The pointing hand and ring inherit <code>currentColor</code>. Use{" "}
-        <code>--gestik-hold-hint-color</code> to color both, or{" "}
-        <code>--gestik-hold-hint-ring-color</code> to color only the ring. The
-        32px hand compresses around its fingertip, keeping the contact point
-        fixed. A silhouette cutout keeps the ring behind the transparent hand on
-        any background. The 112 by 72px scene scales proportionally with{" "}
-        <code>size</code>.
-      </p>
-      <p className="mt-4 max-w-2xl leading-6 text-zinc-600">
-        Replace the hand with <code>icon</code> and set <code>hotspot</code> to
-        its contact point, using coordinates from 0 to 1. Supply an{" "}
-        <code>iconMask</code> with a filled SVG <code>path</code> and{" "}
-        <code>viewBox</code> to preserve the cutout behind custom artwork.
-        Custom icons render without a cutout when no silhouette is supplied.
-        Switching between built-in and custom artwork, or enabling or disabling
-        its mask, restarts the cycle to keep all layers synchronized.
-      </p>
-      <p className="mt-4 max-w-2xl leading-7 text-zinc-600">
-        A filled Phosphor hand gives the hold a solid silhouette. Color the ring
-        independently to make the time spent holding easier to follow.
-      </p>
       <HintExample
         description="Press and hold to reveal more options. An indigo hand stays in place while the rose ring fills."
         code={`import { HoldHint } from "@gestik/react";

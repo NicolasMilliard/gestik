@@ -1,7 +1,6 @@
 import { ScrollHint } from "@gestik/react";
 import { MouseIcon } from "@phosphor-icons/react/dist/csr/Mouse";
 
-import { HintStyleGuide } from "@/components/content/hint-style-guide";
 import {
   Table,
   TableBody,
@@ -27,7 +26,9 @@ const propRows = [
   [
     "style",
     "—",
-    "Inline styles and --gestik-* CSS variables on the outer span.",
+    <>
+      Inline styles and <code>--gestik-*</code> CSS variables on the outer span.
+    </>,
   ],
 ] as const;
 
@@ -50,12 +51,6 @@ export const ScrollHintPage = () => (
       >
         Props
       </h2>
-      <p className="mt-3 leading-6 text-zinc-600">
-        The cue moves smoothly from top to bottom and back to the top. Each
-        cycle includes both movements. Playback follows DragHint and SwipeHint:
-        pause at the current frame, or change the React <code>key</code> to
-        replay a completed finite animation.
-      </p>
       <div className="mt-6 overflow-hidden rounded-xl border border-zinc-200">
         <Table className="min-w-160">
           <TableHeader className="bg-zinc-50">
@@ -78,30 +73,15 @@ export const ScrollHintPage = () => (
           </TableBody>
         </Table>
       </div>
-      <HintStyleGuide />
     </section>
 
-    <section className="mt-16" aria-labelledby="scroll-hint-styling-title">
+    <section className="mt-16" aria-labelledby="scroll-hint-example-title">
       <h2
         className="text-xl font-medium tracking-tight"
-        id="scroll-hint-styling-title"
+        id="scroll-hint-example-title"
       >
-        Styling
+        Example
       </h2>
-      <p className="mt-3 max-w-2xl leading-6 text-zinc-600">
-        The artwork inherits <code>currentColor</code>. Override{" "}
-        <code>--gestik-scroll-hint-color</code> to give the hint its own color.
-        At the default size, the 32px artwork travels 24px inside a 112 by 88px
-        scene. Changing <code>size</code> scales the whole scene proportionally.
-        Pass <code>icon</code> to replace the scroll cue with static artwork
-        that fills the same 32px box. No hotspot or silhouette is needed because
-        the cue has no contact point or background cutout.
-      </p>
-      <p className="mt-4 max-w-2xl leading-7 text-zinc-600">
-        Phosphor&apos;s duotone mouse cue suits a desktop interface. The custom
-        artwork inherits the hint&apos;s color and follows the same vertical
-        loop.
-      </p>
       <HintExample
         description="Scroll to explore more. A sky-blue mouse cue moves vertically with the gesture."
         code={`import { ScrollHint } from "@gestik/react";

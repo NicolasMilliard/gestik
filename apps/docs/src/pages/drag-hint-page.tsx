@@ -60,11 +60,6 @@ export const DragHintPage = () => (
       <h2 className="text-xl font-medium tracking-tight" id="props-title">
         Props
       </h2>
-      <p className="mt-3 leading-6 text-zinc-600">
-        Start with the defaults, then adjust the motion and illustrations to fit
-        your interface.
-      </p>
-
       <div className="mt-6 overflow-hidden rounded-xl border border-zinc-200">
         <Table className="min-w-160">
           <TableHeader className="bg-zinc-50">

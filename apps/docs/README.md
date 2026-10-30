@@ -26,6 +26,8 @@ The [component registry](src/lib/component-registry.ts) is the shared catalog fo
 
 Keep route content in `src/pages/`, reusable components grouped by purpose in `src/components/` (`content`, `home`, `layout`, and `ui`), and interactive demos in `src/playgrounds/`. Demo artwork and its geometry live together in `src/playgrounds/artwork/`. Tests live under `src/tests/`, grouped into components, playgrounds, and bundles; app navigation tests stay directly in that folder. App entry files remain at the source root.
 
+Keep each Props section limited to its table. Mark code tokens in table descriptions with `<code>` so they receive the shared inline-code background and radius.
+
 The `playgrounds` folder owns the interactive demo feature, including its state, code generation, controls, and artwork. Keep shared preview options and their inferred types together in [preview-options.ts](src/playgrounds/preview-options.ts), and reuse `PreviewSelect` for their labeled controls. Add or change an option there instead of maintaining a type union, value conversion map, and menu markup separately in every demo. Component-specific props and types stay beside their owner; keep shared contracts scoped to the feature that uses them.
 
 Routes preload on hover, focus, and touch. Keep the current page visible until its destination is ready, then switch without a page animation. Preserve active links, scroll restoration, and main-content focus. A failed import offers a reload action.
