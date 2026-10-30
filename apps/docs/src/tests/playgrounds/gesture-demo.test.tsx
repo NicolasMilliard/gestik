@@ -84,6 +84,68 @@ describe("Gesture preview controls", () => {
     expect(screen.getAllByRole("slider", { name: "Duration" })).toHaveLength(2);
   });
 
+  it.each([
+    ["drag", DragHintDemo],
+    ["hold", HoldHintDemo],
+    ["resize", ResizeHintDemo],
+    ["scroll", ScrollHintDemo],
+    ["shortcut", ShortcutHintDemo],
+    ["swipe", SwipeHintDemo],
+  ] as const)(
+    "%s applies the selected iteration count, updates its code, and restarts playback",
+    async (gesture, Demo) => {
+      const { container } = render(<Demo />);
+      let previousHint = container.querySelector(`.gestik-${gesture}-hint`);
+
+      const selectIteration = async (
+        label: string,
+        count: string,
+        snippet: string
+      ) => {
+        fireEvent.click(screen.getByRole("combobox", { name: "Iterations" }));
+        const option = await screen.findByRole("option", { name: label });
+        fireEvent.pointerDown(option, { button: 0, pointerType: "mouse" });
+        fireEvent.click(option);
+        const hint = container.querySelector<HTMLElement>(
+          `.gestik-${gesture}-hint`
+        );
+
+        expect(
+          hint?.style.getPropertyValue(`--gestik-${gesture}-hint-iterations`)
+        ).toBe(count);
+        expect(container.querySelector("code")?.textContent).toContain(snippet);
+        expect(hint).not.toBe(previousHint);
+        previousHint = hint;
+      };
+
+      await selectIteration("Once", "1", "iterations={1}");
+      await selectIteration("Twice", "2", "iterations={2}");
+      await selectIteration("Infinite", "infinite", 'iterations="infinite"');
+    }
+  );
+
+  it.each([
+    ["drag", DragHintDemo],
+    ["swipe", SwipeHintDemo],
+  ] as const)(
+    "%s updates its direction through the shared select",
+    async (gesture, Demo) => {
+      const { container } = render(<Demo />);
+      fireEvent.click(screen.getByRole("combobox", { name: "Direction" }));
+      const option = await screen.findByRole("option", { name: "Left" });
+      fireEvent.pointerDown(option, { button: 0, pointerType: "mouse" });
+      fireEvent.click(option);
+
+      expect(
+        container.querySelector<HTMLElement>(`.gestik-${gesture}-hint`)?.dataset
+          .direction
+      ).toBe("left");
+      expect(container.querySelector("code")?.textContent).toContain(
+        'direction="left"'
+      );
+    }
+  );
+
   it("keeps labels unambiguous when the gesture previews share a page", () => {
     const { container } = render(
       <>
