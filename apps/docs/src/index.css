@@ -121,9 +121,9 @@
 
 .custom-drag-hint {
   --gestik-drag-hint-square-stroke: #0f766e;
+  --gestik-drag-hint-square-fill: #ccfbf1;
   --gestik-drag-hint-target-stroke: #7c3aed;
   --gestik-drag-hint-target-stroke-opacity: 0.65;
-  --gestik-drag-hint-square-fill: #ccfbf1;
   --gestik-drag-hint-icon-color: #b45309;
 }
 

@@ -8,6 +8,7 @@ Show a square being lifted, moved, and dropped. The square, shadow, and destinat
 - Apply the mask directly to an SVG scene group. CSS masks referencing animated SVG on an HTML layer can leave stale cutouts in WebKit; this was reproduced in desktop Safari after the same leak was reported on iOS. Keep the square, destination, and shadow inside that group. See [WebKit's related CSS mask repaint report](https://bugs.webkit.org/show_bug.cgi?id=327381).
 - Built-in poses share a top-center hotspot across the square's lower edge. Keep contact consistent when changing pose or artwork.
 - Custom `iconMasks` must match the visible icons' `viewBox`, 24px box, and hotspot. Custom artwork stays static; icons without silhouettes render without cutouts.
+- The docs example uses a center hotspot (`0.5, 0.5`) to place both custom poses inside the square.
 - Synchronize cutout travel, lift, and pose changes with the visible hand. Keep the cutout opaque during loop fades so the square cannot leak through a translucent icon.
 - Use stable React IDs and declarative SVG geometry. Direction changes restart all layers together; playback controls affect the cutout too. Reduced motion retains the idle silhouette.
 

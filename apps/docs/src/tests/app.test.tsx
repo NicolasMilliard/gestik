@@ -209,12 +209,24 @@ describe("Docs navigation", () => {
     expect(document.title).toBe(`${name} — Gestik`);
   });
 
-  it("cuts the background away behind both custom DragHint poses", async () => {
+  it("centers both custom DragHint poses and their cutouts in the square", async () => {
     await renderAt("/drag-hint");
     await screen.findByRole("heading", { level: 1, name: "DragHint" });
-    const example = screen.getByRole("region", { name: "Styling" });
+    const example = screen.getByRole("region", { name: "Example" });
 
-    expect(example.querySelectorAll("mask svg")).toHaveLength(2);
+    expect(
+      example.querySelector<HTMLElement>(".gestik-drag-hint__icon-anchor")
+        ?.style.transform
+    ).toBe("translate(-50%, -50%)");
+    expect(
+      [...example.querySelectorAll("mask svg")].map((mask) => [
+        mask.getAttribute("x"),
+        mask.getAttribute("y"),
+      ])
+    ).toStrictEqual([
+      ["4", "4"],
+      ["4", "4"],
+    ]);
     expect(
       example
         .querySelector(".gestik-drag-hint__masked-scene")
@@ -223,6 +235,9 @@ describe("Docs navigation", () => {
     expect(
       within(example).getByLabelText("React code example").textContent
     ).toContain("iconMasks={handMasks}");
+    expect(
+      within(example).getByLabelText("React code example").textContent
+    ).toContain("hotspot={{ x: 0.5, y: 0.5 }}");
   });
 
   it("navigates from gallery and sidebar links and focuses the new content", async () => {
