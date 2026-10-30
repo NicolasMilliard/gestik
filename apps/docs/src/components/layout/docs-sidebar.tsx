@@ -1,106 +1,58 @@
 import { ListIcon } from "@phosphor-icons/react/dist/csr/List";
-import { XIcon } from "@phosphor-icons/react/dist/csr/X";
-import { Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useId, useState } from "react";
 
-import { components } from "@/lib/component-registry";
+import { DocsBrand, DocsNavigation } from "@/components/layout/docs-navigation";
+
+// Desktop navigation does not need the mobile dialog's focus and scroll handling.
+const DocsMobileMenu = lazy(() => import("./docs-mobile-menu"));
 
 export const DocsSidebar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const menuButton = useRef<HTMLButtonElement>(null);
+  const menuId = useId();
 
   useEffect(() => {
-    if (!menuOpen) {
-      return;
-    }
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
+    // Match Tailwind's lg breakpoint so resizing also releases the modal.
+    const desktop = window.matchMedia("(min-width: 64rem)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) {
         setMenuOpen(false);
-        menuButton.current?.focus();
       }
     };
 
-    window.addEventListener("keydown", handleEscape);
-    return () => window.removeEventListener("keydown", handleEscape);
-  }, [menuOpen]);
-
-  const closeMenu = () => {
-    setMenuOpen(false);
-    if (menuOpen) {
-      menuButton.current?.focus({ preventScroll: true });
-    }
-  };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
 
   return (
-    <aside className="border-b border-zinc-100 bg-zinc-50/70 px-5 py-4 lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:border-r lg:border-b-0 lg:py-7">
+    <aside className="sticky top-0 z-30 border-b border-zinc-100 bg-zinc-50 px-5 py-4 lg:flex lg:h-dvh lg:flex-col lg:border-r lg:border-b-0 lg:bg-zinc-50/70 lg:py-7">
       <div className="flex items-center justify-between">
-        <Link
-          className="inline-flex items-center gap-2.5 rounded-lg text-lg font-medium tracking-tight focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
-          to="/"
-          onClick={closeMenu}
-        >
-          <img
-            alt=""
-            className="size-7"
-            height={28}
-            src={`${import.meta.env.BASE_URL}favicon.svg`}
-            width={28}
-            aria-hidden="true"
-          />
-          gestik
-        </Link>
+        <DocsBrand />
         <button
           className="icon-button relative isolate grid size-11 shrink-0 place-items-center rounded-lg text-zinc-500 hover:text-zinc-700 focus-visible:outline-2 focus-visible:outline-brand lg:hidden"
-          ref={menuButton}
           type="button"
-          aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+          aria-label="Open navigation"
           aria-expanded={menuOpen}
-          aria-controls="docs-navigation"
-          onClick={() => setMenuOpen((open) => !open)}
+          aria-controls={menuId}
+          aria-haspopup="dialog"
+          onClick={(event) => {
+            // The dialog restores this focus after dismissal, including on touch.
+            event.currentTarget.focus({ preventScroll: true });
+            setMenuOpen(true);
+          }}
         >
           <span className="icon-button__icons size-5.5" aria-hidden="true">
-            <ListIcon
-              className="icon-button__default"
-              size={22}
-              focusable="false"
-            />
-            <XIcon
-              className="icon-button__alternate"
-              size={22}
-              focusable="false"
-            />
+            <ListIcon size={22} focusable="false" />
           </span>
         </button>
       </div>
 
-      <nav
-        className="mt-4 hidden flex-col gap-1 data-[open=true]:flex lg:mt-10 lg:flex"
-        id="docs-navigation"
-        aria-label="Documentation"
-        data-open={menuOpen}
-      >
-        <Link
-          className="rounded-lg px-3 py-2 text-zinc-500 hover:bg-zinc-100/70 hover:text-zinc-700 focus-visible:outline-2 focus-visible:outline-brand aria-[current=page]:bg-brand-soft aria-[current=page]:text-brand"
-          to="/"
-          activeOptions={{ exact: true }}
-          onClick={closeMenu}
-        >
-          Overview
-        </Link>
+      <DocsNavigation className="mt-10 hidden flex-col gap-1 overflow-y-auto lg:flex" />
 
-        {components.map(({ name, path }) => (
-          <Link
-            className="rounded-lg px-3 py-2 text-zinc-500 hover:bg-zinc-100/70 hover:text-zinc-700 focus-visible:outline-2 focus-visible:outline-brand aria-[current=page]:bg-brand-soft aria-[current=page]:text-brand"
-            key={path}
-            to={path}
-            activeOptions={{ exact: true }}
-            onClick={closeMenu}
-          >
-            {name}
-          </Link>
-        ))}
-      </nav>
+      {menuOpen && (
+        <Suspense fallback={null}>
+          <DocsMobileMenu id={menuId} onClose={() => setMenuOpen(false)} />
+        </Suspense>
+      )}
     </aside>
   );
 };
