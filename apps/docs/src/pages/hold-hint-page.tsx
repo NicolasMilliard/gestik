@@ -16,15 +16,7 @@ const propRows = [
   [
     "icon",
     "Built-in pointing hand",
-    "Static decorative artwork in a 32px box.",
-  ],
-  [
-    "iconMask",
-    "Built-in hand silhouette",
-    <>
-      Filled <code>path</code> and <code>viewBox</code> for the cutout. Custom
-      icons have no cutout unless supplied.
-    </>,
+    "Static inline SVG artwork with an automatic cutout in a 32px box.",
   ],
   [
     "hotspot",
@@ -131,6 +123,22 @@ import { HandPointingIcon } from "@phosphor-icons/react";
           />
         )}
       </HintExample>
+    </section>
+
+    <section className="mt-16" aria-labelledby="hold-hint-artwork-title">
+      <h2
+        className="text-xl font-medium tracking-tight"
+        id="hold-hint-artwork-title"
+      >
+        Custom artwork
+      </h2>
+      <p className="mt-3 max-w-2xl leading-6 text-zinc-600">
+        Use a static inline SVG with a viewBox. Cutouts fill enclosed holes and
+        stay opaque; artwork changes restart playback. Custom hints reserve
+        space until browser generation finishes. Generation requires canvas and
+        CSP permission for data: images; unsupported artwork renders without
+        cutouts. Built-in hands appear immediately, even without JavaScript.
+      </p>
     </section>
 
     <section className="mt-16" aria-labelledby="hold-hint-accessibility-title">

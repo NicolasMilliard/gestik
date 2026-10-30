@@ -67,13 +67,14 @@ export const DragHint = ({
 }: DragHintProps) => {
   const maskId = useId();
   const scale = size / SCENE_WIDTH;
+  const stageRef = useRef<HTMLSpanElement>(null);
+  const isDefaultIcons = icons === DEFAULT_ICONS;
   const artworkRefs = {
     grabbing: useRef<SVGGElement>(null),
     idle: useRef<SVGGElement>(null),
   };
-  const generated = useSvgSilhouettes(artworkRefs, icons !== DEFAULT_ICONS);
-  const masks =
-    icons === DEFAULT_ICONS ? DEFAULT_ICON_MASKS : generated.silhouettes;
+  const generated = useSvgSilhouettes(artworkRefs, !isDefaultIcons, stageRef);
+  const masks = isDefaultIcons ? DEFAULT_ICON_MASKS : generated.silhouettes;
   const hasMasks = masks.idle || masks.grabbing;
 
   const silhouettes = (["idle", "grabbing"] as const).map((pose) => {
@@ -120,7 +121,8 @@ export const DragHint = ({
       style={hintStyle}
     >
       <span
-        key={`${direction}-${icons === DEFAULT_ICONS}`}
+        key={`${direction}-${isDefaultIcons}`}
+        ref={stageRef}
         data-ready={generated.ready}
         className="gestik-drag-hint__stage"
         style={{ transform: `scale(${scale})` }}
@@ -257,7 +259,7 @@ export const DragHint = ({
                       ref={artworkRefs[pose]}
                       className={`gestik-drag-hint__icon gestik-drag-hint__icon--${pose}`}
                     >
-                      {icons === DEFAULT_ICONS ? (
+                      {isDefaultIcons ? (
                         icons[pose]
                       ) : (
                         <foreignObject width={ICON_SIZE} height={ICON_SIZE}>

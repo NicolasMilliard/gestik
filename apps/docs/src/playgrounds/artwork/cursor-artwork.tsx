@@ -1,13 +1,13 @@
-import { CURSOR_SILHOUETTE } from "./cursor-geometry";
+import { CURSOR_PATH } from "./cursor-geometry";
 
 export const CursorArtwork = () => (
   <svg
     width="100%"
     height="100%"
-    viewBox={CURSOR_SILHOUETTE.viewBox}
+    viewBox="0 0 32 32"
     fill="currentColor"
     focusable="false"
   >
-    <path d={CURSOR_SILHOUETTE.path} />
+    <path d={CURSOR_PATH} />
   </svg>
 );

@@ -7,7 +7,6 @@ import { CursorArtwork } from "@/playgrounds/artwork/cursor-artwork";
 import {
   CURSOR_EXAMPLE,
   CURSOR_HOTSPOT,
-  CURSOR_SILHOUETTE,
 } from "@/playgrounds/artwork/cursor-geometry";
 
 import { formatIterationsProp, ITERATION_OPTIONS } from "./preview-options";
@@ -24,7 +23,7 @@ export const ResizeHintDemo = () => {
   const [previewKey, setPreviewKey] = useState(0);
 
   const artworkCode = customIcon
-    ? `  icon={<CursorArtwork />}\n  iconMask={cursorMask}\n  hotspot={{ x: 4 / 32, y: 2 / 32 }}\n  style={{ color: "#0e7490" }}\n`
+    ? `  icon={<CursorArtwork />}\n  hotspot={{ x: 4 / 32, y: 2 / 32 }}\n  style={{ color: "#0e7490" }}\n`
     : "";
 
   const example = `import { ResizeHint } from "@gestik/react";${customIcon ? `\n\n${CURSOR_EXAMPLE}` : ""}
@@ -48,7 +47,6 @@ ${artworkCode}  size={${size}}
           <ResizeHint
             key={previewKey}
             icon={customIcon ? <CursorArtwork /> : undefined}
-            iconMask={customIcon ? CURSOR_SILHOUETTE : undefined}
             hotspot={customIcon ? CURSOR_HOTSPOT : undefined}
             style={customIcon ? { color: "#0e7490" } : undefined}
             size={size}

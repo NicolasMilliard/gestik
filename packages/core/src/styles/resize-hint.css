@@ -19,20 +19,17 @@
   display: block;
   width: 112px;
   height: 88px;
+  overflow: visible;
   transform-origin: 0 0;
 }
 
-.gestik-resize-hint__icon-origin {
-  position: absolute;
-  top: 34.5px;
-  left: 54.5px;
+/* Keep custom artwork and new cutouts on the same first frame. */
+.gestik-resize-hint__stage[data-ready="false"] {
+  opacity: 0;
 }
 
-.gestik-resize-hint__icon-origin .gestik-resize-hint__travel,
-.gestik-resize-hint__icon-origin .gestik-resize-hint__press {
-  display: block;
-  width: 0;
-  height: 0;
+.gestik-resize-hint__stage[data-ready="false"] * {
+  animation: none;
 }
 
 .gestik-resize-hint__icon {

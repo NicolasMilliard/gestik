@@ -30,6 +30,12 @@ describe("SVG silhouette geometry", () => {
     expect(raster(["...", "...", "..."])).toBe("");
   });
 
+  it("turns faint raster paint into opaque silhouette geometry", () => {
+    const pixels = new Uint8ClampedArray(3 * 3 * 4);
+    pixels[4 * 4 + 3] = 1;
+    expect(filledSilhouettePath(pixels, 3, 3)).toBe("M1 1h1v1H1Z");
+  });
+
   it("resolves styled shapes and transforms without modifying the visible SVG", () => {
     const { container } = render(
       <div>
@@ -59,15 +65,13 @@ describe("SVG silhouette geometry", () => {
       'preserveAspectRatio="xMinYMin meet"',
       'transform="translate(4 8)"',
       "stroke-width: 4",
-      "fill: black",
       "opacity: 1",
-      "fill: none",
     ]) {
       expect(snapshot).toContain(fragment);
     }
   });
 
-  it("keeps opaque RGB colors ending in zero and ignores fully transparent paint", () => {
+  it("preserves opaque and transparent paints for browser rasterization", () => {
     const { container } = render(
       <div>
         <svg viewBox="0 0 24 24">
@@ -92,11 +96,11 @@ describe("SVG silhouette geometry", () => {
     expect(
       (snapshot.querySelector('[data-testid="red-stroke"]') as SVGElement)
         ?.style.stroke
-    ).toBe("black");
+    ).toBe("rgb(255, 0, 0)");
     expect(
       (snapshot.querySelector('[data-testid="transparent-fill"]') as SVGElement)
         ?.style.fill
-    ).toBe("none");
+    ).toBe("rgba(0, 0, 0, 0)");
   });
 
   it.each([
