@@ -1,4 +1,5 @@
 import { HoldHint } from "@gestik/react";
+import { HandPointingIcon } from "@phosphor-icons/react/dist/csr/HandPointing";
 
 import { HintStyleGuide } from "@/components/content/hint-style-guide";
 import {
@@ -9,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { HintExample } from "@/playgrounds/hint-example";
 import { HoldHintDemo } from "@/playgrounds/hold-hint-demo";
 
 const propRows = [
@@ -124,22 +126,38 @@ export const HoldHintPage = () => (
         Switching between built-in and custom artwork, or enabling or disabling
         its mask, restarts the cycle to keep all layers synchronized.
       </p>
-      <div className="mt-6 flex items-center gap-5 rounded-xl border border-zinc-200 p-5">
-        <HoldHint className="custom-hold-hint" size={112} playing={false} />
-        <span className="text-zinc-600">
-          The resting hand, paused before contact.
-        </span>
-      </div>
-      <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 font-medium text-zinc-500">
-          CSS
-        </div>
-        <pre className="overflow-x-auto p-5 leading-6">
-          <code>{`.custom-hold-hint {
-  --gestik-hold-hint-color: #0e7490;
-}`}</code>
-        </pre>
-      </div>
+      <p className="mt-4 max-w-2xl leading-7 text-zinc-600">
+        A filled Phosphor hand gives the hold a solid silhouette. Color the ring
+        independently to make the time spent holding easier to follow.
+      </p>
+      <HintExample
+        description="Press and hold to reveal more options. An indigo hand stays in place while the rose ring fills."
+        code={`import { HoldHint } from "@gestik/react";
+import { HandPointingIcon } from "@phosphor-icons/react";
+
+<HoldHint
+  className="custom-hold-hint"
+  size={168}
+  icon={<HandPointingIcon weight="fill" />}
+  hotspot={{ x: 116 / 256, y: 16 / 256 }}
+/>`}
+        css={`
+          .custom-hold-hint {
+            --gestik-hold-hint-color: #4338ca;
+            --gestik-hold-hint-ring-color: #e11d48;
+          }
+        `}
+      >
+        {(playing) => (
+          <HoldHint
+            className="custom-hold-hint"
+            size={168}
+            icon={<HandPointingIcon weight="fill" />}
+            hotspot={{ x: 116 / 256, y: 16 / 256 }}
+            playing={playing}
+          />
+        )}
+      </HintExample>
     </section>
 
     <section className="mt-16" aria-labelledby="hold-hint-accessibility-title">

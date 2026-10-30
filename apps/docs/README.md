@@ -28,9 +28,9 @@ Keep route content in `src/pages/`, reusable components grouped by purpose in `s
 
 Routes preload on hover, focus, and touch. Keep the current page visible until its destination is ready, then switch without a page animation. Preserve active links, scroll restoration, and main-content focus. A failed import offers a reload action.
 
-Ordinary text, controls, and snippets inherit the 1rem body size. A shared rule in `src/index.css` gives inline `<code>` its rounded background, excluding code inside `<pre>`; keep token spacing outside the code element.
+Ordinary text, controls, and snippets inherit the 1rem body size. A shared rule in `src/index.css` gives inline `<code>` its rounded background, excluding code inside `<pre>`; keep token spacing outside the code element. Use `CodeBlock` for syntax-highlighted TSX and CSS; it preserves source line breaks and removes surrounding template indentation. The docs-only `prism-react-renderer` dependency handles tokenization without adding a highlighter to the library.
 
-Use `PreviewSlider` for playground values: Base UI connects its native label and separate output to the input. Center-aligned thumbs render without waiting for browser measurements, including in prerendered HTML. Keep `Slider.Control` positioned so the thumb stays on its track.
+Use `PreviewSlider` for playground values: Base UI connects its native label and separate output to the input. Center-aligned thumbs render without waiting for browser measurements, including in prerendered HTML. Keep `Slider.Control` positioned so the thumb stays on its track. Use `HintExample` for custom artwork examples with pause and replay controls, and include the React and CSS needed to reproduce the preview.
 
 The [build script](scripts/build-docs.ts) runs client and server builds, then prerenders real HTML for each route and `404.html`. Node runs prerendering; React hydrates the resulting documents in the browser. Keep JSX transforms and package conditions in production mode, including when building from tests, to avoid hydration failures.
 

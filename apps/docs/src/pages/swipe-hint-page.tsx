@@ -1,4 +1,5 @@
 import { SwipeHint } from "@gestik/react";
+import { HandPointingIcon } from "@phosphor-icons/react/dist/csr/HandPointing";
 
 import { HintStyleGuide } from "@/components/content/hint-style-guide";
 import {
@@ -9,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { HintExample } from "@/playgrounds/hint-example";
 import { SwipeHintDemo } from "@/playgrounds/swipe-hint-demo";
 
 const propRows = [
@@ -111,24 +113,41 @@ export const SwipeHintPage = () => (
         begins, then returns to full size as travel ends.
       </p>
 
-      <div className="mt-6 flex items-center gap-5 rounded-xl border border-zinc-200 p-5">
-        <SwipeHint className="custom-swipe-hint" size={84} playing={false} />
-        <span className="text-zinc-600">
-          Custom colors, paused at the starting pose.
-        </span>
-      </div>
+      <p className="mt-4 max-w-2xl leading-7 text-zinc-600">
+        A bold Phosphor hand changes the visual weight while the separate trail
+        color keeps the movement clear. Its fingertip hotspot follows the
+        artwork&apos;s 256 by 256 viewBox.
+      </p>
+      <HintExample
+        description="Swipe left to see the next card. The rose trail follows a bold violet fingertip."
+        code={`import { SwipeHint } from "@gestik/react";
+import { HandPointingIcon } from "@phosphor-icons/react";
 
-      <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 font-medium text-zinc-500">
-          CSS
-        </div>
-        <pre className="overflow-x-auto p-5 leading-6">
-          <code>{`.custom-swipe-hint {
-  --gestik-swipe-hint-icon-color: #0e7490;
-  --gestik-swipe-hint-surface: #ecfeff;
-}`}</code>
-        </pre>
-      </div>
+<SwipeHint
+  className="custom-swipe-hint"
+  size={168}
+  direction="left"
+  icon={<HandPointingIcon weight="bold" />}
+  hotspot={{ x: 116 / 256, y: 12 / 256 }}
+/>`}
+        css={`
+          .custom-swipe-hint {
+            --gestik-swipe-hint-icon-color: #7c3aed;
+            --gestik-swipe-hint-trail-color: #e11d48;
+          }
+        `}
+      >
+        {(playing) => (
+          <SwipeHint
+            className="custom-swipe-hint"
+            size={168}
+            direction="left"
+            icon={<HandPointingIcon weight="bold" />}
+            hotspot={{ x: 116 / 256, y: 12 / 256 }}
+            playing={playing}
+          />
+        )}
+      </HintExample>
     </section>
 
     <section className="mt-16" aria-labelledby="swipe-hint-accessibility-title">

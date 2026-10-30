@@ -1,4 +1,5 @@
 import { ScrollHint } from "@gestik/react";
+import { MouseIcon } from "@phosphor-icons/react/dist/csr/Mouse";
 
 import { HintStyleGuide } from "@/components/content/hint-style-guide";
 import {
@@ -9,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { HintExample } from "@/playgrounds/hint-example";
 import { ScrollHintDemo } from "@/playgrounds/scroll-hint-demo";
 
 const propRows = [
@@ -95,20 +97,36 @@ export const ScrollHintPage = () => (
         that fills the same 32px box. No hotspot or silhouette is needed because
         the cue has no contact point or background cutout.
       </p>
-      <div className="mt-6 flex items-center gap-5 rounded-xl border border-zinc-200 p-5">
-        <ScrollHint className="custom-scroll-hint" size={84} playing={false} />
-        <span className="text-zinc-600">Custom color, paused at the top.</span>
-      </div>
-      <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 font-medium text-zinc-500">
-          CSS
-        </div>
-        <pre className="overflow-x-auto p-5 leading-6">
-          <code>{`.custom-scroll-hint {
-  --gestik-scroll-hint-color: #0e7490;
-}`}</code>
-        </pre>
-      </div>
+      <p className="mt-4 max-w-2xl leading-7 text-zinc-600">
+        Phosphor&apos;s duotone mouse cue suits a desktop interface. The custom
+        artwork inherits the hint&apos;s color and follows the same vertical
+        loop.
+      </p>
+      <HintExample
+        description="Scroll to explore more. A sky-blue mouse cue moves vertically with the gesture."
+        code={`import { ScrollHint } from "@gestik/react";
+import { MouseIcon } from "@phosphor-icons/react";
+
+<ScrollHint
+  className="custom-scroll-hint"
+  size={144}
+  icon={<MouseIcon weight="duotone" />}
+/>`}
+        css={`
+          .custom-scroll-hint {
+            --gestik-scroll-hint-color: #0369a1;
+          }
+        `}
+      >
+        {(playing) => (
+          <ScrollHint
+            className="custom-scroll-hint"
+            size={144}
+            icon={<MouseIcon weight="duotone" />}
+            playing={playing}
+          />
+        )}
+      </HintExample>
     </section>
 
     <section

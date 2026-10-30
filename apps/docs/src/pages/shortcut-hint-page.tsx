@@ -1,4 +1,6 @@
 import { ShortcutHint } from "@gestik/react";
+import { CommandIcon } from "@phosphor-icons/react/dist/csr/Command";
+import { OptionIcon } from "@phosphor-icons/react/dist/csr/Option";
 
 import { HintStyleGuide } from "@/components/content/hint-style-guide";
 import {
@@ -9,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { HintExample } from "@/playgrounds/hint-example";
 import { ShortcutHintDemo } from "@/playgrounds/shortcut-hint-demo";
 
 const propRows = [
@@ -113,33 +116,43 @@ export const ShortcutHintPage = () => (
         width while retaining the same keycap height. Setting <code>size</code>{" "}
         scales the whole row to that width.
       </p>
-      <div className="mt-6 flex flex-wrap items-center gap-5 rounded-xl border border-zinc-200 p-5">
-        <ShortcutHint
-          keys={["Ctrl", "Shift", "K"]}
-          className="custom-shortcut-hint"
-          playing={false}
-        />
-        <span className="text-zinc-600">
-          A three-key combination, paused at rest.
-        </span>
-      </div>
-      <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 font-medium text-zinc-500">
-          React + CSS
-        </div>
-        <pre className="overflow-x-auto p-5 leading-6">
-          <code>{`<ShortcutHint
-  keys={["Ctrl", "Shift", "K"]}
-  className="custom-shortcut-hint"
-  playing={false}
-/>
+      <p className="mt-4 max-w-2xl leading-7 text-zinc-600">
+        Mix custom Phosphor symbols with text legends in the same combination.
+        Each element fills the keycap&apos;s icon box; the key faces use a
+        separate surface color.
+      </p>
+      <HintExample
+        description="Press Command + Option + K to open the command menu. Custom symbols share the mint keycaps with a text legend."
+        code={`import { ShortcutHint } from "@gestik/react";
+import { CommandIcon, OptionIcon } from "@phosphor-icons/react";
 
-.custom-shortcut-hint {
-  --gestik-shortcut-hint-color: #0e7490;
-  --gestik-shortcut-hint-surface: #ecfeff;
-}`}</code>
-        </pre>
-      </div>
+<ShortcutHint
+  className="custom-shortcut-hint"
+  keys={[
+    <CommandIcon key="command" weight="bold" />,
+    <OptionIcon key="option" weight="bold" />,
+    "K",
+  ]}
+/>`}
+        css={`
+          .custom-shortcut-hint {
+            --gestik-shortcut-hint-color: #047857;
+            --gestik-shortcut-hint-surface: #ecfdf5;
+          }
+        `}
+      >
+        {(playing) => (
+          <ShortcutHint
+            className="custom-shortcut-hint"
+            keys={[
+              <CommandIcon key="command" weight="bold" />,
+              <OptionIcon key="option" weight="bold" />,
+              "K",
+            ]}
+            playing={playing}
+          />
+        )}
+      </HintExample>
     </section>
 
     <section

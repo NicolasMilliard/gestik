@@ -9,6 +9,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { CursorArtwork } from "@/playgrounds/artwork/cursor-artwork";
+import {
+  CURSOR_EXAMPLE,
+  CURSOR_HOTSPOT,
+  CURSOR_SILHOUETTE,
+} from "@/playgrounds/artwork/cursor-geometry";
+import { HintExample } from "@/playgrounds/hint-example";
 import { ResizeHintDemo } from "@/playgrounds/resize-hint-demo";
 
 const propRows = [
@@ -123,22 +130,42 @@ export const ResizeHintPage = () => (
         Switching between built-in and custom artwork, or enabling or disabling
         its mask, restarts the cycle to keep all layers synchronized.
       </p>
-      <div className="mt-6 flex items-center gap-5 rounded-xl border border-zinc-200 p-5">
-        <ResizeHint className="custom-resize-hint" playing={false} />
-        <span className="text-zinc-600">
-          The resting artwork, paused before the pull.
-        </span>
-      </div>
-      <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 font-medium text-zinc-500">
-          CSS
-        </div>
-        <pre className="overflow-x-auto p-5 leading-6">
-          <code>{`.custom-resize-hint {
-  --gestik-resize-hint-color: #0e7490;
-}`}</code>
-        </pre>
-      </div>
+      <p className="mt-4 max-w-2xl leading-7 text-zinc-600">
+        Use your own SVG for a pointer-based interface. Here, the cursor&apos;s
+        filled silhouette also masks the frame, and its tip stays attached to
+        the corner throughout the pull.
+      </p>
+      <HintExample
+        description="Drag the corner outward to resize. The violet cursor pulls the teal frame from its lower-right corner."
+        code={`import { ResizeHint } from "@gestik/react";
+
+${CURSOR_EXAMPLE}
+
+<ResizeHint
+  className="custom-resize-hint"
+  size={168}
+  icon={<CursorArtwork />}
+  iconMask={cursorMask}
+  hotspot={{ x: 4 / 32, y: 2 / 32 }}
+/>`}
+        css={`
+          .custom-resize-hint {
+            --gestik-resize-hint-color: #7c3aed;
+            --gestik-resize-hint-frame-color: #0f766e;
+          }
+        `}
+      >
+        {(playing) => (
+          <ResizeHint
+            className="custom-resize-hint"
+            size={168}
+            icon={<CursorArtwork />}
+            iconMask={CURSOR_SILHOUETTE}
+            hotspot={CURSOR_HOTSPOT}
+            playing={playing}
+          />
+        )}
+      </HintExample>
     </section>
 
     <section

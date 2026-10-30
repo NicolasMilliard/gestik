@@ -1,6 +1,7 @@
 import { ScrollHint } from "@gestik/react";
 import { useId, useState } from "react";
 
+import { CodeBlock } from "@/components/content/code-block";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -159,14 +160,7 @@ ${artworkCode}  size={${size}}
         </div>
       </div>
 
-      <div className="mt-3 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
-        <div className="border-b border-zinc-200 px-5 py-3 font-medium text-zinc-500">
-          React
-        </div>
-        <pre className="overflow-x-auto p-5 leading-6">
-          <code>{example}</code>
-        </pre>
-      </div>
+      <CodeBlock code={example} />
     </section>
   );
 };

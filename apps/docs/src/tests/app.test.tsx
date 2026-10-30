@@ -209,6 +209,22 @@ describe("Docs navigation", () => {
     expect(document.title).toBe(`${name} — Gestik`);
   });
 
+  it("cuts the background away behind both custom DragHint poses", async () => {
+    await renderAt("/drag-hint");
+    await screen.findByRole("heading", { level: 1, name: "DragHint" });
+    const example = screen.getByRole("region", { name: "Styling" });
+
+    expect(example.querySelectorAll("mask svg")).toHaveLength(2);
+    expect(
+      example
+        .querySelector(".gestik-drag-hint__masked-scene")
+        ?.getAttribute("mask")
+    ).toMatch(/^url\(#.+\)$/u);
+    expect(
+      within(example).getByLabelText("React code example").textContent
+    ).toContain("iconMasks={handMasks}");
+  });
+
   it("navigates from gallery and sidebar links and focuses the new content", async () => {
     await renderAt("/");
     const gallery = screen.getByRole("region", { name: "Components" });
@@ -216,7 +232,8 @@ describe("Docs navigation", () => {
 
     await expect(
       screen.findByRole("heading", {
-        name: "Filled, outline, and duotone icons",
+        level: 1,
+        name: "DragHint",
       })
     ).resolves.toBeDefined();
     expect(window.location.pathname).toBe("/gestik/drag-hint/");
