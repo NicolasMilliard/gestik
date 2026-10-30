@@ -1,5 +1,6 @@
 import { SwipeHint } from "@gestik/react";
 
+import { HintStyleGuide } from "@/components/content/hint-style-guide";
 import {
   Table,
   TableBody,
@@ -8,9 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { HintStyleGuide } from "../components/hint-style-guide";
-import { SwipeHintDemo } from "../components/swipe-hint-demo";
+import { SwipeHintDemo } from "@/playgrounds/swipe-hint-demo";
 
 const propRows = [
   ["direction", '"right"', "Finger travel: left or right."],

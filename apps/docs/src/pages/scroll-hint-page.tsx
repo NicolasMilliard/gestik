@@ -1,5 +1,6 @@
 import { ScrollHint } from "@gestik/react";
 
+import { HintStyleGuide } from "@/components/content/hint-style-guide";
 import {
   Table,
   TableBody,
@@ -8,9 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { HintStyleGuide } from "../components/hint-style-guide";
-import { ScrollHintDemo } from "../components/scroll-hint-demo";
+import { ScrollHintDemo } from "@/playgrounds/scroll-hint-demo";
 
 const propRows = [
   [

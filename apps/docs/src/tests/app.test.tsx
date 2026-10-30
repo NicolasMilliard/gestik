@@ -18,9 +18,9 @@ import {
 } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import App from "./app";
-import { HomePage } from "./pages/home-page";
-import { createDocsRouter } from "./router";
+import App from "@/app";
+import { HomePage } from "@/pages/home-page";
+import { createDocsRouter } from "@/router";
 
 let activeRouter: ReturnType<typeof createDocsRouter> | undefined;
 

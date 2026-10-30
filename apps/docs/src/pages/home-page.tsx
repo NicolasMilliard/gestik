@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 
-import { InstallCommand } from "../components/install-command";
-import { OverviewSection } from "../components/overview-section";
-import { components } from "../lib/components";
+import { InstallCommand } from "@/components/home/install-command";
+import { OverviewSection } from "@/components/home/overview-section";
+import { components } from "@/lib/component-registry";
 
 export const HomePage = () => (
   <>

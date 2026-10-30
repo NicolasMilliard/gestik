@@ -10,7 +10,7 @@ import {
 } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { InstallCommand } from "./install-command";
+import { InstallCommand } from "@/components/home/install-command";
 
 describe("Install command copying", () => {
   const writeText = vi.fn<(text: string) => Promise<void>>();

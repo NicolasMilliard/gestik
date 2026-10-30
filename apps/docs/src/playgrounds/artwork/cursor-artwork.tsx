@@ -1,4 +1,4 @@
-import { CURSOR_SILHOUETTE } from "../lib/cursor-artwork";
+import { CURSOR_SILHOUETTE } from "./cursor-geometry";
 
 export const CursorArtwork = () => (
   <svg

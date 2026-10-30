@@ -1,7 +1,7 @@
 import { Outlet, Scripts, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 
-import { DocsSidebar } from "./components/docs-sidebar";
+import { DocsSidebar } from "@/components/layout/docs-sidebar";
 
 const App = () => {
   const pathname = useRouterState({

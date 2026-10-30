@@ -5,7 +5,7 @@ import path from "node:path";
 import { JSDOM } from "jsdom";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
-import { buildDocs } from "../scripts/build-docs";
+import { buildDocs } from "../../../scripts/build-docs";
 
 const gestures = ["drag", "hold", "resize", "scroll", "shortcut", "swipe"];
 
@@ -42,7 +42,7 @@ describe("Docs production bundles", () => {
 
     expect(
       initialModules.filter((id) =>
-        /\/src\/(?:pages\/[\w-]+-hint-page|components\/[\w-]+-hint-demo|components\/ui\/select)\.tsx$/u.test(
+        /\/src\/(?:pages\/[\w-]+-hint-page|playgrounds\/.+|components\/(?:ui\/select|content\/.+))\.tsx?$/u.test(
           id
         )
       )

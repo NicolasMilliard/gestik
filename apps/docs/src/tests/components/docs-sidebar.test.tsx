@@ -13,8 +13,8 @@ import {
 } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { createDocsRouter } from "../router";
-import { DocsSidebar } from "./docs-sidebar";
+import { DocsSidebar } from "@/components/layout/docs-sidebar";
+import { createDocsRouter } from "@/router";
 
 describe(DocsSidebar, () => {
   afterEach(() => {

@@ -22,7 +22,9 @@ Open the printed URL under `/gestik/`.
 
 ## Maintain pages
 
-Add components to [src/lib/components.ts](src/lib/components.ts) to register their routes, sidebar links, sorted gallery entries, and prerendered pages. Keep pages and playground controls behind lazy imports; the gallery's live hints load immediately and intentionally loop.
+The [component registry](src/lib/component-registry.ts) is the shared catalog for routes, sidebar links, homepage previews, and prerendered URLs. Each entry provides the name, path, `Preview`, and `Page`; add a hint there once to register it in all four places. `Page` loads the full documentation page lazily, including its controls; `Preview` supplies the small live hint in the gallery. Gallery previews load immediately and intentionally loop.
+
+Keep route content in `src/pages/`, reusable components grouped by purpose in `src/components/` (`content`, `home`, `layout`, and `ui`), and interactive demos in `src/playgrounds/`. Demo artwork and its geometry live together in `src/playgrounds/artwork/`. Tests live under `src/tests/`, grouped into components, playgrounds, and bundles; app navigation tests stay directly in that folder. App entry files remain at the source root.
 
 Routes preload on hover, focus, and touch. Keep the current page visible until its destination is ready, then switch without a page animation. Preserve active links, scroll restoration, and main-content focus. A failed import offers a reload action.
 
@@ -30,7 +32,7 @@ The [build script](scripts/build-docs.ts) runs client and server builds, then pr
 
 ## Validate
 
-Run `bun run verify` before submitting. [Production tests](src/docs-bundle.test.ts) check generated HTML, deferred imports, and startup/chunk budgets; [consumer tests](src/library-bundle.test.ts) measure the React library separately. Read current sizes from build output rather than maintaining a size snapshot here.
+Run `bun run verify` before submitting. [Production tests](src/tests/bundles/docs-bundle.test.ts) check generated HTML, deferred imports, and startup/chunk budgets; [consumer tests](src/tests/bundles/library-bundle.test.ts) measure the React library separately. Read current sizes from build output rather than maintaining a size snapshot here.
 
 For navigation or build changes, also open a direct component URL, refresh it, and exercise its controls in the production preview. HTML checks alone do not establish working hydration.
 

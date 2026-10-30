@@ -1,5 +1,6 @@
 import { ShortcutHint } from "@gestik/react";
 
+import { HintStyleGuide } from "@/components/content/hint-style-guide";
 import {
   Table,
   TableBody,
@@ -8,9 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { HintStyleGuide } from "../components/hint-style-guide";
-import { ShortcutHintDemo } from "../components/shortcut-hint-demo";
+import { ShortcutHintDemo } from "@/playgrounds/shortcut-hint-demo";
 
 const propRows = [
   [

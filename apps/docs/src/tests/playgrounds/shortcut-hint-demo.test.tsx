@@ -3,7 +3,7 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { ShortcutHintDemo } from "./shortcut-hint-demo";
+import { ShortcutHintDemo } from "@/playgrounds/shortcut-hint-demo";
 
 describe(ShortcutHintDemo, () => {
   afterEach(cleanup);

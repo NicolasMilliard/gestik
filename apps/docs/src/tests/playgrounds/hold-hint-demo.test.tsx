@@ -3,7 +3,7 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { HoldHintDemo } from "./hold-hint-demo";
+import { HoldHintDemo } from "@/playgrounds/hold-hint-demo";
 
 describe(HoldHintDemo, () => {
   afterEach(cleanup);

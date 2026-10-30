@@ -5,11 +5,12 @@ import {
 } from "@tanstack/react-router";
 import type { RouterHistory } from "@tanstack/react-router";
 
+import { DocsPageError } from "@/components/layout/docs-page-error";
+import { components } from "@/lib/component-registry";
+import { HomePage } from "@/pages/home-page";
+import { NotFoundPage } from "@/pages/not-found-page";
+
 import App from "./app";
-import { DocsPageError } from "./components/docs-page-error";
-import { components } from "./lib/components";
-import { HomePage } from "./pages/home-page";
-import { NotFoundPage } from "./pages/not-found-page";
 
 const rootRoute = createRootRoute({
   component: App,

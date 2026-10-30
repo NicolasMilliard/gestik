@@ -9,9 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-import { CURSOR_EXAMPLE } from "../lib/cursor-artwork";
-import { CursorArtwork } from "./cursor-artwork";
+import { CursorArtwork } from "@/playgrounds/artwork/cursor-artwork";
+import { CURSOR_EXAMPLE } from "@/playgrounds/artwork/cursor-geometry";
 
 type Iterations = 1 | 2 | "infinite";
 

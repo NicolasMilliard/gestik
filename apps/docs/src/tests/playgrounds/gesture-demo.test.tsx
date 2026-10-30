@@ -3,11 +3,11 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { DragHintDemo } from "./drag-hint-demo";
-import { HoldHintDemo } from "./hold-hint-demo";
-import { ResizeHintDemo } from "./resize-hint-demo";
-import { ScrollHintDemo } from "./scroll-hint-demo";
-import { SwipeHintDemo } from "./swipe-hint-demo";
+import { DragHintDemo } from "@/playgrounds/drag-hint-demo";
+import { HoldHintDemo } from "@/playgrounds/hold-hint-demo";
+import { ResizeHintDemo } from "@/playgrounds/resize-hint-demo";
+import { ScrollHintDemo } from "@/playgrounds/scroll-hint-demo";
+import { SwipeHintDemo } from "@/playgrounds/swipe-hint-demo";
 
 describe("Gesture preview controls", () => {
   afterEach(cleanup);

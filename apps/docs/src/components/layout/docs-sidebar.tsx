@@ -3,7 +3,7 @@ import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
-import { components } from "../lib/components";
+import { components } from "@/lib/component-registry";
 
 export const DocsSidebar = () => {
   const [menuOpen, setMenuOpen] = useState(false);

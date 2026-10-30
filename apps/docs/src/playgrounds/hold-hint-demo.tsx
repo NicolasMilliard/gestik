@@ -1,4 +1,4 @@
-import { ResizeHint } from "@gestik/react";
+import { HoldHint } from "@gestik/react";
 import { useId, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -9,13 +9,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
+import { CursorArtwork } from "@/playgrounds/artwork/cursor-artwork";
 import {
   CURSOR_EXAMPLE,
   CURSOR_HOTSPOT,
   CURSOR_SILHOUETTE,
-} from "../lib/cursor-artwork";
-import { CursorArtwork } from "./cursor-artwork";
+} from "@/playgrounds/artwork/cursor-geometry";
 
 type Iterations = 1 | 2 | "infinite";
 
@@ -27,11 +26,11 @@ const iterationItems = [
 
 const iterationValues = { "1": 1, "2": 2, infinite: "infinite" } as const;
 
-export const ResizeHintDemo = () => {
+export const HoldHintDemo = () => {
   const id = useId();
   const [customIcon, setCustomIcon] = useState(false);
   const [size, setSize] = useState(112);
-  const [duration, setDuration] = useState(2200);
+  const [duration, setDuration] = useState(3000);
   const [iterations, setIterations] = useState<Iterations>("infinite");
   const [playing, setPlaying] = useState(true);
   const [previewKey, setPreviewKey] = useState(0);
@@ -45,9 +44,9 @@ export const ResizeHintDemo = () => {
     ? `  icon={<CursorArtwork />}\n  iconMask={cursorMask}\n  hotspot={{ x: 4 / 32, y: 2 / 32 }}\n  style={{ color: "#0e7490" }}\n`
     : "";
 
-  const example = `import { ResizeHint } from "@gestik/react";${customIcon ? `\n\n${CURSOR_EXAMPLE}` : ""}
+  const example = `import { HoldHint } from "@gestik/react";${customIcon ? `\n\n${CURSOR_EXAMPLE}` : ""}
 
-<ResizeHint
+<HoldHint
 ${artworkCode}  size={${size}}
   duration={${duration}}
   ${iterationsCode}
@@ -60,10 +59,10 @@ ${artworkCode}  size={${size}}
   };
 
   return (
-    <section aria-label="Interactive ResizeHint preview">
+    <section aria-label="Interactive HoldHint preview">
       <div className="grid overflow-hidden rounded-2xl border border-zinc-200 lg:grid-cols-[minmax(0,1fr)_260px]">
         <div className="playground-preview flex min-h-72 flex-col items-center justify-center gap-6 px-6 py-10 sm:min-h-80">
-          <ResizeHint
+          <HoldHint
             key={previewKey}
             icon={customIcon ? <CursorArtwork /> : undefined}
             iconMask={customIcon ? CURSOR_SILHOUETTE : undefined}
@@ -75,7 +74,7 @@ ${artworkCode}  size={${size}}
             playing={playing}
           />
           <p className="text-center text-sm text-zinc-600">
-            Drag the corner outward to resize.
+            Press and hold to reveal more options.
           </p>
         </div>
 

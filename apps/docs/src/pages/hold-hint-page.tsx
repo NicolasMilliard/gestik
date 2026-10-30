@@ -1,5 +1,6 @@
 import { HoldHint } from "@gestik/react";
 
+import { HintStyleGuide } from "@/components/content/hint-style-guide";
 import {
   Table,
   TableBody,
@@ -8,9 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { HintStyleGuide } from "../components/hint-style-guide";
-import { HoldHintDemo } from "../components/hold-hint-demo";
+import { HoldHintDemo } from "@/playgrounds/hold-hint-demo";
 
 const propRows = [
   [

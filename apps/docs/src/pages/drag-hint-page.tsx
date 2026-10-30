@@ -1,5 +1,7 @@
 import { DragHint } from "@gestik/react";
 
+import { HintStyleGuide } from "@/components/content/hint-style-guide";
+import { DragHintMaskDemo } from "@/components/drag-hint-mask-demo";
 import {
   Table,
   TableBody,
@@ -8,10 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { DragHintDemo } from "../components/drag-hint-demo";
-import { DragHintMaskDemo } from "../components/drag-hint-mask-demo";
-import { HintStyleGuide } from "../components/hint-style-guide";
+import { DragHintDemo } from "@/playgrounds/drag-hint-demo";
 
 const propRows = [
   ["direction", '"right"', "Drag left or right."],

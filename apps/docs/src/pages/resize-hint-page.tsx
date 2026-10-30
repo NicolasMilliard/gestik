@@ -1,5 +1,6 @@
 import { ResizeHint } from "@gestik/react";
 
+import { HintStyleGuide } from "@/components/content/hint-style-guide";
 import {
   Table,
   TableBody,
@@ -8,9 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { HintStyleGuide } from "../components/hint-style-guide";
-import { ResizeHintDemo } from "../components/resize-hint-demo";
+import { ResizeHintDemo } from "@/playgrounds/resize-hint-demo";
 
 const propRows = [
   [
