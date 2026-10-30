@@ -31,6 +31,15 @@
   transform-origin: 0 0;
 }
 
+/* Keep SSR and hydration free of unmasked frames. All layers start together. */
+.gestik-drag-hint__stage[data-ready="false"] {
+  opacity: 0;
+}
+
+.gestik-drag-hint__stage[data-ready="false"] * {
+  animation: none;
+}
+
 .gestik-drag-hint__background {
   position: absolute;
   inset: 0;

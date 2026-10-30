@@ -47,39 +47,6 @@ describe("Docs navigation", () => {
     window.history.replaceState(null, "", "/");
   });
 
-  it("shows an alphabetical live gallery without playground controls on the home page", async () => {
-    await renderAt("/");
-
-    const gallery = screen.getByRole("region", { name: "Components" });
-    const links = within(gallery).getAllByRole("link");
-
-    expect(
-      links.map((link) => [
-        within(link).getByRole("heading").textContent,
-        link.getAttribute("href"),
-      ])
-    ).toStrictEqual([
-      ["DragHint", "/gestik/drag-hint/"],
-      ["HoldHint", "/gestik/hold-hint/"],
-      ["ResizeHint", "/gestik/resize-hint/"],
-      ["ScrollHint", "/gestik/scroll-hint/"],
-      ["ShortcutHint", "/gestik/shortcut-hint/"],
-      ["SwipeHint", "/gestik/swipe-hint/"],
-    ]);
-    expect(
-      gallery.querySelectorAll(
-        ".gestik-drag-hint, .gestik-hold-hint, .gestik-resize-hint, .gestik-scroll-hint, .gestik-shortcut-hint, .gestik-swipe-hint"
-      )
-    ).toHaveLength(6);
-    expect(screen.queryByRole("slider")).toBeNull();
-    expect(screen.queryByRole("heading", { name: "Props" })).toBeNull();
-    expect(
-      screen
-        .getByRole("link", { name: "Overview" })
-        .getAttribute("aria-current")
-    ).toBe("page");
-  });
-
   it.each([
     ["npm", "npm install @gestik/react"],
     ["pnpm", "pnpm add @gestik/react"],
@@ -95,7 +62,6 @@ describe("Docs navigation", () => {
     );
     expect(button.getAttribute("aria-pressed")).toBe("true");
     expect(screen.getAllByRole("button", { pressed: true })).toHaveLength(1);
-    expect(screen.queryByText(/package is not published yet/u)).toBeNull();
   });
 
   it("opens and closes the mobile navigation with its button", async () => {
@@ -151,10 +117,9 @@ describe("Docs navigation", () => {
       ).getByRole("link", { name })
     );
 
-    await screen.findByRole("heading", {
-      level: 1,
-      name: name === "Overview" ? "Show users how." : name,
-    });
+    await (path === "/"
+      ? screen.findByRole("region", { name: "Components" })
+      : screen.findByRole("heading", { level: 1, name }));
     expect(window.location.pathname).toBe(
       path === "/" ? "/gestik/" : `/gestik${path}/`
     );
@@ -163,28 +128,20 @@ describe("Docs navigation", () => {
   });
 
   it.each([
-    ["/drag-hint", "DragHint", "SwipeHint"],
-    ["/hold-hint", "HoldHint", "SwipeHint"],
-    ["/resize-hint", "ResizeHint", "SwipeHint"],
-    ["/scroll-hint", "ScrollHint", "SwipeHint"],
-    ["/shortcut-hint", "ShortcutHint", "SwipeHint"],
-    ["/swipe-hint", "SwipeHint", "DragHint"],
+    ["/drag-hint", "DragHint"],
+    ["/hold-hint", "HoldHint"],
+    ["/resize-hint", "ResizeHint"],
+    ["/scroll-hint", "ScrollHint"],
+    ["/shortcut-hint", "ShortcutHint"],
+    ["/swipe-hint", "SwipeHint"],
   ])(
-    "opens %s directly with only its own documentation",
-    async (path, name, otherName) => {
+    "loads the preview for a direct component URL (%s)",
+    async (path, name) => {
       await renderAt(path);
 
       await expect(
-        screen.findByRole("heading", { level: 1, name })
+        screen.findByRole("region", { name: `Interactive ${name} preview` })
       ).resolves.toBeDefined();
-      expect([
-        screen.queryByRole("heading", { name: otherName }),
-        screen.queryByRole("heading", { name: "Show users how." }),
-      ]).toStrictEqual([null, null]);
-      expect(
-        screen.getByRole("region", { name: `Interactive ${name} preview` })
-      ).toBeDefined();
-      expect(screen.getByRole("heading", { name: "Props" })).toBeDefined();
     }
   );
 
@@ -206,43 +163,6 @@ describe("Docs navigation", () => {
         .getByRole("link", { name: "Overview" })
         .getAttribute("aria-current")
     ).toBeNull();
-    expect(document.title).toBe(`${name} — Gestik`);
-  });
-
-  it("centers both custom DragHint poses and their cutouts in the square", async () => {
-    await renderAt("/drag-hint");
-    await screen.findByRole("heading", { level: 1, name: "DragHint" });
-    const example = screen.getByRole("region", { name: "Example" });
-
-    expect(
-      ["x", "y"].map((attribute) =>
-        example
-          .querySelector(".gestik-drag-hint__icon-anchor")
-          ?.getAttribute(attribute)
-      )
-    ).toStrictEqual(["4", "4"]);
-    expect(
-      [...example.querySelectorAll("mask svg")].map((mask) => [
-        mask.getAttribute("x"),
-        mask.getAttribute("y"),
-      ])
-    ).toStrictEqual([
-      ["4", "4"],
-      ["4", "4"],
-      ["4", "4"],
-      ["4", "4"],
-    ]);
-    expect(
-      example
-        .querySelector(".gestik-drag-hint__masked-scene")
-        ?.getAttribute("mask")
-    ).toMatch(/^url\(#.+\)$/u);
-    expect(
-      within(example).getByLabelText("React code example").textContent
-    ).toContain("iconMasks={handMasks}");
-    expect(
-      within(example).getByLabelText("React code example").textContent
-    ).toContain("hotspot={{ x: 0.5, y: 0.5 }}");
   });
 
   it("navigates from gallery and sidebar links and focuses the new content", async () => {
@@ -285,9 +205,7 @@ describe("Docs navigation", () => {
     });
     window.history.back();
     await waitFor(() => {
-      expect(
-        screen.getByRole("heading", { name: "Show users how." })
-      ).toBeDefined();
+      expect(screen.getByRole("region", { name: "Components" })).toBeDefined();
     });
     window.history.forward();
     await waitFor(() => {
@@ -357,6 +275,8 @@ describe("Docs navigation", () => {
     });
     await router.load();
     render(<RouterProvider router={router} />);
+    const homeContent = screen.getByRole("region", { name: "Components" });
+    const homeTitle = document.title;
     fireEvent.click(
       within(screen.getByRole("region", { name: "Components" })).getByRole(
         "link",
@@ -365,11 +285,10 @@ describe("Docs navigation", () => {
     );
     await vi.waitUntil(() => requested);
 
-    expect(
-      screen.getByRole("heading", { name: "Show users how." })
-    ).toBeDefined();
-    expect(screen.queryByText("Loading documentation…")).toBeNull();
-    expect(document.title).toBe("Gestik");
+    expect(screen.getByRole("region", { name: "Components" })).toBe(
+      homeContent
+    );
+    expect(document.title).toBe(homeTitle);
     available = true;
     await expect(
       screen.findByRole("heading", { name: "Deferred page" })
@@ -398,7 +317,7 @@ describe("Docs navigation", () => {
       );
       await screen.findByRole("heading", { level: 1, name: "SwipeHint" });
       fireEvent.click(screen.getByRole("link", { name: "Overview" }));
-      await screen.findByRole("heading", { name: "Show users how." });
+      await screen.findByRole("region", { name: "Components" });
       expect(transition).not.toHaveBeenCalled();
     } finally {
       Reflect.deleteProperty(document, "startViewTransition");

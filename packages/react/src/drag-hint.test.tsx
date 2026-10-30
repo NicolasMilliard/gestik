@@ -1,12 +1,44 @@
 /** @vitest-environment jsdom */
 
-import { cleanup, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
+import { StrictMode, useEffect, useState } from "react";
+import { hydrateRoot } from "react-dom/client";
+import { renderToString } from "react-dom/server";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { DragHint } from "./drag-hint";
+import * as silhouette from "./svg-silhouette";
+
+const CUSTOM_ICONS = {
+  grabbing: (
+    <svg data-testid="grabbing-pose" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="40" />
+    </svg>
+  ),
+  idle: (
+    <svg data-testid="idle-pose" viewBox="0 0 24 24">
+      <path d="M4 4h16v16H4Z" />
+    </svg>
+  ),
+};
+const CUTOUT = { path: "M1 1h256v256H1Z", viewBox: "1 1 256 256" };
+const ready = async (container: HTMLElement) => {
+  await waitFor(() =>
+    expect(
+      container.querySelector<HTMLElement>(".gestik-drag-hint__stage")?.dataset
+        .ready
+    ).toBe("true")
+  );
+};
 
 describe(DragHint, () => {
-  afterEach(cleanup);
+  beforeEach(() => {
+    vi.spyOn(silhouette, "createSvgSilhouette").mockResolvedValue(CUTOUT);
+  });
+  afterEach(() => {
+    cleanup();
+    vi.restoreAllMocks();
+  });
 
   it("is decorative and drags right by default", () => {
     const { container } = render(<DragHint />);
@@ -197,72 +229,151 @@ describe(DragHint, () => {
     }
   });
 
-  it("positions custom silhouettes using the icon box and hotspot", () => {
-    const icons = {
-      grabbing: <svg data-testid="grabbing-pose" />,
-      idle: <svg data-testid="idle-pose" />,
-    };
-    const iconMasks = {
-      grabbing: { path: "M10 10h80v80H10Z", viewBox: "0 0 100 100" },
-      idle: { path: "M4 4h16v16H4Z", viewBox: "0 0 24 24" },
-    };
-    const { container, rerender } = render(
-      <DragHint
-        icons={icons}
-        iconMasks={iconMasks}
-        hotspot={{ x: 0.25, y: 0.75 }}
-      />
+  it("generates both cutouts automatically and positions them at the hotspot", async () => {
+    const { container } = render(
+      <DragHint icons={CUSTOM_ICONS} hotspot={{ x: 0.25, y: 0.75 }} />
     );
-
+    expect(
+      container.querySelector<HTMLElement>(".gestik-drag-hint__stage")?.dataset
+        .ready
+    ).toBe("false");
+    expect(container.querySelector("mask")).toBeNull();
+    await ready(container);
     for (const pose of ["idle", "grabbing"] as const) {
-      const silhouette = container.querySelector(
+      const cutout = container.querySelector(
         `.gestik-drag-hint__mask--${pose}`
       );
-
-      expect(silhouette?.getAttribute("viewBox")).toBe(iconMasks[pose].viewBox);
+      expect(cutout?.getAttribute("viewBox")).toBe(CUTOUT.viewBox);
       expect(
         ["x", "y", "width", "height"].map((attribute) =>
-          silhouette?.getAttribute(attribute)
+          cutout?.getAttribute(attribute)
         )
       ).toStrictEqual(["10", "-2", "24", "24"]);
-      expect(silhouette?.querySelector("path")?.getAttribute("d")).toBe(
-        iconMasks[pose].path
+      expect(cutout?.querySelector("path")?.getAttribute("d")).toBe(
+        CUTOUT.path
       );
-      // Custom components render once, outside the mask.
       expect(screen.getAllByTestId(`${pose}-pose`)).toHaveLength(1);
     }
-
-    rerender(<DragHint icons={icons} />);
-
-    expect(container.querySelector("mask")).toBeNull();
-    expect(
-      container
-        .querySelector(".gestik-drag-hint__masked-scene")
-        ?.getAttribute("mask")
-    ).toBeNull();
+    expect(silhouette.createSvgSilhouette).toHaveBeenCalledTimes(2);
   });
 
-  it("restarts the scene when custom artwork or its cutout is mounted", () => {
-    const icons = { grabbing: <svg />, idle: <svg /> };
-    const { container, rerender } = render(<DragHint />);
-    const original = container.querySelector(".gestik-drag-hint__stage");
-
-    rerender(<DragHint icons={icons} />);
-    const custom = container.querySelector(".gestik-drag-hint__stage");
-    expect(custom).not.toBe(original);
-
+  it("rebuilds after geometry changes, discards stale work, and preserves pause", async () => {
+    let finishOld: ((value: typeof CUTOUT) => void) | undefined;
+    vi.mocked(silhouette.createSvgSilhouette).mockImplementationOnce(
+      () =>
+        // oxlint-disable-next-line promise/avoid-new -- Control completion to exercise stale async results.
+        new Promise((resolve) => {
+          finishOld = resolve;
+        })
+    );
+    const { container, rerender } = render(<DragHint icons={CUSTOM_ICONS} />);
     rerender(
       <DragHint
-        icons={icons}
-        iconMasks={{
-          grabbing: { path: "M0 0h24v24H0Z", viewBox: "0 0 24 24" },
-          idle: { path: "M0 0h24v24H0Z", viewBox: "0 0 24 24" },
+        icons={{
+          ...CUSTOM_ICONS,
+          grabbing: (
+            <svg viewBox="0 0 10 10">
+              <rect width="10" height="10" />
+            </svg>
+          ),
         }}
+        playing={false}
       />
     );
-    expect(container.querySelector(".gestik-drag-hint__stage")).not.toBe(
-      custom
+    await ready(container);
+    expect(
+      container
+        .querySelector(".gestik-drag-hint__mask--grabbing path")
+        ?.getAttribute("d")
+    ).toBe(CUTOUT.path);
+    await act(() => finishOld?.({ ...CUTOUT, path: "stale" }));
+    expect(
+      container
+        .querySelector(".gestik-drag-hint__mask--grabbing path")
+        ?.getAttribute("d")
+    ).toBe(CUTOUT.path);
+    expect(
+      (container.firstElementChild as HTMLElement).style.getPropertyValue(
+        "--gestik-drag-hint-play-state"
+      )
+    ).toBe("paused");
+    // Equivalent JSX and playback changes do not regenerate geometry.
+    rerender(
+      <DragHint
+        icons={{
+          ...CUSTOM_ICONS,
+          grabbing: (
+            <svg viewBox="0 0 10 10">
+              <rect width="10" height="10" />
+            </svg>
+          ),
+        }}
+        playing
+      />
     );
+    expect(silhouette.createSvgSilhouette).toHaveBeenCalledTimes(4);
+  });
+
+  it("observes a child component's own geometry updates without remounting it", async () => {
+    let change: (() => void) | undefined;
+    const Artwork = () => {
+      const [width, setWidth] = useState(10);
+      useEffect(() => {
+        change = () => setWidth(20);
+      }, []);
+      return (
+        <svg viewBox="0 0 24 24">
+          <rect data-testid="changing-shape" width={width} height="10" />
+        </svg>
+      );
+    };
+    const { container } = render(
+      <StrictMode>
+        <DragHint
+          icons={{ grabbing: CUSTOM_ICONS.grabbing, idle: <Artwork /> }}
+        />
+      </StrictMode>
+    );
+    await ready(container);
+    const calls = vi.mocked(silhouette.createSvgSilhouette).mock.calls.length;
+    await act(() => change?.());
+    await ready(container);
+    expect(screen.getByTestId("changing-shape").getAttribute("width")).toBe(
+      "20"
+    );
+    expect(silhouette.createSvgSilhouette).toHaveBeenCalledTimes(calls + 2);
+  });
+
+  it("settles into unmasked artwork when generation fails", async () => {
+    vi.mocked(silhouette.createSvgSilhouette).mockRejectedValue(
+      new Error("Canvas blocked")
+    );
+    const { container } = render(<DragHint icons={CUSTOM_ICONS} />);
+    await ready(container);
+    expect(container.querySelector("mask")).toBeNull();
+    expect(screen.getByTestId("idle-pose")).toBeDefined();
+  });
+
+  it("keeps server markup stable through hydration and reveals only completed cutouts", async () => {
+    const html = renderToString(<DragHint icons={CUSTOM_ICONS} />);
+    expect(html).toContain('data-ready="false"');
+    expect(html).not.toContain("<mask");
+    expect(renderToString(<DragHint />)).toContain('data-ready="true"');
+    const container = document.createElement("div");
+    container.innerHTML = html;
+    document.body.append(container);
+    const onRecoverableError = vi.fn<(error: unknown) => void>();
+    let root: ReturnType<typeof hydrateRoot> | undefined;
+    await act(() => {
+      root = hydrateRoot(container, <DragHint icons={CUSTOM_ICONS} />, {
+        onRecoverableError,
+      });
+    });
+    await ready(container);
+    expect(container.querySelectorAll("mask")).toHaveLength(2);
+    expect(onRecoverableError).not.toHaveBeenCalled();
+    await act(() => root?.unmount());
+    container.remove();
   });
 
   it("applies playback settings and can resume", () => {

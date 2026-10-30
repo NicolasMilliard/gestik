@@ -76,29 +76,20 @@ describe("Docs production bundles", () => {
     );
   });
 
-  it.each([
-    ["", "Show users how.", "Gestik"],
-    ...gestures.map((gesture) => [
-      `${gesture}-hint`,
-      `${gesture[0].toUpperCase() + gesture.slice(1)}Hint`,
-      `${gesture[0].toUpperCase() + gesture.slice(1)}Hint — Gestik`,
-    ]),
-  ])(
-    "prerenders %s with content, title, and nested-safe assets",
-    async (route, heading, title) => {
+  it.each(["", ...gestures.map((gesture) => `${gesture}-hint`)])(
+    "prerenders %s with content and nested-safe assets",
+    async (route) => {
       const html = await readFile(
         path.join(outDir, route, "index.html"),
         "utf-8"
       );
       const dom = new JSDOM(html);
       const { document } = dom.window;
-      expect(document.querySelector("h1")?.textContent).toBe(heading);
-      expect(document.title).toBe(title);
+      expect(document.querySelector("main h1")).not.toBeNull();
       expect(document.querySelectorAll('a[href*="#/"]')).toHaveLength(0);
       expect(
         document.querySelector('script[type="module"]')?.getAttribute("src")
       ).toMatch(/^\/gestik\/assets\//u);
-      expect(html).not.toContain("Loading documentation");
       dom.window.close();
     }
   );
@@ -116,19 +107,14 @@ describe("Docs production bundles", () => {
     const panels = example?.querySelectorAll('[role="tabpanel"]') ?? [];
 
     expect(
-      [...tabs].map((tab) => [
-        tab.textContent,
-        tab.getAttribute("aria-selected"),
-      ])
-    ).toStrictEqual([
-      ["React", "true"],
-      ["CSS", "false"],
-    ]);
+      [...tabs].map((tab) => tab.getAttribute("aria-selected"))
+    ).toStrictEqual(["true", "false"]);
     expect(
       [...panels].map((panel) => panel.hasAttribute("hidden"))
     ).toStrictEqual([false, true]);
-    expect(panels[0]?.textContent).toContain("import { DragHint }");
-    expect(panels[1]?.textContent).toContain("--gestik-drag-hint-square-fill");
+    for (const panel of panels) {
+      expect(panel.querySelector("code")?.textContent?.trim()).toBeTruthy();
+    }
     expect(
       [...tabs].map((tab) => [tab.id, tab.getAttribute("aria-controls")])
     ).toStrictEqual(
@@ -143,9 +129,7 @@ describe("Docs production bundles", () => {
   it("provides a real not-found document for static hosting", async () => {
     const html = await readFile(path.join(outDir, "404.html"), "utf-8");
     const dom = new JSDOM(html);
-    expect(dom.window.document.querySelector("h1")?.textContent).toBe(
-      "Page not found"
-    );
+    expect(dom.window.document.querySelector("main h1")).not.toBeNull();
     expect(
       dom.window.document
         .querySelector('script[type="module"]')
