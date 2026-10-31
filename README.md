@@ -23,11 +23,17 @@ The hints use CSS animations, scale with their `size`, and support playback cont
 
 ## Project status
 
-Gestik is in early development. `@gestik/core` and `@gestik/react` are private workspace packages at version `0.0.0` and have not been published to npm. The install commands in the docs are a preview; use the live playgrounds or run this repository locally to explore the components.
+Gestik `0.1.0` is published on npm as `@gestik/core` and `@gestik/react`. Install the React package to use the hints in your application, or explore the live playgrounds to try the components.
 
-## Usage preview
+## Usage
 
-Within this repository, components are imported from `@gestik/react`:
+Install the React package:
+
+```sh
+bun add @gestik/react
+```
+
+Import components from `@gestik/react`:
 
 ```tsx
 import { SwipeHint } from "@gestik/react";
@@ -46,7 +52,7 @@ All hints share `size` (scene width in pixels), `duration` (a complete cycle in 
 
 The default width is 112px. `ShortcutHint` instead sizes its scene to fit the key row, starting at 112px for Command + K. Explicit sizes scale the complete scene proportionally. Drag and swipe directions describe the element's or finger's travel; changing direction starts a new cycle. Changing a shortcut's key count also restarts playback.
 
-Every hint accepts custom static artwork inside an inert, hidden subtree. Swipe, hold, resize, and scroll use `icon`; drag uses an `icons` pair for its two poses; shortcut accepts custom elements in `keys`. For contact-based gestures, `hotspot` anchors the artwork. Drag's `iconMasks` and hold/resize's `iconMask` supply optional cutouts for custom artwork. Supply static illustrations and keep the actual interaction outside the hint. When showing a looping hint alongside other content, provide a way to pause or dismiss it, or use a finite iteration count.
+Every hint accepts custom static artwork inside an inert, hidden subtree. Swipe, hold, resize, and scroll use `icon`; drag uses an `icons` pair for its two poses; shortcut accepts custom elements in `keys`. For contact-based gestures, `hotspot` anchors the artwork. Drag, hold, and resize automatically generate opaque cutouts from supported static inline SVG artwork; see the [artwork contracts](docs/props.md#artwork-contracts) for requirements and fallback behavior. Supply static illustrations and keep the actual interaction outside the hint. When showing a looping hint alongside other content, provide a way to pause or dismiss it, or use a finite iteration count.
 
 All hints also accept a typed `style` object with ordinary React CSS properties and `--gestik-*` variables. Explicit playback props take precedence over the matching style variables. Use `size` for proportional scaling; width and height in `style` only affect the outer layout box. See the [complete props reference](docs/props.md) for shared props, gesture-specific options, and defaults.
 

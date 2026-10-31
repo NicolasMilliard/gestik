@@ -1,10 +1,21 @@
 {
   "name": "@gestik/core",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
+  "description": "Framework-independent animation CSS, SVG geometry, and layout for Gestik gesture hints.",
+  "homepage": "https://nicolasmilliard.github.io/gestik/",
+  "bugs": {
+    "url": "https://github.com/NicolasMilliard/gestik/issues"
+  },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NicolasMilliard/gestik.git",
+    "directory": "packages/core"
+  },
   "files": [
-    "dist"
+    "dist",
+    "LICENSE",
+    "README.md"
   ],
   "type": "module",
   "sideEffects": [
@@ -23,6 +34,9 @@
     "./styles/scroll-hint.css": "./dist/styles/scroll-hint.css",
     "./styles/shortcut-hint.css": "./dist/styles/shortcut-hint.css",
     "./styles/swipe-hint.css": "./dist/styles/swipe-hint.css"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsdown --dts",
