@@ -51,11 +51,11 @@
     },
     "packages/core": {
       "name": "@gestik/core",
-      "version": "0.0.0",
+      "version": "0.1.0",
     },
     "packages/react": {
       "name": "@gestik/react",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "dependencies": {
         "@gestik/core": "workspace:*",
       },

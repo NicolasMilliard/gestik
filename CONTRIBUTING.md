@@ -41,6 +41,22 @@ Inspect the fixes before submitting. `verify` runs lint, formatting, builds, typ
 
 For a quicker test run, build the library first and use `bun run test`; bare `bun test` invokes a different runner. For visual changes, check the docs in a browser, including sizing, direction, playback, and reduced motion as applicable.
 
+## Prepare a release
+
+Keep the core and React release versions aligned in their manifests and the workspace entries in `bun.lock`; a frozen install alone does not catch stale workspace versions. The repository root and docs app remain private. Each published package includes only `dist`, its README, its MIT license, and package metadata; keep the package licenses aligned with the root `LICENSE`.
+
+Run `bun run verify` before packing from each package directory:
+
+```sh
+release_dir="$(mktemp -d)"
+(cd packages/core && bun pm pack --destination "$release_dir")
+(cd packages/react && bun pm pack --destination "$release_dir")
+```
+
+Inspect both tarballs, including the export targets, README, and license. Use Bun to pack so React's `workspace:*` dependency is replaced with core's release version. Complete installation checks in a fresh application outside this monorepo before publishing, covering React 18 and 19, TypeScript, CSS loading, and server rendering.
+
+Publish `@gestik/core` first, then `@gestik/react`. Both packages set public access in `publishConfig`. After publication, update the root README's project status and usage instructions to reflect availability on npm.
+
 ## Open a pull request
 
 Explain the problem, resulting behavior, and any public API changes. Report verification results and anything you could not check; include useful screenshots or recordings for visual changes.
