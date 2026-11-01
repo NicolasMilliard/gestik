@@ -1,6 +1,6 @@
 {
   "name": "@gestik/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Framework-independent animation CSS, SVG geometry, and layout for Gestik gesture hints.",
   "homepage": "https://nicolasmilliard.github.io/gestik/",
   "bugs": {

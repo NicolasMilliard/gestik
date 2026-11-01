@@ -1,3 +1,5 @@
+"use client";
+
 import { RESIZE_HINT_DEFAULTS, POINTING_HAND_SILHOUETTE } from "@gestik/core";
 import type { HintHotspot } from "@gestik/core";
 import { useId, useRef } from "react";

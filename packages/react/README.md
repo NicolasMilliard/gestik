@@ -35,6 +35,12 @@ Explore the [interactive docs](https://nicolasmilliard.github.io/gestik/) for ea
 
 Source and contributions: [NicolasMilliard/gestik](https://github.com/NicolasMilliard/gestik). Report bugs or propose gestures in the [issue tracker](https://github.com/NicolasMilliard/gestik/issues).
 
+## Server rendering
+
+All hints support server rendering. In React Server Component frameworks such as Next.js App Router, import them directly from `@gestik/react`: `DragHint`, `HoldHint`, and `ResizeHint` include their own `"use client"` boundaries for state, effects, and DOM refs. They still produce server-rendered HTML and hydrate in the browser.
+
+`ScrollHint`, `ShortcutHint`, and `SwipeHint` can also render as synchronous Server Components. Their animation runs through CSS. Applications without React Server Components require no special setup.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
