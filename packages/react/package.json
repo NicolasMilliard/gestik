@@ -1,6 +1,6 @@
 {
   "name": "@gestik/react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Animated gesture hints for React: drag, hold, resize, scroll, swipe, and keyboard shortcuts.",
   "homepage": "https://nicolasmilliard.github.io/gestik/",
   "bugs": {

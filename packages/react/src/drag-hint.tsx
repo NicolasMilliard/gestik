@@ -1,3 +1,5 @@
+"use client";
+
 import {
   DRAG_HINT_DEFAULTS,
   CLOSED_HAND_SILHOUETTE,

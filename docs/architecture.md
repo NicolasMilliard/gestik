@@ -20,6 +20,8 @@ Core is a collection of assets and pure calculations. Its JavaScript entry point
 
 React continues to import each selected hint's stylesheet automatically. Omitting a playback prop leaves the CSS variable unset inline, so consumer styles can override the default. Moving those defaults into React parameter initializers would change that behavior. CSS remains the source of truth for timing, iterations, and play state; core's JavaScript provides scene dimensions, default directions, contact points, and shortcut labels and layout.
 
+React Server Component boundaries belong to the individual hints that require state, effects, or DOM refs: `DragHint`, `HoldHint`, and `ResizeHint`. Their built modules preserve `"use client"` while the public barrel and core stay unmarked. `ScrollHint`, `ShortcutHint`, and `SwipeHint` can render as synchronous Server Components; `useId` alone does not require a client boundary. Client boundaries preserve ordinary React usage and server rendering with hydration.
+
 Core is a regular dependency of React. Consumers need only install their adapter. The build preserves that dependency instead of embedding a second copy of core. Core and React have explicit package exports, and core's JavaScript entry point does not import every stylesheet. Production consumer tests check that importing one React hint includes only that hint and its styles within the existing bundle budget.
 
 ## Alternatives and tradeoffs
