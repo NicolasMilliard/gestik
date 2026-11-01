@@ -23,7 +23,7 @@ The hints use CSS animations, scale with their `size`, and support playback cont
 
 ## Project status
 
-Gestik `0.1.0` is published on npm as `@gestik/core` and `@gestik/react`. Install the React package to use the hints in your application, or explore the live playgrounds to try the components.
+Gestik `0.1.1`is published on npm as `@gestik/core` and `@gestik/react`. This patch adds React Server Component client boundaries to `DragHint`, `HoldHint`, and `ResizeHint`, allowing direct imports in Next.js App Router. Install the React package to use the hints in your application, or explore the live playgrounds to try the components.
 
 ## Usage
 
